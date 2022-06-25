@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, TextInput, Text } from "react-native";
+import { SafeAreaView, StyleSheet, TextInput, Text } from "react-native-web";
 
 const StatInput = (props) => {
   const [number, onChangeNumber] = React.useState(props.value);

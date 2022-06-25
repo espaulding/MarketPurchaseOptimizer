@@ -47,7 +47,7 @@ class MainWindow extends React.Component {
     render() {
         return (
             <div className="main-panel">
-                <h1>class is {this.state.class}</h1>
+                <h1>class is {this.state.class.label}</h1>
                 <StatInput label={"HP"} value={this.hp} />
                 <StatInput label={this.state.class.stat} value={this.atkStat} />
                 <StatInput label={"Crit Rate"} value={this.critRate} />
