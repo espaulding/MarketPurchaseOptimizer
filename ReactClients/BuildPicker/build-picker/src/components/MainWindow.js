@@ -10,7 +10,7 @@ function MainWindow(props) {
         berserker : { label: 'Berserker', hpModifier : 2.2, defModifier : 1.1, stat: 'Strength' },
         wardancer : { label: 'Wardancer', hpModifier : 2.2, defModifier : 1.1, stat: 'Dexterity' },
         striker : { label: 'Striker', hpModifier : 2.2, defModifier : 1.05, stat: 'Strength' },
-        glaiver : { label: 'Glaiver', hpModifier : 2.2, defModifier : 1.05, stat: 'Strength' },
+        glaiver : { label: 'Glaver', hpModifier : 2.2, defModifier : 1.05, stat: 'Strength' },
         paladin : { label: 'Paladin', hpModifier : 2.1, defModifier : 1.1, stat: 'Strength' },
         deathblade : { label: 'Deathblade', hpModifier : 2.2, defModifier : 1, stat: 'Dexterity'  },
         soulfist : { label: 'Soulfist', hpModifier : 2.1, defModifier : 1.05, stat: 'Strength' },
