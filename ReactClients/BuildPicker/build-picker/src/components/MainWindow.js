@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { StyleSheet, Text } from "react-native";
+import NumberFormat from 'react-number-format';
 import StatInput from './StatInput';
 
 function MainWindow(props) {
@@ -29,15 +31,45 @@ function MainWindow(props) {
     }; 
 
     const [subclass, setSubclass] = useState(subclassList.sorceress);
-    const [defensePhysical, setDefensePhysical] = useState(40000);
-    const [defenseMagical, setDefenseMagical] = useState(40000);
+    const [defensePhysical, setDefensePhysical] = useState(38557);
+    const [defenseMagical, setDefenseMagical] = useState(39477);
     const [hp, setHp] = useState(91833);
     const [critRate, setCritRate] = useState(.5514);
     const [critDmg, setCritDmg] = useState(2.00);
-    const [atkStat, setAtkStat] = useState(100000);
-    const [wpnDmg, setWpnDmg] = useState(24000);
+    const [atkStat, setAtkStat] = useState(100777);
+    const [wpnDmg, setWpnDmg] = useState(23400);
     const [mpRegen, setMpRegen] = useState(159);
     const [moveSpeed, setMoveSpeed] = useState(1.3);
+
+    const convertPercent = (number) => {
+        return (number * 100).toFixed(2);
+    }
+
+    // t -> type of defense
+    // physical or magical
+    // if neither take the average of physical and magical defense
+    const computeDr = (t) => {
+        var classDef = 0;
+        if (t === 'physical') { classDef = defensePhysical * subclass.defModifier; }
+        if (t === 'magical') { classDef = defenseMagical * subclass.defModifier; }
+        return classDef / (classDef + 6500);
+    }
+
+    // t -> type of defense
+    // physical or magical
+    // if neither take the average of physical and magical defense
+    const computeEffectiveHp = (t) => {
+        return hp / (1 - computeDr(t));
+    }
+
+    const computeAttackPower = () => {
+        return Math.floor(Math.sqrt(atkStat * wpnDmg / 6));
+    }
+
+    const adjustedAttackPower = () => {
+        var ap = computeAttackPower();
+        return (critRate * critDmg * ap) + (1 - critRate) * ap;
+    }
 
     return (
         <div className="main-panel">
@@ -45,7 +77,7 @@ function MainWindow(props) {
 
             </div>
             <div className="stat-input">
-                <h1>{subclass.label}, hp {subclass.hpModifier}, def {subclass.defModifier}</h1>
+                <h3>{subclass.label}, ( {subclass.hpModifier}, {subclass.defModifier} )</h3>
                 <StatInput label={"HP"} value={hp} setter={setHp} />
                 <StatInput label={"Physical Defense"} value={defensePhysical} setter={setDefensePhysical} />
                 <StatInput label={"Magical Defense"} value={defenseMagical} setter={setDefenseMagical} />
@@ -56,11 +88,38 @@ function MainWindow(props) {
                 <StatInput label={"MP Regen"} value={mpRegen} setter={setMpRegen} />
                 <StatInput label={"Movement Speed"} value={moveSpeed} setter={setMoveSpeed} />
             </div>
-            <div className="stat-calc">
+            <div className="stat-calc" style={styles.rightPanel}>
+                <Text style={styles.baseText}>Effective HP (Physical) <NumberFormat disabled={true} thousandSeparator={','} decimalScale={0} value={computeEffectiveHp('physical')}></NumberFormat></Text>
+                <Text style={styles.baseText}>Damage Reduction (Physical) <NumberFormat disabled={true} suffix={'%'} value={convertPercent(computeDr('physical'))}></NumberFormat></Text>
 
+                <hr/>
+                <Text style={styles.baseText}>Effective HP (Magical) <NumberFormat disabled={true} thousandSeparator={','} decimalScale={0} value={computeEffectiveHp('magical')}></NumberFormat></Text>
+                <Text style={styles.baseText}>Damage Reduction (Magical) <NumberFormat disabled={true} suffix={'%'} value={convertPercent(computeDr('magical'))}></NumberFormat></Text>
+
+                <hr/>
+                <Text style={styles.baseText}>Attack Power <NumberFormat disabled={true} thousandSeparator={','} decimalScale={0} value={computeAttackPower()}></NumberFormat></Text>
+                <Text style={styles.baseText}>Attack Power (Adjusted)<NumberFormat disabled={true} thousandSeparator={','} decimalScale={0} value={adjustedAttackPower()}></NumberFormat></Text>
             </div>
         </div>
-    );
+    ); 
 }
+
+const styles = StyleSheet.create({
+    rightPanel: {
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    baseText: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: '10px',
+        marginLeft: '10px',
+        fontFamily: "Cochin",
+        color: 'white',
+        minWidth: '300px',
+        width: '350px',
+        maxWidth: '350px',
+    }
+});
 
 export default MainWindow;

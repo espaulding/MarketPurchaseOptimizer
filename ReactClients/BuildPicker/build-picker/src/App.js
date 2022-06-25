@@ -16,9 +16,9 @@ function App() {
           Learn React
         </a>
       </header>
-      <body className="App-body">
+      <div className="App-body">
         <MainWindow/>
-      </body>
+      </div>
     </div>
   );
 }

@@ -15,6 +15,7 @@ const StatInput = (props) => {
           value={props.value}
           placeholder="enter value"
           keyboardType="numeric"
+          maxLength={10}
         />
       </div>
     </SafeAreaView>
