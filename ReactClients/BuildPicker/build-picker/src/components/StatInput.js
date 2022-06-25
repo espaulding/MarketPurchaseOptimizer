@@ -6,31 +6,34 @@ const StatInput = (props) => {
 
   return (
     <SafeAreaView>
-      <Text style={styles.baseText}>{props.label}</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeNumber}
-        value={number}
-        placeholder="enter value"
-        keyboardType="numeric"
-      />
+      <div style={styles.inputWrapper}>
+        <Text style={styles.baseText}>{props.label}</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeNumber}
+          value={number}
+          placeholder="enter value"
+          keyboardType="numeric"
+        />
+      </div>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  inputWrapper: {
+    flexDirection: 'row'
+  },
   input: {
     height: 40,
     margin: 12,
-    borderWidth: 1,
+    border: '1px solid white',
     padding: 10,
+    color: 'white'
   },
   baseText: {
-    fontFamily: "Cochin"
-  },
-  titleText: {
-    fontSize: 20,
-    fontWeight: "bold"
+    fontFamily: "Cochin",
+    color: 'white'
   }
 });
 
