@@ -1,17 +1,18 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, TextInput, Text } from "react-native-web";
+import { SafeAreaView, StyleSheet, TextInput, Text } from "react-native";
 
 const StatInput = (props) => {
-  const [number, onChangeNumber] = React.useState(props.value);
 
   return (
     <SafeAreaView>
       <div style={styles.inputWrapper}>
-        <Text style={styles.baseText}>{props.label}</Text>
+        <div style={styles.baseText}>
+          <Text style={styles.baseText}>{props.label}</Text>
+        </div>
         <TextInput
           style={styles.input}
-          onChangeText={onChangeNumber}
-          value={number}
+          onChangeText={props.setter}
+          value={props.value}
           placeholder="enter value"
           keyboardType="numeric"
         />
@@ -22,7 +23,12 @@ const StatInput = (props) => {
 
 const styles = StyleSheet.create({
   inputWrapper: {
-    flexDirection: 'row'
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    minWidth: '301px',
+    width: '301px',
+    maxWidth: '301px',
   },
   input: {
     height: 40,
@@ -33,7 +39,10 @@ const styles = StyleSheet.create({
   },
   baseText: {
     fontFamily: "Cochin",
-    color: 'white'
+    color: 'white',
+    minWidth: '120px',
+    width: '120px',
+    maxWidth: '120px',
   }
 });
 
