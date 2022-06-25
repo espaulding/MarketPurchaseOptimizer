@@ -43,7 +43,25 @@
 }
 
 .main-panel {
+  display: flex;
+  flex-direction: row;
   width: 100vw;
+}
+
+.class-engraving-picker {
+  min-width: 33%;
+  width: 33%;
+  border:#61dafb 1px solid;
+}
+
+.stat-input {
+  width: 33%;
+  border:#61dafb 1px solid;
+}
+
+.stat-calc {
+  width: 34%;
+  border:#61dafb 1px solid;
 }
 
 @keyframes App-logo-spin {

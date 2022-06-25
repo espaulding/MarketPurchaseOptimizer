@@ -23,6 +23,7 @@ Use incoming market data and a desired purchase outcome to choose an optimal set
   - https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
   - windows -> https://nodejs.org/en/download/
   - go ahead and let it install chocolaty when it asks
+  - to make a new project -> "npx create-react-app build-picker"
 
 ## Running a React app in a local development environment
 - npm start - starts the development server

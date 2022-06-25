@@ -41,14 +41,24 @@ function MainWindow(props) {
 
     return (
         <div className="main-panel">
-            <h1>{subclass.label}, hp {subclass.hpModifier}, def {subclass.defModifier}</h1>
-            <StatInput label={"HP"} value={hp} setter={setHp} />
-            <StatInput label={"Weapon Damge"} value={wpnDmg} setter={setWpnDmg} />
-            <StatInput label={subclass.stat} value={atkStat} setter={setAtkStat} />
-            <StatInput label={"Crit Rate"} value={critRate} setter={setCritRate} />
-            <StatInput label={"Crit Damage"} value={critDmg} setter={setCritDmg} />
-            <StatInput label={"MP Regen"} value={mpRegen} setter={setMpRegen} />
-            <StatInput label={"Movement Speed"} value={moveSpeed} setter={setMoveSpeed} />
+            <div className="class-engraving-picker">
+
+            </div>
+            <div className="stat-input">
+                <h1>{subclass.label}, hp {subclass.hpModifier}, def {subclass.defModifier}</h1>
+                <StatInput label={"HP"} value={hp} setter={setHp} />
+                <StatInput label={"Physical Defense"} value={defensePhysical} setter={setDefensePhysical} />
+                <StatInput label={"Magical Defense"} value={defenseMagical} setter={setDefenseMagical} />
+                <StatInput label={"Weapon Damge"} value={wpnDmg} setter={setWpnDmg} />
+                <StatInput label={subclass.stat} value={atkStat} setter={setAtkStat} />
+                <StatInput label={"Crit Rate"} value={critRate} setter={setCritRate} />
+                <StatInput label={"Crit Damage"} value={critDmg} setter={setCritDmg} />
+                <StatInput label={"MP Regen"} value={mpRegen} setter={setMpRegen} />
+                <StatInput label={"Movement Speed"} value={moveSpeed} setter={setMoveSpeed} />
+            </div>
+            <div className="stat-calc">
+
+            </div>
         </div>
     );
 }
