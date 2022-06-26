@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   baseText: {
-    fontFamily: "Cochin",
+    paddingBottom: '15px',
+    textAlign: 'right',
     color: 'white',
     minWidth: '120px',
     width: '120px',
