@@ -67,8 +67,8 @@ function MainWindow(props) {
     // if neither take the average of physical and magical defense
     const computeDr = (data, t) => {
         var classDef = 0;
-        if (t === 'physical') { classDef = data.defensePhysical * data.subclass.defModifier; }
-        if (t === 'magical') { classDef = data.defenseMagical * data.subclass.defModifier; }
+        if (t === 'physical') { classDef = data.defensePhysical }
+        if (t === 'magical') { classDef = data.defenseMagical }
         return classDef / (classDef + 6500);
     }
 
