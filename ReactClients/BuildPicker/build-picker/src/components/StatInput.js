@@ -1,10 +1,9 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, TextInput, Text } from "react-native";
+import { StyleSheet, TextInput, Text } from "react-native";
 
 const StatInput = (props) => {
 
   return (
-    <SafeAreaView>
       <div style={styles.inputWrapper}>
         <div style={styles.baseText}>
           <Text style={styles.baseText}>{props.label}</Text>
@@ -18,7 +17,6 @@ const StatInput = (props) => {
           maxLength={10}
         />
       </div>
-    </SafeAreaView>
   );
 };
 
@@ -27,16 +25,18 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    minWidth: '301px',
-    width: '301px',
-    maxWidth: '301px',
+    width: '100%',
+    height: '40px',
   },
   input: {
     height: 40,
-    margin: 12,
-    border: '1px solid white',
+    margin: 0,
+    marginLeft: '12px',
+    borderRadius: '20px',
+    border: '1px solid cyan',
     padding: 10,
-    color: 'white'
+    boxSizing: 'border-box',
+    color: 'cyan',
   },
   baseText: {
     paddingBottom: '15px',
