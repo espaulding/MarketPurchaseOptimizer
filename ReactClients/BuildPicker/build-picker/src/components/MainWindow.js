@@ -44,93 +44,99 @@ function MainWindow(props) {
         { 
             label: 'Class Engravings', code: 'class',
             items: [
-                { label: 'Barrage Enhancement', code: 'BE' },
-                { label: 'Berserker\'s Technique', code: 'BT' },
-                { label: 'Blessed Aura', code: 'BA' },
-                { label: 'Combat Readyness', code: 'CR' },
-                { label: 'Control', code: 'CON' },
-                { label: 'Death Strike', code: 'DST' },
-                { label: 'Deathblow', code: 'DB' },
-                { label: 'Demonic Impulse', code: 'DI' },
-                { label: 'Desperate Salvation', code: 'DSA' },
-                { label: 'Energy Overflow', code: 'EO' },
-                { label: 'Enhanced Weapon', code: 'EW' },
-                { label: 'Esoteric Flurry', code: 'EF' },
-                { label: 'Esoteric Skill Enhancement', code: 'ESE' },
-                { label: 'Firepower Enhancement', code: 'FE' },
-                { label: 'First Intention', code: 'FI' },
-                { label: 'Gravity Training', code: 'GT' },
-                { label: 'Igniter', code: 'IGN' },
-                { label: 'Judgement', code: 'JUD' },
-                { label: 'Lone Knight', code: 'LK' },
-                { label: 'Loyal Companion', code: 'LC' },
-                { label: 'Mayhem', code: 'MAY' },
-                { label: 'Peacemaker', code: 'PEA' },
-                { label: 'Perfect Suppression', code: 'PS' },
-                { label: 'Pinnacle', code: 'PIN' },
-                { label: 'Pistoleer', code: 'PIS' },
-                { label: 'Rage Hammer', code: 'RH' },
-                { label: 'Reflux', code: 'REF' },
-                { label: 'Remaining Energy', code: 'RE' },
-                { label: 'Robust Spirit', code: 'RS' },
-                { label: 'Shock Training', code: 'ST' },
-                { label: 'Surge', code: 'SUR' },
-                { label: 'Time to Hunt', code: 'TTH' },
-                { label: 'True Courage', code: 'TC' },
-                { label: 'Ultimate Skill: Taijutsu', code: 'UST' },
+                { label: 'Barrage Enhancement', code: 'BE' },        // 0
+                { label: 'Berserker\'s Technique', code: 'BT' },     // 1
+                { label: 'Blessed Aura', code: 'BA' },               // 2
+                { label: 'Combat Readyness', code: 'CR' },           // 3  
+                { label: 'Control', code: 'CON' },                   // 4 
+                { label: 'Death Strike', code: 'DST' },              // 5 
+                { label: 'Deathblow', code: 'DB' },                  // 6
+                { label: 'Demonic Impulse', code: 'DI' },            // 7
+                { label: 'Desperate Salvation', code: 'DSA' },       // 8
+                { label: 'Energy Overflow', code: 'EO' },            // 9
+                { label: 'Enhanced Weapon', code: 'EW' },            //10
+                { label: 'Esoteric Flurry', code: 'EF' },            //11
+                { label: 'Esoteric Skill Enhancement', code: 'ESE' },//12
+                { label: 'Firepower Enhancement', code: 'FE' },      //13
+                { label: 'First Intention', code: 'FI' },            //14
+                { label: 'Gravity Training', code: 'GT' },           //15
+                { label: 'Igniter', code: 'IGN' },                   //16
+                { label: 'Judgement', code: 'JUD' },                 //17
+                { label: 'Lone Knight', code: 'LK' },                //18
+                { label: 'Loyal Companion', code: 'LC' },            //19
+                { label: 'Mayhem', code: 'MAY' },                    //20
+                { label: 'Peacemaker', code: 'PEA' },                //21
+                { label: 'Perfect Suppression', code: 'PS' },        //22
+                { label: 'Pinnacle', code: 'PIN' },                  //23
+                { label: 'Pistoleer', code: 'PIS' },                 //24
+                { label: 'Rage Hammer', code: 'RH' },                //25
+                { label: 'Reflux', code: 'REF' },                    //26
+                { label: 'Remaining Energy', code: 'RE' },           //27
+                { label: 'Robust Spirit', code: 'RS' },              //28
+                { label: 'Shock Training', code: 'ST' },             //29
+                { label: 'Surge', code: 'SUR' },                     //30
+                { label: 'Time to Hunt', code: 'TTH' },              //31
+                { label: 'True Courage', code: 'TC' },               //32
+                { label: 'Ultimate Skill: Taijutsu', code: 'UST' },  //33
             ]
         },
         { 
             label: 'Common Engravings', code: 'common',
             items: [
-                { label: 'Adrenaline', code: 'ADR' },             // Use Skill -> 1% AP, 6 stacks 15% crit (6 stacks max)
-                { label: 'All-Out Attack', code: 'ALL' },         // Holding or Casting -> 20% DMG 
-                { label: 'Ambush Master', code: 'AM' },           // Back Attack -> 25% DMG
-                { label: 'Awakening', code: 'AWA' },          
-                { label: 'Barricade', code: 'BAR' },              // Shielded -> 16% DMG
-                { label: 'Broken Bone', code: 'BB' },     
-                { label: 'Contender', code: 'CON' },              // Kill Foe -> 2.5% AP (17.5% max)
-                { label: 'Crisis Evasion', code: 'CE' },     
-                { label: 'Crushing Fist', code: 'CF' },           // on counter -> 20% AP (duration?)
-                { label: 'Cursed Doll', code: 'CD' } ,            // 16% AP 25% (Reduced Healing)
-                { label: 'Disrespect', code: 'DIS' },             // Enemy HP < 30% -> 36% DMG
-                { label: 'Divine Protection', code: 'DP' },       // 20% chance of 60% DR (10s CD)
-                { label: 'Drops of Ether', code: 'DOE' },         // 6 possible 30s buffs (10s CD)
-                { label: 'Emergency Rescue', code: 'ER' },        // HP < 30% -> Shield for 50% MaxHP (3s) then heal for 50% of shield (180s CD)
-                { label: 'Enhanced Shield', code: 'ES' },         // bad
-                { label: 'Ether Predator', code: 'EP' },          // On hit -> .5% AP 1% Def for 90s up to 30 stacks (orb CD 10s)
-                { label: 'Expert', code: 'EXP' },                 // not computing Healing
-                { label: 'Explosive Expert', code: 'EE' },      
-                { label: 'Fortitude', code: 'FOR' },              // Low HP -> 30% DR
-                { label: 'Grudge', code: 'GRU' },                 // 20% DMG (20% more dmg taken)
-                { label: 'Heavy Armor', code: 'HA' },             // 100% defense
-                { label: 'Hit Master', code: 'HM' },              // Not head or back attack -> 16% DMG 
-                { label: 'Increase Mass', code: 'IM' },           // 18% AP (-10% Atk Speed)
-                { label: 'Keen Blunt Weapon', code: 'KBW' },      // 50% Crit Dmg (10% chance of -20% DMG)
-                { label: 'Lightning Fury', code: 'LF' },          // On hit (1s CD) -> 60% chance of orb (5 orbs explode for AOE damage amount??)
-                { label: 'MP Efficiency Increase', code: 'MEI' }, // MP < 50% -> 12% DMG (30% MP Regen)
-                { label: 'Magick Stream', code: 'MS' },           // Not hit for 3 sec -> 3% MP Regen, 5 stacks -> 10% CDR, On hit (10s CD) -> lose 1 stack
-                { label: 'Master Brawler', code: 'MB' },          // Head Attack -> 25% DMG
-                { label: 'Master of Escape', code: 'MOE' },
-                { label: 'Master\'s Tenacity', code: 'MT' },      // HP < 50% -> 16% DMG
-                { label: 'Max MP Increase', code: 'MMI' },        // 30% MP
-                { label: 'Necromancy', code: 'Nec' },            
-                { label: 'Precise Dagger', code: 'PD' },          // 20% Crit, -12% Crit Dmg
-                { label: 'Preemptive Strike', code: 'PS' },
-                { label: 'Propulsion', code: 'PRO' },             // Use spacebar -> 16% DMG (5s)
-                { label: 'Raid Captain', code: 'RC' },            // 45% of movement bonus as % DMG (140% Move Speed -> 18% DMG)
-                { label: 'Shield Piercing', code: 'SP' },         // Attacking shield -> 100% DMG 
-                { label: 'Sight Focus', code: 'SF' },             // Say "!!!!!" in Normal Chat (30s CD) -> 28% DMG (6s) ... max uptime of 20%
-                { label: 'Spirit Absorption', code: 'SA' },       // 15% Atk Speed, 15% Move Speed
-                { label: 'Stabilized Status', code: 'SS' },       // HP > 80% -> 16% DMG
-                { label: 'Strong Will', code: 'SW' },             // Being pushed -> 30% DR
-                { label: 'Super Charge', code: 'SC' },            // Charge -> 20% DMG, 40% Charging Speed
-                { label: 'Vital Point Hit', code: 'VPH' },        // 36% more stagger done
+                { label: 'Adrenaline', code: 'ADR' },             // 0 Use Skill -> 1% AP, 6 stacks 15% crit (6 stacks max)
+                { label: 'All-Out Attack', code: 'ALL' },         // 1 Holding or Casting -> 20% DMG 
+                { label: 'Ambush Master', code: 'AM' },           // 2 Back Attack -> 25% DMG
+                { label: 'Awakening', code: 'AWA' },              // 3
+                { label: 'Barricade', code: 'BAR' },              // 4 Shielded -> 16% DMG
+                { label: 'Broken Bone', code: 'BB' },             // 5 
+                { label: 'Contender', code: 'CON' },              // 6 Kill Foe -> 2.5% AP (17.5% max)
+                { label: 'Crisis Evasion', code: 'CE' },          // 7  
+                { label: 'Crushing Fist', code: 'CF' },           // 8 on counter -> 20% AP (duration?)
+                { label: 'Cursed Doll', code: 'CD' } ,            // 9 16% AP 25% (Reduced Healing)
+                { label: 'Disrespect', code: 'DIS' },             //10 Enemy HP < 30% -> 36% DMG
+                { label: 'Divine Protection', code: 'DP' },       //11 20% chance of 60% DR (10s CD)
+                { label: 'Drops of Ether', code: 'DOE' },         //12 6 possible 30s buffs (10s CD)
+                { label: 'Emergency Rescue', code: 'ER' },        //13 HP < 30% -> Shield for 50% MaxHP (3s) then heal for 50% of shield (180s CD)
+                { label: 'Enhanced Shield', code: 'ES' },         //14 bad engraving
+                { label: 'Ether Predator', code: 'EP' },          //15 On hit -> .5% AP 1% Def for 90s up to 30 stacks (orb CD 10s)
+                { label: 'Expert', code: 'EXP' },                 //16 not computing Healing
+                { label: 'Explosive Expert', code: 'EE' },        //17
+                { label: 'Fortitude', code: 'FOR' },              //18 Low HP -> 30% DR
+                { label: 'Grudge', code: 'GRU' },                 //19 20% DMG (20% more dmg taken)
+                { label: 'Heavy Armor', code: 'HA' },             //20 100% defense
+                { label: 'Hit Master', code: 'HM' },              //21 Not head or back attack -> 16% DMG 
+                { label: 'Increase Mass', code: 'IM' },           //22 18% AP (-10% Atk Speed)
+                { label: 'Keen Blunt Weapon', code: 'KBW' },      //23 50% Crit Dmg (10% chance of -20% DMG)
+                { label: 'Lightning Fury', code: 'LF' },          //24 On hit (1s CD) -> 60% chance of orb (5 orbs explode for AOE damage amount??)
+                { label: 'MP Efficiency Increase', code: 'MEI' }, //25 MP < 50% -> 12% DMG (30% MP Regen)
+                { label: 'Magick Stream', code: 'MS' },           //26 Not hit for 3 sec -> 3% MP Regen, 5 stacks -> 10% CDR, On hit (10s CD) -> lose 1 stack
+                { label: 'Master Brawler', code: 'MB' },          //27 Head Attack -> 25% DMG
+                { label: 'Master of Escape', code: 'MOE' },       //28
+                { label: 'Master\'s Tenacity', code: 'MT' },      //29 HP < 50% -> 16% DMG
+                { label: 'Max MP Increase', code: 'MMI' },        //30 30% MP
+                { label: 'Necromancy', code: 'Nec' },             //31 
+                { label: 'Precise Dagger', code: 'PD' },          //32 20% Crit, -12% Crit Dmg
+                { label: 'Preemptive Strike', code: 'PS' },       //33
+                { label: 'Propulsion', code: 'PRO' },             //34 Use spacebar -> 16% DMG (5s)
+                { label: 'Raid Captain', code: 'RC' },            //35 45% of movement bonus as % DMG (140% Move Speed -> 18% DMG)
+                { label: 'Shield Piercing', code: 'SP' },         //36 Attacking shield -> 100% DMG 
+                { label: 'Sight Focus', code: 'SF' },             //37 Say "!!!!!" in Normal Chat (30s CD) -> 28% DMG (6s) ... max uptime of 20%
+                { label: 'Spirit Absorption', code: 'SA' },       //38 15% Atk Speed, 15% Move Speed
+                { label: 'Stabilized Status', code: 'SS' },       //39 HP > 80% -> 16% DMG
+                { label: 'Strong Will', code: 'SW' },             //40 Being pushed -> 30% DR
+                { label: 'Super Charge', code: 'SC' },            //41 Charge -> 20% DMG, 40% Charging Speed
+                { label: 'Vital Point Hit', code: 'VPH' },        //42 36% more stagger done
             ]
         },
     ];
 
-    const [selectedEngravings, setSelectedEngravings]  = useState([]);
+    const [selectedEngravings, setSelectedEngravings]  = useState([
+                                                                    engravings[0].items[26], // reflux
+                                                                    engravings[1].items[0],  // adrenaline
+                                                                    engravings[1].items[23], // keen blunt weapon
+                                                                    engravings[1].items[35], // raid captain
+                                                                    engravings[1].items[21], // hit master 
+                                                                  ]);
     const [subclass, setSubclass] = useState(subclassList.sorceress);
     const [defensePhysical, setDefensePhysical] = useState(38557);
     const [defenseMagical, setDefenseMagical] = useState(39477);
