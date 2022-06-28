@@ -343,164 +343,64 @@ const engravings = [
             },                   
             { // 5
                 label: 'Death Strike', code: 'DST',
-                tooltip: '',
+                tooltip: 'Use Last Rush -> Recover 50% Hawk Meter and Damage taken +(22/33/44)% for 8s',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    dr: (d) => { return 1 - (1 - d) * 1.44; },
                 }
             },              
             { // 6
                 label: 'Deathblow', code: 'DB',
-                tooltip: '',
-                impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                tooltip: 'Max Orbs + 1, Esoteric skills consume all orbs for +35% DMG per orb',
+                impl: { // huge burst but I'm on the fence as to a way to compute the time taken to buildup orbs
+                    //dmg: (d, mspd, aspd) => { return d * 1.35; } 
                 }
             },                  
             { // 7
                 label: 'Demonic Impulse', code: 'DI',
-                tooltip: '',
+                tooltip: 'Composure does not active when Demonize ends. Demoninze -> Demonic Skill CD is reset and +30% Crit Rate',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    cr: (crit) => { return crit + .3; }
                 }
             },           
             { // 8
                 label: 'Desperate Salvation', code: 'DSA',
-                tooltip: '',
-                impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
-                }
+                tooltip: 'Recovery effect ends -> additional recovery (8/16/24)% of your Max HP',
+                impl: { }
             },       
             { // 9
                 label: 'Energy Overflow', code: 'EO',
-                tooltip: '',
+                tooltip: 'Energy < 30% -> +15% DMG. Energy does not go below 1. Hype -> no longer recovers additional energy.',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    dmg: (d, mspd, aspd) => { return d * 1.15; }
                 }
             },            
             { //10
                 label: 'Enhanced Weapon', code: 'EW',
-                tooltip: '',
+                tooltip: 'Change stance -> +30% Crit Rate for 9s',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    cr: (crit) => { return crit + .3; }
                 }
             },            
             { //11
                 label: 'Esoteric Flurry', code: 'EF',
-                tooltip: '',
+                tooltip: 'Using Esoteric Skill -> only 1 orb consumed and +18% DMG',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    dmg: (d, mspd, aspd) => { return d * 1.18; }
                 }
             },            
             { //12
                 label: 'Esoteric Skill Enhancement', code: 'ESE',
-                tooltip: '',
-                impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                tooltip: 'Max orbs + 1. Esoteric skill +12% per orb held',
+                impl: { // how many orbs can a wardancer have?
+                    dmg: (d, mspd, aspd) => { return d * 1.36 ; }
                 }
             },
             { //13
                 label: 'Firepower Enhancement', code: 'FE',
-                tooltip: '',
+                tooltip: 'Incoming damage -20% and Crit Rate +(30/35/40)% based on level of Firepower buff',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    dr: (d) => { return 1 - (1 - d) * (1 - .2); },
+                    cr: (crit) => { return crit + .4; }
                 }
             },      
             { //14
