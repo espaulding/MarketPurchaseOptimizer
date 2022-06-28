@@ -21,7 +21,7 @@ const EngravingSelector = (props) => {
     if (option) {
         return (
             <div className="engraving engraving-value">
-                <div>{option.label}</div>
+                <div title={option.tooltip}>{option.label}</div>
             </div>
         );
     }
