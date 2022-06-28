@@ -15,7 +15,7 @@ const ClassChangeDD = (props) => {
           Object
               .keys(subclassList)
               .map((name, index) => {
-                  return (<Dropdown.Item onClick={() => {props.data.setSubclass(subclassList[name])}}>{subclassList[name].label}</Dropdown.Item>);
+                  return (<Dropdown.Item key={index} onClick={() => {props.data.setSubclass(subclassList[name])}}>{subclassList[name].label}</Dropdown.Item>);
               })
         }
       </DropdownButton>

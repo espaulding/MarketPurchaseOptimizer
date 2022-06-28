@@ -13,10 +13,11 @@ const computeDefWithEngravings = (data, t, selectedEngravings) => {
     var defense = 0;
     if (t === 'physical') { defense = data.defensePhysical }
     if (t === 'magical') { defense = data.defenseMagical }
+    const baseDefense = defense;
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.def !== undefined) {
-            defense = e.impl.def(defense);
+            defense = e.impl.def(defense, baseDefense);
         }
     });
 
@@ -189,9 +190,8 @@ const computeBaseDmgEngrave = (data, selectedEngravings) => {
     var moveSpeed = computeMoveSpeedEngrave(data, selectedEngravings);
     var atkSpeed = computeAtkSpeedEngrave(data, selectedEngravings);
     var ap = computeAttackPowerWithEngravings(data, selectedEngravings);
-
     var baseDmgEngrave = normalizeCrit(ap, critRate, critDmg);
-    baseDmgEngrave = normalizeCdr(baseDmgEngrave, cdr);
+        baseDmgEngrave = normalizeCdr(baseDmgEngrave, cdr);
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.dmg !== undefined) {

@@ -178,7 +178,7 @@ const engravings = [
             },          
             { //25
                 label: 'MP Efficiency Increase', code: 'MEI',
-                tooltip: 'MP < 50% -> 12% DMG (30% MP Regen)',
+                tooltip: 'MP < 50% -> 12% DMG (+30% MP Regen)',
                 impl: {
                     mpr: (m) => { return m * 1.3; },
                     dmg: (d, mspd, aspd) => { return d * 1.12; }

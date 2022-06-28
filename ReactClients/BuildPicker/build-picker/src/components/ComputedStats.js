@@ -132,13 +132,13 @@ const ComputedStats = (props) => {
                 <div className="stats" style={styles.doubleCell}>
                   <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(characterData.critRate)}></NumberFormat>
                   (Rate), 
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(critRateEngrave)}></NumberFormat>
+                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(characterData.critDmg)}></NumberFormat>
                   (Dmg)
                 </div>
               </td>
               <td style={styles.numberCell}>
                 <div className="stats" style={styles.doubleCell}>
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(characterData.critRate)}></NumberFormat>
+                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(critRateEngrave)}></NumberFormat>
                   (Rate), 
                   <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(critDmgEngrave)}></NumberFormat>
                   (Dmg)
@@ -181,7 +181,7 @@ const ComputedStats = (props) => {
           </tr>
           <tr>
               <td style={styles.labelCell}>DPS Gain (From Engravings)</td>
-              <td colspan={2} style={styles.numberCell}><NumberFormat className="stats" disabled={true} prefix={'+'} suffix={'%'} value={convertPercent((baseDmgEngrave/baseDmg) - 1)}></NumberFormat></td>
+              <td colSpan={2} style={styles.numberCell}><NumberFormat className="stats" disabled={true} prefix={'+'} suffix={'%'} value={convertPercent((baseDmgEngrave/baseDmg) - 1)}></NumberFormat></td>
           </tr>
         </tbody>
       </Table>          
