@@ -23,6 +23,18 @@ td {
   font-size: var(--bs-body-font-size);
 }
 
+/* #282c34 */
+
+.stats {
+  background-color: transparent;
+  color: cyan;
+  box-shadow: none;
+  border-color: transparent;
+  text-align: center;
+  min-height: 100%;
+  vertical-align: middle;
+}
+
 .dropdown-menu {
   height: 300px;
   overflow-y: scroll;
@@ -100,6 +112,7 @@ td {
   min-width: 15rem;
   max-width: 100%;
   max-height: 100%;
+  background-color: gray !important;
 }
 
 .multiselect-custom .p-multiselect-label:not(.p-placeholder):not(.p-multiselect-items-label) {
@@ -120,6 +133,11 @@ td {
   display: flex;
   align-items: center;
   margin: 3px 0px 3px 0px;
+}
+
+.engraving-value {
+  background-color: #282c34 !important;
+  color: cyan !important;
 }
 
 @keyframes App-logo-spin {

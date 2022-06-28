@@ -29,7 +29,7 @@ const engravings = [
             { label: 'Lightning Fury', code: 'LF' },          //24 On hit (1s CD) -> 60% chance of orb (5 orbs explode for AOE damage amount??)
             { label: 'MP Efficiency Increase', code: 'MEI' }, //25 MP < 50% -> 12% DMG (30% MP Regen)
             { label: 'Magick Stream', code: 'MS' },           //26 Not hit for 3 sec -> 3% MP Regen, 5 stacks -> 10% CDR, On hit (10s CD) -> lose 1 stack
-            { label: 'Master Brawler', code: 'MB' },          //27 Head Attack -> 25% DMG
+            { label: 'Master Brawler', code: 'MB' },          //27 Head/Frontal Attack -> 25% DMG
             { label: 'Master of Escape', code: 'MOE' },       //28
             { label: 'Master\'s Tenacity', code: 'MT' },      //29 HP < 50% -> 16% DMG
             { label: 'Max MP Increase', code: 'MMI' },        //30 30% MP

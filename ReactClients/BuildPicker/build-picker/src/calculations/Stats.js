@@ -10,16 +10,33 @@ const computeDr = (data, t) => {
 // t -> type of defense
 // physical or magical
 const computeEffectiveHp = (data, t) => {
-    return data.hp / (1 - computeDr(data, t));
+    var cards1 = .12;
+    var cards2 = .16;
+    var fort = .3;
+    var HP = data.hp;
+    var DR = (1 - computeDr(data, t))
+
+    //DR = DR * (1 - cards1) * (1- cards2);
+    //DR = DR * (1 - fort);
+
+    //add in mayhem
+    //HP = HP * .25;
+    //DR = DR * (1 - .65);
+
+    return (HP) / DR;
 }
 
 const computeAttackPower = (data) => {
     return Math.floor(Math.sqrt(data.atkStat * data.wpnDmg / 6));
 }
 
-const adjustedAttackPower = (data) => {
+const computeAdjustedAttackPower = (data) => {
     var ap = computeAttackPower(data);
     return (data.critRate * data.critDmg * ap) + (1 - data.critRate) * ap;
 }
 
-export {computeDr, computeEffectiveHp, computeAttackPower, adjustedAttackPower};
+const computeAdjustedApEngravings = (ap, selectedEngravings) => {
+    return ap;
+};
+
+export {computeDr, computeEffectiveHp, computeAttackPower, computeAdjustedAttackPower, computeAdjustedApEngravings};

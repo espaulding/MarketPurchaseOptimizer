@@ -68,7 +68,7 @@ function MainWindow(props) {
             <EngravingSelector selectedEngravings={selectedEngravings} setSelectedEngravings={setSelectedEngravings} />
             </div>
             <div className="stat-input">
-                <h3>{subclass.label}, ( {subclass.hpModifier}, {subclass.defModifier} )</h3>
+                <h3>{subclass.label}</h3>
                 <Stack gap={1}>
                     <StatInput label={"HP"} value={hp} setter={setHp} />
                     <StatInput label={"Physical Defense"} value={defensePhysical} setter={setDefensePhysical} />
@@ -82,7 +82,7 @@ function MainWindow(props) {
                 </Stack>
             </div>
             <div className="stat-calc" style={styles.rightPanel}>
-                <ComputedStats data={characterData}/>
+                <ComputedStats data={characterData} selectedEngravings={selectedEngravings}/>
             </div>
         </div>
     ); 

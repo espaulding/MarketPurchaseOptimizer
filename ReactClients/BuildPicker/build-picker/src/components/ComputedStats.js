@@ -7,7 +7,8 @@ import {
   computeEffectiveHp, 
   computeDr,
   computeAttackPower,
-  adjustedAttackPower
+  computeAdjustedAttackPower,
+  computeAdjustedApEngravings
  } from '../calculations/Stats.js'
 
 const ComputedStats = (props) => {
@@ -17,34 +18,54 @@ const ComputedStats = (props) => {
   }
 
   const characterData = props.data;
+  var apAdjusted = computeAdjustedAttackPower(characterData);
+  var apEngravings = computeAdjustedApEngravings(apAdjusted, props.selectedEngravings)
 
   return (
     <Table striped bordered variant="dark" size="sm">
+      <thead>
+        <tr>
+          <td></td>
+          <td>Base</td>
+          <td>With Engravings</td>
+        </tr>
+      </thead>
       <tbody>
         <tr>
             <td style={styles.tableCellRight}>Effective HP (Physical)</td>
-            <td><NumberFormat disabled={true} thousandSeparator={','} decimalScale={0} value={computeEffectiveHp(characterData, 'physical')}></NumberFormat></td>
+            <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={computeEffectiveHp(characterData, 'physical')}></NumberFormat></td>
+            <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={computeEffectiveHp(characterData, 'physical')}></NumberFormat></td>
         </tr>
         <tr>
             <td style={styles.tableCellRight}>Damage Reduction (Physical)</td>
-            <td><NumberFormat disabled={true} suffix={'%'} value={convertPercent(computeDr(characterData, 'physical'))}></NumberFormat></td>
+            <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} suffix={'%'} value={convertPercent(computeDr(characterData, 'physical'))}></NumberFormat></td>
+            <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} suffix={'%'} value={convertPercent(computeDr(characterData, 'physical'))}></NumberFormat></td>
         </tr>
         <tr>
             <td style={styles.tableCellRight}>Effective HP (Magical)</td>
-            <td><NumberFormat disabled={true} thousandSeparator={','} decimalScale={0} value={computeEffectiveHp(characterData, 'magical')}></NumberFormat></td>
+            <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={computeEffectiveHp(characterData, 'magical')}></NumberFormat></td>
+            <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={computeEffectiveHp(characterData, 'magical')}></NumberFormat></td>
         </tr>
         <tr>
             <td style={styles.tableCellRight}>Damage Reduction (Magical)</td>
-            <td><NumberFormat disabled={true} suffix={'%'} value={convertPercent(computeDr(characterData, 'magical'))}></NumberFormat></td>
+            <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} suffix={'%'} value={convertPercent(computeDr(characterData, 'magical'))}></NumberFormat></td>
+            <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} suffix={'%'} value={convertPercent(computeDr(characterData, 'magical'))}></NumberFormat></td>
         </tr>
 
         <tr>
             <td style={styles.tableCellRight}>Attack Power</td>
-            <td><NumberFormat disabled={true} thousandSeparator={','} decimalScale={0} value={computeAttackPower(characterData)}></NumberFormat></td>
+            <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={computeAttackPower(characterData)}></NumberFormat></td>
+            <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={computeAttackPower(characterData)}></NumberFormat></td>
         </tr>
         <tr>
-            <td style={styles.tableCellRight}>Attack Power (Adjusted)</td>
-            <td><NumberFormat disabled={true} thousandSeparator={','} decimalScale={0} value={adjustedAttackPower(characterData)}></NumberFormat></td>
+            <td style={styles.tableCellRight}>Crit Normalized (AP)</td>
+            <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={apAdjusted}></NumberFormat></td>
+            <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={apEngravings}></NumberFormat></td>
+        </tr>
+        <tr>
+            <td style={styles.tableCellRight}>DPS Gain (From Engravings)</td>
+            <td style={styles.numberCell}></td>
+            <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} suffix={'%'} value={convertPercent((apEngravings/apAdjusted) - 1)}></NumberFormat></td>
         </tr>
       </tbody>
     </Table>
@@ -55,6 +76,9 @@ const ComputedStats = (props) => {
 const styles = StyleSheet.create({
   tableCellRight: {
       textAlign: 'right'
+  },
+  numberCell: {
+    paddingTop: '13px',
   }
 });
 
