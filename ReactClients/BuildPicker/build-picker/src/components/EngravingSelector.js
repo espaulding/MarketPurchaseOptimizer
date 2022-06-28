@@ -52,6 +52,7 @@ const EngravingSelector = (props) => {
 
   return (
     <MultiSelect 
+      style={styles.engravingSelector}
       className="multiselect-custom"
       options={engravings} 
       itemTemplate={engravingTemplate}
@@ -69,12 +70,8 @@ const EngravingSelector = (props) => {
 };
 
 const styles = StyleSheet.create({
-  inputWrapper: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    height: '40px',
+  engravingSelector: {
+    width: '80%'
   }
 });
 

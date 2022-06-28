@@ -69,28 +69,20 @@ td {
   color: #61dafb;
 }
 
-.main-panel {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100vw;
-  height: 100%;
-}
-
 /* 3 main panels */
 .class-engraving-picker {
   min-width: 33%;
-  width: 33%;
+  width: 80%;
   /* border:#61dafb 1px solid; */
 }
 
 .stat-input {
-  width: 25%;
+  width: 30%;
   /* border:#61dafb 1px solid; */
 }
 
 .stat-calc {
-  width: 40%;
+  width: 50%;
   /* border:#61dafb 1px solid; */
 }
 /* ------- */
