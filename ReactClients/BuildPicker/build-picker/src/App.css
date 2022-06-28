@@ -190,6 +190,10 @@ li.p-multiselect-item-group {
   margin-right: .5rem;
 }
 
+.p-multiselect-footer {
+  border: 1px blue solid;
+}
+
 .engraving {
   display: flex;
   align-items: center;
