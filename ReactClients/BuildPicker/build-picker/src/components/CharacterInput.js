@@ -10,7 +10,7 @@ const CharacterInput = (props) => {
     <div className="stat-input">
       <Stack gap={2}>
           <StatInput label={data.subclass.stat} value={data.atkStat} setter={data.setAtkStat} />
-          <StatInput label={"Weapon Damge"} value={data.wpnDmg} setter={data.setWpnDmg} />
+          <StatInput label={"Weapon Damage"} value={data.wpnDmg} setter={data.setWpnDmg} />
           <StatInput label={"Attack Speed"} value={data.atkSpeed} setter={data.setAtkSpeed} />
           <StatInput label={"Movement Speed"} value={data.moveSpeed} setter={data.setMoveSpeed} />
           <StatInput label={"HP"} value={data.hp} setter={data.setHp} />

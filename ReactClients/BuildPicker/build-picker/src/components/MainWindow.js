@@ -30,7 +30,7 @@ function MainWindow() {
     const [wpnDmg, setWpnDmg] = useState(24241);
     const [atkSpeed, setAtkSpeed] = useState(1.2066);
     const [moveSpeed, setMoveSpeed] = useState(1.2066);
-    const [cdr, setCdr] = useState(.3783); // 25.83% + lvl 6 gem
+    const [cdr, setCdr] = useState(.3473); // 25.83% + lvl 6 gem
 
     // wrap all the react hooks for character data into an object so it can be passed around as a single variable
     const characterData = {

@@ -405,110 +405,46 @@ const engravings = [
             },      
             { //14
                 label: 'First Intention', code: 'FI',
-                tooltip: '',
+                tooltip: 'Can no longer gain Esoteric Meter -> +32% DMG',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    dmg: (d, mspd, aspd) => { return d * 1.32; }
                 }
             },            
             { //15
                 label: 'Gravity Training', code: 'GT',
-                tooltip: '',
+                tooltip: 'Hypergravity mode -> +20% DMG. During Combat -> Meter recdover 2% every 1s. +30% Basic Atk and Vortex Gravity Crit Rate',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    dmg: (d, mspd, aspd) => { return d * 1.2; },
+                    cr: (crit) => { return crit + .3; }
                 }
             },           
             { //16
                 label: 'Igniter', code: 'IGN',
-                tooltip: '',
+                tooltip: 'Magick Amplication -> Crit Rate +25% and Crit Dmg +50%. When Magic Maplication is triggered skill currently in cooldown -50% CD',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    cr: (crit) => { return crit + .25; },
+                    cd: (crit) => { return crit + .5; }
                 }
             },                  
             { //17
                 label: 'Judgement', code: 'JUD',
-                tooltip: '',
-                impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
-                }
+                tooltip: 'Duration of Sacred Executioner +150%. Punishment DMG +15%. When Punishment hits -> Piety Gain +100%. ',
+                impl: { }
             },                 
             { //18
                 label: 'Lone Knight', code: 'LK',
-                tooltip: '',
+                tooltip: 'Gunlance skills -> +15% Crit Rate and +50% Crit DMG. Battlefield Shield cannot be used. Consumpiton of Shield Meter during Defensive Stance +100%',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    cr: (crit) => { return crit + .15; },
+                    cd: (crit) => { return crit + .5; }
                 }
             },                
             { //19
                 label: 'Loyal Companion', code: 'LC',
-                tooltip: '',
+                tooltip: 'Mark of Death -> Foe DMG Taken + 14%. When hawk is summoned -> Atk Power +10%. Summons Silerhawk MK-II, allowing Move Speed +4%, Hawk\'s basic AoE range +60%, basic ATK DMG +300%, and summon duration +100%. Hawk inflicts Mark of Death.',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    atk: (a) => { return a * 1.1; },
+                    dmg: (d, mspd, aspd) => { return d * 1.14; }
                 }
             },           
             { //20
@@ -524,92 +460,47 @@ const engravings = [
             },                   
             { //21
                 label: 'Peacemaker', code: 'PEA',
-                tooltip: '',
-                impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
-                }
+                tooltip: 'Handgun -> Atk Speed +(8/12/16)%. Shotgun -> Crit Rate +(15/20/25)%. Rifle -> +10% DMG and if enemy HP < 50% -> +(10/20/30)% DMG for 9s',
+                impl: { } // there's so much going on here and none of the buffs are always on
             },                
             { //22
                 label: 'Perfect Suppression', code: 'PS',
-                tooltip: '',
+                tooltip: 'Normal skill -> +30% DMG. Shadowburst Meter +50% for all skills. Disables Demonize',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    dmg: (d, mspd, aspd) => { return d * 1.3; }
                 }
             },        
             { //23
-                label: 'Pinnacle', code: 'PIN',
-                tooltip: '',
+                label: 'Pinnacle (Flurry)', code: 'PIN',
+                tooltip: 'Max Dual Meter and Change Stance then: Flurry -> +15% Atk Speed, +15% DMG, +25% Crit Rate. Focus -> +15% Move Speed, +20% DMG, +50% Crit DMG',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    dmg: (d, mspd, aspd) => { return d * 1.15; },
+                    cr: (crit) => { return crit + .25; },
+                    aspd: (s) => { return s + .15; }
                 }
-            },                  
+            },          
+            { //23
+                label: 'Pinnacle (Focus)', code: 'PIN',
+                tooltip: 'Max Dual Meter and Change Stance then: Flurry -> +15% Atk Speed, +15% DMG, +25% Crit Rate. Focus -> +15% Move Speed, +20% DMG, +50% Crit DMG',
+                impl: {
+                    dmg: (d, mspd, aspd) => { return d * 1.2; },
+                    cd: (crit) => { return crit + .5; },
+                    mspd: (s) => { return s + .15; }
+                }
+            },          
             { //24
                 label: 'Pistoleer', code: 'PIS',
-                tooltip: '',
+                tooltip: 'Can only use Handgun. Skill DMG +70%, Stagger +40%, Awakening skill DMG +30%',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    dmg: (d, mspd, aspd) => { return d * 1.7; }
                 }
             },                 
             { //25  
                 label: 'Rage Hammer', code: 'RH', 
-                tooltip: '',
-                impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                tooltip: 'Use Gravity Release Skill -> +5% Crit Rate and 15% Crit Dmg based on Cores used',
+                impl: { // does this buff stack up higher with more cores? how does it work?
+                    cr: (crit) => { return crit + .05; },
+                    cd: (crit) => { return crit + .15; },
                 }
             },                
             { //26
@@ -622,128 +513,54 @@ const engravings = [
             },                    
             { //27
                 label: 'Remaining Energy', code: 'RE',
-                tooltip: '',
+                tooltip: 'Surge skill -> +12% Atk/Move Speed and +(12/24/36) Atk Power (30s). Art does not consume meter for 2s when activated',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    atk: (a) => { return a * 1.36; },
+                    aspd: (s) => { return s + .12; },
+                    mspd: (s) => { return s + .12; }
                 }
             },           
             { //28
                 label: 'Robust Spirit', code: 'RS', 
-                tooltip: '',
+                tooltip: 'Use Hype -> Enter lvl 3 immediately, Energy Recovery +200%, and +30% DMG',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    dmg: (d, mspd, aspd) => { return d * 1.3; }
                 }
             },              
             { //29
                 label: 'Shock Training', code: 'ST',
-                tooltip: '',
+                tooltip: 'Shock skill +20% DMG. 4% of Shock Energy recovered every 1s',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    dmg: (d, mspd, aspd) => { return d * 1.2; }
                 }
             },             
             { //30
                 label: 'Surge', code: 'SUR',
-                tooltip: '',
+                tooltip: 'Surge casts at max with empty orbs. Remaining Energy buff does not activtate. During Surge -> skill attacks stack up to 20. 1% Atk Power and Surge +6% DMG per stack. Death Trance ends -> 100% Death Orb Meter per Surge Enhancement',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    atk: (a) => { return a * 1.2; }
                 }
             },                    
             { //31
                 label: 'Time to Hunt', code: 'TTH',
-                tooltip: '',
+                tooltip: 'Crit Rate +(20/30/40)%, but Shotgun disabled',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    cr: (crit) => { return crit + .4; }
                 }
             },             
             { //32
                 label: 'True Courage', code: 'TC',
-                tooltip: '',
+                tooltip: 'Serenade of Courage -> You gain +20% DMG and +10% Crit Rate',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    dmg: (d, mspd, aspd) => { return d * 1.2; },
+                    cr: (crit) => { return crit + .1; },
                 }
             },            
             { //33
                 label: 'Ultimate Skill: Taijutsu', code: 'UST',
-                tooltip: '',
+                tooltip: 'Stamina Skills -> +65% DMG, Shock Skills -> -30% DMG, Stamina Energy recovery + 300%',
                 impl: {
-                    hp: (h) => { return h; },
-                    mp: (m) => { return m; },
-                    mpr: (m) => { return m; },
-                    def: (d) => { return d; },
-                    dr: (d) => { return d; },
-                    atk: (a) => { return a; },
-                    dmg: (d, mspd, aspd) => { return d; },
-                    cr: (crit) => { return crit; },
-                    cd: (crit) => { return crit; },
-                    aspd: (s) => { return s; },
-                    mspd: (s) => { return s; },
-                    cdr: (c) => { return c; },
+                    dmg: (d, mspd, aspd) => { return d * 1.65; }
                 }
             }
         ]
