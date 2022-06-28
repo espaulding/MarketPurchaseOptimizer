@@ -9,7 +9,7 @@ import ClassChangeDD from './ClassChangeDD.js';
 import subclassList from '../data/SubClasses';
 import engravings from '../data/Engravings.js';
 
-function MainWindow(props) {
+function MainWindow() {
     
     const [selectedEngravings, setSelectedEngravings]  = useState([
                                                                     engravings[1].items[26], // reflux
@@ -19,8 +19,8 @@ function MainWindow(props) {
                                                                     engravings[0].items[21], // hit master 
                                                                   ]);
     const [subclass, setSubclass] = useState(subclassList.sorceress);
-    const [defensePhysical, setDefensePhysical] = useState(39927);
-    const [defenseMagical, setDefenseMagical] = useState(39602);
+    const [defensePhysical, setDefensePhysical] = useState(19963);
+    const [defenseMagical, setDefenseMagical] = useState(19800);
     const [hp, setHp] = useState(93216);
     const [mp, setMp] = useState(3594);
     const [mpRegen, setMpRegen] = useState(159);
@@ -30,7 +30,7 @@ function MainWindow(props) {
     const [wpnDmg, setWpnDmg] = useState(24241);
     const [atkSpeed, setAtkSpeed] = useState(1.2066);
     const [moveSpeed, setMoveSpeed] = useState(1.2066);
-    const [cdr, setCdr] = useState(.3783); // character sheet + lvl 6 gem
+    const [cdr, setCdr] = useState(.3783); // 25.83% + lvl 6 gem
 
     // wrap all the react hooks for character data into an object so it can be passed around as a single variable
     const characterData = {

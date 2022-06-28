@@ -8,10 +8,11 @@ const engravings = [
                 impl: {
                     hp: (h) => { return h; },
                     mp: (m) => { return m; },
+                    mpr: (m) => { return m; },
                     def: (d) => { return d; },
                     dr: (d) => { return d; },
                     atk: (a) => { return a * 1.06; },
-                    dmg: (d) => { return d; },
+                    dmg: (d, mspd, aspd) => { return d; },
                     cr: (crit) => { return crit + .15; },
                     cd: (crit) => { return crit; },
                     aspd: (s) => { return s; },
