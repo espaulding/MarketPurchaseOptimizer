@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet } from "react-native";
-import Stack from 'react-bootstrap/Stack'
 
-import StatInput from './StatInput.js';
+import CharacterInput from './CharacterInput.js';
 import EngravingSelector from './EngravingSelector.js';
 import ComputedStats from './ComputedStats.js';
 import ClassChangeDD from './ClassChangeDD.js';
@@ -47,38 +46,19 @@ function MainWindow(props) {
         cdr : cdr, setCdr : setCdr
     }
 
-    const convertPercent = (number) => {
-        return (number * 100).toFixed(2);
-    }
-
     return (
         <div style={styles.mainPanel}>
             <div style={styles.topPanel}>
                 <div className="class-engraving-picker">
-                    <ClassChangeDD characterData={characterData} />
+                    <ClassChangeDD data={characterData} />
                     <hr/>
                     <EngravingSelector selectedEngravings={selectedEngravings} setSelectedEngravings={setSelectedEngravings} />
                     <hr />
                 </div>
             </div>
             <div style={styles.bottomPanel}>
-                <div className="stat-input">
-                    <h3>{subclass.label}</h3>
-                    <Stack gap={2}>
-                        <StatInput label={"HP"} value={hp} setter={setHp} />
-                        <StatInput label={"Physical Defense"} value={defensePhysical} setter={setDefensePhysical} />
-                        <StatInput label={"Magical Defense"} value={defenseMagical} setter={setDefenseMagical} />
-                        <StatInput label={"Weapon Damge"} value={wpnDmg} setter={setWpnDmg} />
-                        <StatInput label={subclass.stat} value={atkStat} setter={setAtkStat} />
-                        <StatInput label={"Crit Rate"} value={critRate} setter={setCritRate} />
-                        <StatInput label={"Crit Damage"} value={critDmg} setter={setCritDmg} />
-                        <StatInput label={"MP Regen"} value={mpRegen} setter={setMpRegen} />
-                        <StatInput label={"Movement Speed"} value={moveSpeed} setter={setMoveSpeed} />
-                    </Stack>
-                </div>
-                <div className="stat-calc" style={styles.rightPanel}>
-                    <ComputedStats data={characterData} selectedEngravings={selectedEngravings}/>
-                </div>
+                <CharacterInput data={characterData} />
+                <ComputedStats data={characterData} selectedEngravings={selectedEngravings}/>
             </div>
         </div>
     ); 
@@ -107,21 +87,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         width: '100%',
-    },
-    rightPanel: {
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    baseText: {
-        display: 'flex',
-        flexDirection: 'row',
-        marginTop: '10px',
-        marginLeft: '10px',
-        fontFamily: "Cochin",
-        color: 'white',
-        minWidth: '300px',
-        width: '350px',
-        maxWidth: '350px',
     }
 });
 

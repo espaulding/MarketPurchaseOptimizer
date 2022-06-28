@@ -16,7 +16,7 @@ const computeEffectiveHp = (data, t) => {
     var HP = data.hp;
     var DR = (1 - computeDr(data, t))
 
-    //DR = DR * (1 - cards1) * (1- cards2);
+    //DR = DR * (1 - cards1) * (1 - cards2);
     //DR = DR * (1 - fort);
 
     //add in mayhem

@@ -25,8 +25,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'right',
     width: '100%',
     height: '40px',
+    paddingRight: '15px'
   },
   input: {
     height: 40,
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
     color: 'cyan',
   },
   baseText: {
-    paddingBottom: '15px',
+    paddingBottom: '14px',
     textAlign: 'right',
     color: 'white',
     minWidth: '120px',

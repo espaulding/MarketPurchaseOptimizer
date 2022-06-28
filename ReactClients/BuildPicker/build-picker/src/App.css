@@ -77,12 +77,18 @@ td {
 }
 
 .stat-input {
+  display: flex;
+  align-items: center;
+  justify-content: right;
   width: 30%;
   /* border:#61dafb 1px solid; */
 }
 
 .stat-calc {
+  display: flex;
+  align-items: center;
   width: 50%;
+  padding: 0 0 0 20px;
   /* border:#61dafb 1px solid; */
 }
 /* ------- */
