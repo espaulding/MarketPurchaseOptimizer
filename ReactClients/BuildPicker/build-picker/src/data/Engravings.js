@@ -2,8 +2,36 @@ const engravings = [
     { 
         label: 'Common Engravings', code: 'common',
         items: [
-            { label: 'Adrenaline', code: 'ADR' },             // 0 Use Skill -> 1% AP, 6 stacks 15% crit (6 stacks max)
-            { label: 'All-Out Attack', code: 'ALL' },         // 1 Holding or Casting -> 20% DMG 
+            { 
+                label: 'Adrenaline', code: 'ADR', // 0 
+                tooltip: 'Use Skill -> 1% AP, 6 stacks 15% crit (6 stacks max)',
+                impl: {
+                    hp: (h) => { return h; },
+                    mp: (m) => { return m; },
+                    def: (d) => { return d; },
+                    dr: (d) => { return d; },
+                    atk: (a) => { return a * 1.06; },
+                    dmg: (d) => { return d; },
+                    cr: (crit) => { return crit + .15; },
+                    cd: (crit) => { return crit; },
+                    aspd: (s) => { return s; },
+                    mspd: (s) => { return s; },
+                    cdr: (c) => { return c; },
+                }
+            },             
+            { 
+                label: 'All-Out Attack', code: 'ALL', // 1
+                tooltip: 'Holding or Casting -> 20% DMG, 20% Atk Speed',
+                impl: {
+                    hp: (h) => { return h; },
+                    def: (d) => { return d; },
+                    dr: (d) => { return d; },
+                    atk: (a) => { return a * 1.06; },
+                    dmg: (d) => { return d; },
+                    cr: (crit) => { return crit + .15; },
+                    cd: (crit) => { return crit; },
+                }
+            },         // 1 Holding or Casting -> 20% DMG 
             { label: 'Ambush Master', code: 'AM' },           // 2 Back Attack -> 25% DMG
             { label: 'Awakening', code: 'AWA' },              // 3
             { label: 'Barricade', code: 'BAR' },              // 4 Shielded -> 16% DMG

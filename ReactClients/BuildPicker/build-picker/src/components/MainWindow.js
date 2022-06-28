@@ -22,13 +22,15 @@ function MainWindow(props) {
     const [defensePhysical, setDefensePhysical] = useState(39927);
     const [defenseMagical, setDefenseMagical] = useState(39602);
     const [hp, setHp] = useState(93216);
+    const [mp, setMp] = useState(3594);
+    const [mpRegen, setMpRegen] = useState(159);
     const [critRate, setCritRate] = useState(.5514);
     const [critDmg, setCritDmg] = useState(2.00);
     const [atkStat, setAtkStat] = useState(105603);
     const [wpnDmg, setWpnDmg] = useState(24241);
-    const [mpRegen, setMpRegen] = useState(159);
+    const [atkSpeed, setAtkSpeed] = useState(1.2066);
     const [moveSpeed, setMoveSpeed] = useState(1.2066);
-    const [cdr, setCdr] = useState(.2583 + .12); // character sheet + lvl 6 gem
+    const [cdr, setCdr] = useState(.3783); // character sheet + lvl 6 gem
 
     // wrap all the react hooks for character data into an object so it can be passed around as a single variable
     const characterData = {
@@ -37,11 +39,13 @@ function MainWindow(props) {
         defensePhysical : defensePhysical, setDefensePhysical : setDefensePhysical,
         defenseMagical : defenseMagical, setDefenseMagical : setDefenseMagical,
         hp : hp, setHp : setHp,
+        mp : mp, setMp : setMp,
+        mpRegen : mpRegen, setMpRegen : setMpRegen,
         critRate : critRate, setCritRate : setCritRate,
         critDmg : critDmg, setCritDmg : setCritDmg,
         atkStat : atkStat, setAtkStat : setAtkStat,
         wpnDmg : wpnDmg, setWpnDmg : setWpnDmg,
-        mpRegen : mpRegen, setMpRegen : setMpRegen,
+        atkSpeed : atkSpeed, setAtkSpeed : setAtkSpeed,
         moveSpeed : moveSpeed, setMoveSpeed : setMoveSpeed,
         cdr : cdr, setCdr : setCdr
     }

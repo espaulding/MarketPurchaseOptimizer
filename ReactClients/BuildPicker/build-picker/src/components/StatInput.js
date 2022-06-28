@@ -44,9 +44,9 @@ const styles = StyleSheet.create({
     paddingBottom: '14px',
     textAlign: 'right',
     color: 'white',
-    minWidth: '120px',
-    width: '120px',
-    maxWidth: '120px',
+    minWidth: '140px',
+    width: '140px',
+    maxWidth: '140px',
   }
 });
 
