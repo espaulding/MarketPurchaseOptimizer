@@ -479,7 +479,7 @@ const engravings = [
                     aspd: (s) => { return s + .15; }
                 }
             },          
-            { //23
+            { //24
                 label: 'Pinnacle (Focus)', code: 'PIN',
                 tooltip: 'Max Dual Meter and Change Stance then: Flurry -> +15% Atk Speed, +15% DMG, +25% Crit Rate. Focus -> +15% Move Speed, +20% DMG, +50% Crit DMG',
                 impl: {
@@ -488,14 +488,14 @@ const engravings = [
                     mspd: (s) => { return s + .15; }
                 }
             },          
-            { //24
+            { //25
                 label: 'Pistoleer', code: 'PIS',
                 tooltip: 'Can only use Handgun. Skill DMG +70%, Stagger +40%, Awakening skill DMG +30%',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.7; }
                 }
             },                 
-            { //25  
+            { //26  
                 label: 'Rage Hammer', code: 'RH', 
                 tooltip: 'Use Gravity Release Skill -> +5% Crit Rate and 15% Crit Dmg based on Cores used',
                 impl: { // does this buff stack up higher with more cores? how does it work?
@@ -503,7 +503,7 @@ const engravings = [
                     cd: (crit) => { return crit + .15; },
                 }
             },                
-            { //26
+            { //27
                 label: 'Reflux', code: 'REF', 
                 tooltip: 'Disable Arcane Rupture, 16% DMG, 10% CDR (except Awakening and movement skills)',
                 impl: {
@@ -511,7 +511,7 @@ const engravings = [
                     cdr: (c) => { return (1 - (1 - c) * (1 - .1)); }
                 }
             },                    
-            { //27
+            { //28
                 label: 'Remaining Energy', code: 'RE',
                 tooltip: 'Surge skill -> +12% Atk/Move Speed and +(12/24/36) Atk Power (30s). Art does not consume meter for 2s when activated',
                 impl: {
@@ -520,35 +520,35 @@ const engravings = [
                     mspd: (s) => { return s + .12; }
                 }
             },           
-            { //28
+            { //29
                 label: 'Robust Spirit', code: 'RS', 
                 tooltip: 'Use Hype -> Enter lvl 3 immediately, Energy Recovery +200%, and +30% DMG',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.3; }
                 }
             },              
-            { //29
+            { //30
                 label: 'Shock Training', code: 'ST',
                 tooltip: 'Shock skill +20% DMG. 4% of Shock Energy recovered every 1s',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.2; }
                 }
             },             
-            { //30
+            { //31
                 label: 'Surge', code: 'SUR',
                 tooltip: 'Surge casts at max with empty orbs. Remaining Energy buff does not activtate. During Surge -> skill attacks stack up to 20. 1% Atk Power and Surge +6% DMG per stack. Death Trance ends -> 100% Death Orb Meter per Surge Enhancement',
                 impl: {
                     atk: (a) => { return a * 1.2; }
                 }
             },                    
-            { //31
+            { //32
                 label: 'Time to Hunt', code: 'TTH',
                 tooltip: 'Crit Rate +(20/30/40)%, but Shotgun disabled',
                 impl: {
                     cr: (crit) => { return crit + .4; }
                 }
             },             
-            { //32
+            { //33
                 label: 'True Courage', code: 'TC',
                 tooltip: 'Serenade of Courage -> You gain +20% DMG and +10% Crit Rate',
                 impl: {
@@ -556,7 +556,7 @@ const engravings = [
                     cr: (crit) => { return crit + .1; },
                 }
             },            
-            { //33
+            { //34
                 label: 'Ultimate Skill: Taijutsu', code: 'UST',
                 tooltip: 'Stamina Skills -> +65% DMG, Shock Skills -> -30% DMG, Stamina Energy recovery + 300%',
                 impl: {

@@ -12,7 +12,7 @@ import engravings from '../data/Engravings.js';
 function MainWindow() {
     
     const [selectedEngravings, setSelectedEngravings]  = useState([
-                                                                    engravings[1].items[26], // reflux
+                                                                    engravings[1].items[27], // reflux
                                                                     engravings[0].items[0],  // adrenaline
                                                                     engravings[0].items[23], // keen blunt weapon
                                                                     engravings[0].items[35], // raid captain
