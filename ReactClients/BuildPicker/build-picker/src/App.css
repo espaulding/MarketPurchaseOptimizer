@@ -113,24 +113,89 @@ td {
   background-color: gray !important;
 }
 
+.p-checkbox-icon {
+  color: cyan !important;
+}
+
+.p-checkbox-box  {
+  background-color: gray !important;
+  color: cyan !important;
+  border: 2px solid cyan !important
+}
+
+.p-multiselect-filter-icon {
+  background: gray !important;
+  color: blue !important;
+}
+
+.p-multiselect-close-icon {
+  background: gray !important;
+  color: blue !important;
+}
+
+.p-component {
+  background: gray !important;
+  color: blue !important;
+}
+
+.p-multiselect-header {
+  background: gray !important;
+  color: blue !important;
+}
+
+.p-multiselect-panel {
+  color: blue !important;
+  background: gray !important;
+}
+
+li.p-multiselect-item-group {
+  color: blue !important;
+  background: gray !important;
+}
+
+.p-inputtext {
+  color: blue !important;
+  background: gray !important;
+  border: 1px solid cyan;
+}
+
+.p-multiselect-filter {
+  color: blue !important;
+  background: gray !important;
+}
+
+.p-multiselect-items {
+  color: blue !important;
+  background: gray !important;
+}
+
+.p-multiselect-item  {
+  color: green !important;
+  background: gray !important;
+}
+
+.p-highlight {
+  background-color: #282c34 !important;
+}
+
 .multiselect-custom .p-multiselect-label:not(.p-placeholder):not(.p-multiselect-items-label) {
   padding-top: .25rem;
   padding-bottom: .25rem;
 }
 
 .multiselect-custom .engraving-value {
+  display: inline-flex;
   padding: .25rem .5rem;
   border-radius: 3px;
-  display: inline-flex;
   margin-right: .5rem;
-  background-color: var(--primary-color);
-  color: var(--primary-color-text);
 }
 
 .engraving {
   display: flex;
   align-items: center;
   margin: 3px 0px 3px 0px;
+  background-color: transparent !important;
+  color: cyan !important;
 }
 
 .engraving-value {
