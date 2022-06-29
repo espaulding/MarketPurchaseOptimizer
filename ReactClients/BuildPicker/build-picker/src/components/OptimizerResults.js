@@ -1,33 +1,53 @@
-import React from "react";
+import React, { useState } from 'react';
 import { StyleSheet } from "react-native";
 import NumberFormat from 'react-number-format';
-import Table from 'react-bootstrap/Table'
+import Table from 'react-bootstrap/Table';
 
-import { 
-    computeBaseDmg, computeBaseDmgEngrave
- } from '../calculations/Stats.js'
+import { computeBaseDmg, computeBaseDmgEngrave } from '../calculations/Stats.js';
 
 const OptimizerResults = (props) => {
+  const init = [
+    {
+      dpsGain: (computeBaseDmgEngrave(props.data, props.selectedEngravings)/computeBaseDmg(props.data)) - 1,
+      engravings: props.selectedEngravings
+    }
+  ];
 
   const convertPercent = (number) => {
     return (number * 100).toFixed(2);
-  }
-
-//   selectedEngravings.forEach(function (e) {
-//     if(e.impl !== undefined && e.impl.dmg !== undefined) {
-//         baseDmgEngrave = e.impl.dmg(baseDmgEngrave, moveSpeed, atkSpeed);
-//     }
-// });
+  };
 
   const engravingToText = (engravings) => {
     return engravings.map((e) => { return e.label; }).join(', ');
   };
 
-  var buildLimit = 5;
-  const characterData = props.data;
+  const renderResults = () => {
+    var results = init;
+    if(props.optimizerResults.length > 0) { results = props.optimizerResults; }
 
-  var baseDmg = computeBaseDmg(characterData);
-  var baseDmgEngrave = computeBaseDmgEngrave(characterData, props.selectedEngravings)
+    return(
+      results.map(
+        (r, index) => {
+          return <tr key={index}>
+                  <td style={styles.numberCell}>
+                    <NumberFormat 
+                      style={styles.inputCell}
+                      className="stats" 
+                      disabled={true} 
+                      thousandSeparator={','} 
+                      prefix={'+'} 
+                      suffix={'%'} 
+                      value={convertPercent(r.dpsGain)}/>
+                  </td>
+                  <td style={styles.labelCell}>
+                    {engravingToText(r.engravings)}
+                  </td>
+                  <td>click me</td>
+                </tr>
+        }
+      )
+    );
+  };
 
   return (
     <div className="stat-calc">
@@ -40,28 +60,12 @@ const OptimizerResults = (props) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td style={styles.numberCell}>
-              <NumberFormat 
-                style={styles.inputCell}
-                className="stats" 
-                disabled={true} 
-                thousandSeparator={','} 
-                prefix={'+'} 
-                suffix={'%'} 
-                value={convertPercent((baseDmgEngrave/baseDmg) - 1)}/>
-            </td>
-            <td style={styles.labelCell}>
-              {engravingToText(props.selectedEngravings)}
-            </td>
-            <td>click me</td>
-          </tr>
+          {renderResults()}
         </tbody>
       </Table>          
     </div>
   );
-};
-
+}
 
 const styles = StyleSheet.create({
   labelCell: {

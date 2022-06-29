@@ -13,6 +13,7 @@ import OptimizerResults from './OptimizerResults';
 
 import subclassList from '../data/SubClasses';
 import engravings from '../data/Engravings.js';
+import { optimizeBuild } from '../calculations/Optimizer'
 
 function MainWindow() {
     
@@ -55,6 +56,9 @@ function MainWindow() {
     const [moveSpeed, setMoveSpeed] = useState(1.2066);
     const [cdr, setCdr] = useState(.2583); // 25.83%
     const [cdrGem, setCdrGem] = useState(7); // 25.83% + lvl 6 gem
+
+    const [optimizerResults, setOptimizerResults]  = useState([]);
+    const [buildLimit, setBuildLimit] = useState(5);
 
     // wrap all the react hooks for character data into an object so it can be passed around as a single variable
     const characterData = {
@@ -117,7 +121,19 @@ function MainWindow() {
                             <div className='calc-button'>
                                 <div style={styles.spacer}>Build for 5 Engravings</div>
                                 <div className='d-grid'>
-                                    <Button size="lg">Calculate Top Builds!</Button>
+                                    <Button 
+                                        size="lg" 
+                                        onClick={
+                                                () => { optimizeBuild({
+                                                    data : characterData,
+                                                    buildLimit : buildLimit,
+                                                    lockedEngravings : lockedEngravings,
+                                                    possibleEngravings : possibleEngravings,
+                                                    setOptimizerResults : setOptimizerResults
+                                                }); }
+                                            }>
+                                            Calculate Top Builds!
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -127,10 +143,8 @@ function MainWindow() {
                                 data={characterData} 
                                 selectedEngravings={selectedEngravings}
                                 setSelectedEngravings={setSelectedEngravings}
-                                lockedEngravings={lockedEngravings}
-                                setLockedEngravings={setLockedEngravings}
-                                possibleEngravings={possibleEngravings}
-                                setPossibleEngravings={setPossibleEngravings}
+                                optimizerResults={optimizerResults} 
+                                setOptimizerResults={setOptimizerResults}
                             />
                         </div>
                     </div>
