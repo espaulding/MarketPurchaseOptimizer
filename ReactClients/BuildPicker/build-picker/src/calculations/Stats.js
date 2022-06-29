@@ -2,8 +2,8 @@
 // physical or magical
 const computeDr = (data, t) => {
     var defense = 0;
-    if (t === 'physical') { defense = data.defensePhysical }
-    if (t === 'magical') { defense = data.defenseMagical }
+    if (t === 'physical') { defense = +data.defensePhysical }
+    if (t === 'magical') { defense = +data.defenseMagical }
     return defense / (defense + 6500);
 }
 
@@ -11,8 +11,8 @@ const computeDr = (data, t) => {
 // physical or magical
 const computeDefWithEngravings = (data, t, selectedEngravings) => {
     var defense = 0;
-    if (t === 'physical') { defense = data.defensePhysical }
-    if (t === 'magical') { defense = data.defenseMagical }
+    if (t === 'physical') { defense = +data.defensePhysical }
+    if (t === 'magical') { defense = +data.defenseMagical }
     const baseDefense = defense;
 
     selectedEngravings.forEach(function (e) {
@@ -40,7 +40,7 @@ const computeDrWithEngravings = (data, t, selectedEngravings) => {
 }
 
 const computeHpWithEngravings = (data, selectedEngravings) => {
-    var HP = data.hp;
+    var HP = +data.hp;
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.hp !== undefined) {
@@ -52,7 +52,7 @@ const computeHpWithEngravings = (data, selectedEngravings) => {
 }
 
 const computeMpWithEngravings = (data, selectedEngravings) => {
-    var MP = data.mp;
+    var MP = +data.mp;
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.mp !== undefined) {
@@ -64,7 +64,7 @@ const computeMpWithEngravings = (data, selectedEngravings) => {
 }
 
 const computeMpRegenWithEngravings = (data, selectedEngravings) => {
-    var mpRegen = data.mpRegen;
+    var mpRegen = +data.mpRegen;
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.mpr !== undefined) {
@@ -79,7 +79,7 @@ const computeMpRegenWithEngravings = (data, selectedEngravings) => {
 // physical or magical
 const computeEffectiveHp = (data, t) => {
     var PercentDamageTaken = (1 - computeDr(data, t))
-    return data.hp / PercentDamageTaken;
+    return +data.hp / PercentDamageTaken;
 }
 
 // t -> type of defense
@@ -92,12 +92,15 @@ const computeEffectiveHpWithEngravings = (data, t, selectedEngravings) => {
 }
 
 const computeAttackPower = (data) => {
-    return Math.floor(Math.sqrt(data.atkStat * data.wpnDmg / 6));
+    return Math.floor(Math.sqrt(+data.atkStat * +data.wpnDmg / 6));
 }
 
 const computeAttackPowerWithEngravings = (data, selectedEngravings) => {
-    var atkStat = data.atkStat;
-    var wpnDmg = data.wpnDmg;
+    var atkStat = +data.atkStat;
+    var wpnDmg = +data.wpnDmg;
+
+    // leaving a spot here in case something can modify int/str/dex or wpn dmg
+
     var ap = Math.floor(Math.sqrt(atkStat * wpnDmg / 6));
 
     selectedEngravings.forEach(function (e) {
@@ -118,13 +121,13 @@ const normalizeCdr = (dmg, cdr) => {
 }
 
 const computeBaseDmg = (data) => {
-    var dmg = normalizeCrit(computeAttackPower(data), data.critRate, data.critDmg);
-        dmg = normalizeCdr(dmg, data.cdr);
+    var dmg = normalizeCrit(computeAttackPower(data), +data.critRate, +data.critDmg);
+        dmg = normalizeCdr(dmg, +data.cdr);
     return dmg;
 }
 
 const computeCritRateEngrave = (data, selectedEngravings) => {
-    var critRate = data.critRate;
+    var critRate = +data.critRate;
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.cr !== undefined) {
@@ -136,7 +139,7 @@ const computeCritRateEngrave = (data, selectedEngravings) => {
 }
 
 const computeCritDmgEngrave = (data, selectedEngravings) => {
-    var critDmg = data.critDmg;
+    var critDmg = +data.critDmg;
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.cd !== undefined) {
@@ -148,7 +151,7 @@ const computeCritDmgEngrave = (data, selectedEngravings) => {
 }
 
 const computeCdrEngrave = (data, selectedEngravings) => {
-    var cooldownReduction = data.cdr;
+    var cooldownReduction = +data.cdr;
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.cdr !== undefined) {
@@ -156,11 +159,11 @@ const computeCdrEngrave = (data, selectedEngravings) => {
         }
     });
 
-    return cooldownReduction < 1 ? cooldownReduction : 1;
+    return cooldownReduction < .75 ? cooldownReduction : .75; // 75% CDR is the cap in game
 }
 
 const computeAtkSpeedEngrave = (data, selectedEngravings) => {
-    var atkSpeed = data.atkSpeed;
+    var atkSpeed = +data.atkSpeed;
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.aspd !== undefined) {
@@ -172,7 +175,7 @@ const computeAtkSpeedEngrave = (data, selectedEngravings) => {
 }
 
 const computeMoveSpeedEngrave = (data, selectedEngravings) => {
-    var moveSpeed = data.moveSpeed;
+    var moveSpeed = +data.moveSpeed;
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.mspd !== undefined) {
