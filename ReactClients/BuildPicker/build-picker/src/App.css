@@ -213,6 +213,7 @@ li.p-multiselect-item-group {
 }
 
 .engraving-value {
+  display: flex;
   background-color: #282c34 !important;
   color: cyan !important;
   cursor: default;

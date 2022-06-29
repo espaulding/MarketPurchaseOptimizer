@@ -4,7 +4,7 @@ const engravings = [
         items: [
             { // 0
                 label: 'Adrenaline', code: 'ADR',
-                tooltip: 'Use Skill -> 1% AP, 6 stacks 15% crit (6 stacks max)',
+                tooltip: 'Use Skill -> 1% AP, 6 stacks -> 15% crit (6 stacks max)',
                 impl: {
                     atk: (a) => { return a * 1.06; },
                     cr: (crit) => { return crit + .15; }
@@ -58,7 +58,7 @@ const engravings = [
             },         
             { // 8
                 label: 'Crushing Fist', code: 'CF',
-                tooltip: 'on counter -> 20% AP (duration?)',
+                tooltip: 'Counter Attack -> 20% Atk Power (duration???)',
                 impl: {
                     atk: (a) => { return a * 1.2; }
                 }
@@ -90,7 +90,7 @@ const engravings = [
             },      
             { //12 
                 label: 'Drops of Ether', code: 'DOE',
-                tooltip: '6 possible 30s buffs, 10s CD for orbs. +15% crit, +10% atk power, +10% defense, +10% move speed, retore MP, restore HP',
+                tooltip: '6 possible 30s buffs, 10s CD for orbs. +15% crit, +10% atk power, +10% defense, +10% move speed, restore MP, restore HP',
                 impl: {
                     def: (d, bd) => { return d + (bd * .1); },
                     atk: (a) => { return a * 1.1; },

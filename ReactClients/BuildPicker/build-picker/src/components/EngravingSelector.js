@@ -1,9 +1,14 @@
 import React from "react";
 import { StyleSheet } from "react-native";
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+import PopoverBody from 'react-bootstrap/PopoverBody';
+import PopoverHeader from 'react-bootstrap/PopoverHeader';
 
 import { MultiSelect } from 'primereact/multiselect';
 
 import engravings from '../data/Engravings.js';
+import { Popover } from "bootstrap";
 
 const EngravingSelector = (props) => {
 
@@ -25,9 +30,17 @@ const EngravingSelector = (props) => {
   const selectedEngravingTemplate = (option) => {
     if (option) {
         return (
-            <div className="engraving engraving-value">
-                <div title={option.tooltip}>{option.label} <button className="selected-engraving-remove p-multiselect-close-icon pi pi-times" onClick={()=>{ removeEngraving(option); }}></button></div>
-            </div>
+            <OverlayTrigger 
+              placement="bottom" 
+              overlay={<Tooltip id="engraving-tooltip">{option.tooltip}</Tooltip>} 
+              delay={{ show: 350, hide: 350 }}>
+                <div className="engraving engraving-value">
+                  {option.label} 
+                  <button 
+                    className="selected-engraving-remove p-multiselect-close-icon pi pi-times" 
+                    onClick={()=>{ removeEngraving(option); }}/>
+                </div>
+            </OverlayTrigger>
         );
     }
   
@@ -44,9 +57,15 @@ const EngravingSelector = (props) => {
   
   const engravingTemplate = (option) => {
     return (
+      <OverlayTrigger 
+        placement="right" 
+        overlay={<Tooltip id="engraving-tooltip">{option.tooltip}</Tooltip>} 
+        delay={{ show: 350, hide: 350 }}
+      >
         <div className="engraving">
             <div>{option.label}</div>
         </div>
+      </OverlayTrigger>  
     );
   };
 
@@ -62,10 +81,11 @@ const EngravingSelector = (props) => {
       panelFooterTemplate={panelFooterTemplate}
       value={props.selectedEngravings} 
       onChange={ (e) => { 
-        if (props.selectedEngravings.length < 10) {
-          props.setSelectedEngravings(e.value); 
-        }
-      } } 
+          if (props.selectedEngravings.length < 10) {
+            props.setSelectedEngravings(e.value); 
+          }
+        } 
+      } 
       optionLabel="label"
       optionGroupLabel='label'
       placeholder="Select Engravings" 
