@@ -82,6 +82,7 @@ td {
   flex-direction: row;
   min-width: 50%;
   width: 1260px;
+  align-items: center;
 }
 
 /* 3 main panels */

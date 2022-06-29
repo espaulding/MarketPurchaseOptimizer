@@ -64,7 +64,7 @@ const ComputedStats = (props) => {
           </tr>
         </thead>
         <tbody>
-        <tr>
+          <tr>
               <td style={styles.labelCell}>MP Regen</td>
               <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mpRegen}></NumberFormat></td>
               <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mpRegenEngrave}></NumberFormat></td>

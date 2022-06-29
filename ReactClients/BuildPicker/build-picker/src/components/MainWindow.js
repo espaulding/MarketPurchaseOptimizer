@@ -77,50 +77,62 @@ function MainWindow() {
 
     return (
         <div style={styles.mainPanel}>
-            <Tabs unmountOnExit="true">
-                <Tab style={styles.tabWindow} eventKey="BuildExplorer" title="Build Explorer">
-                    <div style={styles.topPanel}>
-                        <div className="class-engraving-picker">
-                            <EngravingSelector selectedEngravings={selectedEngravings} setSelectedEngravings={setSelectedEngravings} />
-                        </div>
-                    </div>
-                    <div style={styles.bottomPanel}>
-                        <CharacterInput data={characterData} />
-                        <ComputedStats data={characterData} selectedEngravings={selectedEngravings}/>
-                    </div>
-                </Tab>
-                <Tab style={styles.tabWindow} eventKey="BuildOptimizer" title="Build Optimizer">
-                    <div style={styles.topPanel}>
-                        <div className="class-engraving-picker">
-                            <EngravingSelector 
-                                label={"Locked In Build: "} 
-                                maxItems={6}
-                                numItems={lockedEngravings.length}
-                                sibling={possibleEngravings}
-                                setSibling={setPossibleEngravings}
-                                selectedEngravings={lockedEngravings} 
-                                setSelectedEngravings={setLockedEngravings} />
-                        </div>
-                        <div className="class-engraving-picker">
-                            <EngravingSelector 
-                                label={"Build Using: "} 
-                                maxItems={15}
-                                numItems={possibleEngravings.length}
-                                sibling={lockedEngravings}
-                                setSibling={setLockedEngravings}
-                                selectedEngravings={possibleEngravings} 
-                                setSelectedEngravings={setPossibleEngravings} />
-                        </div>
-                        <div className='calc-button'>
-                            <div style={styles.spacer}></div>
-                            <div className='d-grid'>
-                                <Button size="lg">Calculate!</Button>
+            <Tabs unmountOnExit={true}>
+                <Tab eventKey="BuildExplorer" title="Build Explorer">
+                    <div style={styles.tabWindow}>
+                        <div style={styles.topPanel}>
+                            <div className="class-engraving-picker">
+                                <EngravingSelector selectedEngravings={selectedEngravings} setSelectedEngravings={setSelectedEngravings} />
                             </div>
                         </div>
+                        <div style={styles.bottomPanel}>
+                            <CharacterInput data={characterData} />
+                            <ComputedStats data={characterData} selectedEngravings={selectedEngravings}/>
+                        </div>
                     </div>
-                    <div style={styles.bottomPanel}>
-                        <CharacterInput data={characterData} />
-                        <OptimizerResults data={characterData} selectedEngravings={selectedEngravings}/>
+                </Tab>
+                <Tab eventKey="BuildOptimizer" title="Build Optimizer">
+                    <div style={styles.tabWindow}>
+                        <div style={styles.topPanel}>
+                            <div className="class-engraving-picker">
+                                <EngravingSelector 
+                                    label={"Locked In Build: "} 
+                                    maxItems={6}
+                                    numItems={lockedEngravings.length}
+                                    sibling={possibleEngravings}
+                                    setSibling={setPossibleEngravings}
+                                    selectedEngravings={lockedEngravings} 
+                                    setSelectedEngravings={setLockedEngravings} />
+                            </div>
+                            <div className="class-engraving-picker">
+                                <EngravingSelector 
+                                    label={"Build Using: "} 
+                                    maxItems={15}
+                                    numItems={possibleEngravings.length}
+                                    sibling={lockedEngravings}
+                                    setSibling={setLockedEngravings}
+                                    selectedEngravings={possibleEngravings} 
+                                    setSelectedEngravings={setPossibleEngravings} />
+                            </div>
+                            <div className='calc-button'>
+                                <div style={styles.spacer}>Build for 5 Engravings</div>
+                                <div className='d-grid'>
+                                    <Button size="lg">Calculate Top Builds!</Button>
+                                </div>
+                            </div>
+                        </div>
+                        <div style={styles.bottomPanel}>
+                            <CharacterInput data={characterData} />
+                            <OptimizerResults 
+                                data={characterData} 
+                                selectedEngravings={selectedEngravings}
+                                setSelectedEngravings={setSelectedEngravings}
+                                lockedEngravings={lockedEngravings}
+                                setLockedEngravings={setLockedEngravings}
+                                possibleEngravings={possibleEngravings}
+                                setPossibleEngravings={setPossibleEngravings}
+                            />
+                        </div>
                     </div>
                 </Tab>
             </Tabs>
@@ -130,8 +142,13 @@ function MainWindow() {
 
 const styles = StyleSheet.create({
     spacer: {
+        display: 'flex',
         minWidth: '263px',
         height: '100%',
+        fontSize: '20px',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
     },
     engravingPicker: {
         display: 'flex',
@@ -164,6 +181,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
+        alignItems: 'flex-start',
         width: '95%',
     }
 });
