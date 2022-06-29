@@ -9,7 +9,7 @@ const ClassChangeDD = (props) => {
 
   return (
     <div style={styles.panel}>
-      <div style={styles.label}> | {props.data.subclass.label} | </div>
+      <div style={styles.label}>{props.data.subclass.label}</div>
       <DropdownButton id="dropdown-basic-button" title="Change Class" variant="dark" menuVariant="dark">
         {
           Object
@@ -19,7 +19,6 @@ const ClassChangeDD = (props) => {
               })
         }
       </DropdownButton>
-      
     </div>
     
   );

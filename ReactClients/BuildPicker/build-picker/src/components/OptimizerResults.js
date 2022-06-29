@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet } from "react-native";
 import NumberFormat from 'react-number-format';
 import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button'
 
 import { computeBaseDmg, computeBaseDmgEngrave } from '../calculations/Stats.js';
 
@@ -42,7 +43,16 @@ const OptimizerResults = (props) => {
                   <td style={styles.labelCell}>
                     {engravingToText(r.engravings)}
                   </td>
-                  <td>click me</td>
+                  <td style={styles.btnCell}>
+                    <Button 
+                      style={styles.apply} 
+                      variant="link" 
+                      onClick={() => { 
+                        props.setSelectedEngravings(r.engravings);
+                        document.querySelector("[data-rr-ui-event-key='BuildExplorer']").click();
+                      }}>
+                        Apply</Button>
+                  </td>
                 </tr>
         }
       )
@@ -68,18 +78,27 @@ const OptimizerResults = (props) => {
 }
 
 const styles = StyleSheet.create({
+  apply: {
+    height: '30px',
+    padding: '0',
+  },
+  btnCell: {
+    height: '30px',
+  },
   labelCell: {
       display: 'flex',
       justifyContent: 'right',
       minWidth: '500x',
-      paddingTop: '10px',
-      paddingBottom: '7px',
+      height: '32px',
+      paddingTop: '4px',
+      //paddingBottom: '7px',
       paddingLeft: '5px',
       paddingRight: '10px',
   },
   numberCell: {
-    paddingTop: '6px',
+    //paddingTop: '10px',
     width: '100px',
+    height: '30px',
     minWidth: '100px',
     maxWidth: '210px',
   },
@@ -87,7 +106,7 @@ const styles = StyleSheet.create({
     width: '90px',
     minWidth: '90px',
     maxWidth: '200px',
-    paddingBottom: '3px',
+    //paddingBottom: '3px',
   },
 });
 

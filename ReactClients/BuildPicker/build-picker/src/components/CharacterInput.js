@@ -1,6 +1,7 @@
 import React from "react";
 import Stack from 'react-bootstrap/Stack'
 import StatInput from './StatInput.js';
+import ClassChangeDD from './ClassChangeDD.js';
 
 const CharacterInput = (props) => {
   var data = props.data;
@@ -21,6 +22,7 @@ const CharacterInput = (props) => {
           <StatInput label={"Crit Damage"} value={data.critDmg} setter={data.setCritDmg} />
           <StatInput label={"Cooldown Reduction"} value={data.cdr} setter={data.setCdr} />
           <StatInput label={"CDR Gem Level"} value={data.cdrGem} setter={data.setCdrGem} />
+          <ClassChangeDD data={props.data}/>
       </Stack>                
     </div>
   );

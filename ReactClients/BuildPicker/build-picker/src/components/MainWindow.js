@@ -9,7 +9,6 @@ import CharacterInput from './CharacterInput.js';
 import EngravingSelector from './EngravingSelector.js';
 import ComputedStats from './ComputedStats.js';
 import OptimizerResults from './OptimizerResults';
-//import ClassChangeDD from './ClassChangeDD.js';
 
 import subclassList from '../data/SubClasses';
 import engravings from '../data/Engravings.js';
@@ -19,12 +18,12 @@ function MainWindow() {
     
     const [lockedEngravings, setLockedEngravings]  = useState([
         engravings[1].items[27], // reflux
-        engravings[0].items[0],  // adrenaline
     ]);
     const [possibleEngravings, setPossibleEngravings]  = useState([
+        engravings[0].items[0],  // adrenaline
         engravings[0].items[9],   // cursed doll
-        engravings[0].items[12],  // drops of ether
-        engravings[0].items[15],  // ether predator
+        //engravings[0].items[12],  // drops of ether
+        //engravings[0].items[15],  // ether predator
         engravings[0].items[19],  // grudge
         engravings[0].items[21],  // hit master
         engravings[0].items[22],  // increase mass
@@ -48,12 +47,12 @@ function MainWindow() {
     const [hp, setHp] = useState(93216);
     const [mp, setMp] = useState(3594);
     const [mpRegen, setMpRegen] = useState(159);
-    const [critRate, setCritRate] = useState(.5514);
+    const [critRate, setCritRate] = useState(.4014);
     const [critDmg, setCritDmg] = useState(2.00);
     const [atkStat, setAtkStat] = useState(105603);
     const [wpnDmg, setWpnDmg] = useState(24241);
     const [atkSpeed, setAtkSpeed] = useState(1.2066);
-    const [moveSpeed, setMoveSpeed] = useState(1.2066);
+    const [moveSpeed, setMoveSpeed] = useState(1.3066);
     const [cdr, setCdr] = useState(.2583); // 25.83%
     const [cdrGem, setCdrGem] = useState(7); // 25.83% + lvl 6 gem
 
@@ -126,6 +125,7 @@ function MainWindow() {
                                         onClick={
                                                 () => { optimizeBuild({
                                                     data : characterData,
+                                                    numResults : 15,
                                                     buildLimit : buildLimit,
                                                     lockedEngravings : lockedEngravings,
                                                     possibleEngravings : possibleEngravings,
@@ -140,7 +140,7 @@ function MainWindow() {
                         <div style={styles.bottomPanel}>
                             <CharacterInput data={characterData} />
                             <OptimizerResults 
-                                data={characterData} 
+                                data={characterData}
                                 selectedEngravings={selectedEngravings}
                                 setSelectedEngravings={setSelectedEngravings}
                                 optimizerResults={optimizerResults} 

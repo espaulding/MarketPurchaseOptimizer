@@ -43,7 +43,7 @@ const optimizeBuild = (props) => {
   results.sort((a,b) => a.dpsGain > b.dpsGain ? -1 : 1);
 
   //take the top 10 results and then set them
-  props.setOptimizerResults(results.slice(0, 12));
+  props.setOptimizerResults(results.slice(0, props.numResults));
 }
 
 export { optimizeBuild };
