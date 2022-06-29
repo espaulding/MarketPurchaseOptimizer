@@ -309,73 +309,73 @@ const engravings = [
         label: 'Class Engravings', code: 'class',
         items: [
             { // 0
-                label: 'Barrage Enhancement', code: 'BE',
+                label: '(Artillerist) Barrage Enhancement', code: 'BE',
                 tooltip: 'Barrage Skill Damage +40%. No Firepower Buff -> Firepower Meter +30%. On full Firepower Meter -> cooling effect removed',
                 impl: { }
             },        
             { // 1
-                label: 'Berserker\'s Technique', code: 'BT',
+                label: '(Berserker) Berserker\'s Technique', code: 'BT',
                 tooltip: 'During Bust +70% Crit Dmg (Negates Exhausion after burst)',
                 impl: {
                     cd: (crit) => { return crit + .7; }
                 }
             },    
             { // 2
-                label: 'Blessed Aura', code: 'BA',
+                label: '(Paladin) Blessed Aura', code: 'BA',
                 tooltip: 'With aura -> (10/15/20)% Damage Reduction, 2% HP restored every (2.5/2/1.5) seconds',
                 impl: {
                     dr: (d) => { return 1 - (1 - d) * (1 - .2); }
                 }
             },               
             { // 3
-                label: 'Combat Readyness', code: 'CR',
+                label: '(Gunlancer) Combat Readyness', code: 'CR',
                 tooltip: 'Normal skills +20% DMG, Shield amount +50%. Defensive stance -> hit by enemy -> +6% DMG (10s) up to 3 stacks',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.2 * 1.18; }
                 }
             },           
             { // 4
-                label: 'Control', code: 'CON',
+                label: '(Glaiver) Control', code: 'CON',
                 tooltip: 'Cannot use Focus stance. Flurry skills +36% DMG',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.36; }
                 }
             },                   
             { // 5
-                label: 'Death Strike', code: 'DST',
+                label: '(Sharpshooter) Death Strike', code: 'DST',
                 tooltip: 'Use Last Rush -> Recover 50% Hawk Meter and Damage taken +(22/33/44)% for 8s',
                 impl: {
                     dr: (d) => { return 1 - (1 - d) * 1.44; },
                 }
             },              
             { // 6
-                label: 'Deathblow', code: 'DB',
+                label: '(Striker) Deathblow', code: 'DB',
                 tooltip: 'Max Orbs + 1, Esoteric skills consume all orbs for +35% DMG per orb',
                 impl: { // huge burst but I'm on the fence as to a way to compute the time taken to buildup orbs
                     //dmg: (d, mspd, aspd) => { return d * 1.35; } 
                 }
             },                  
             { // 7
-                label: 'Demonic Impulse', code: 'DI',
+                label: '(Shadowhunter) Demonic Impulse', code: 'DI',
                 tooltip: 'Composure does not active when Demonize ends. Demoninze -> Demonic Skill CD is reset and +30% Crit Rate',
                 impl: {
                     cr: (crit) => { return crit + .3; }
                 }
             },           
             { // 8
-                label: 'Desperate Salvation', code: 'DSA',
+                label: '(Bard) Desperate Salvation', code: 'DSA',
                 tooltip: 'Recovery effect ends -> additional recovery (8/16/24)% of your Max HP',
                 impl: { }
             },       
             { // 9
-                label: 'Energy Overflow', code: 'EO',
+                label: '(Soulfist) Energy Overflow', code: 'EO',
                 tooltip: 'Energy < 30% -> +15% DMG. Energy does not go below 1. Hype -> no longer recovers additional energy.',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.15; }
                 }
             },            
             { //10
-                label: 'Enhanced Weapon', code: 'EW',
+                label: '(Deadeye) Enhanced Weapon', code: 'EW',
                 tooltip: 'Change stance -> +30% Crit Rate for 9s',
                 impl: {
                     cr: (crit) => { return crit + .3; }
@@ -389,14 +389,14 @@ const engravings = [
                 }
             },            
             { //12
-                label: 'Esoteric Skill Enhancement', code: 'ESE',
+                label: '(Striker) Esoteric Skill Enhancement', code: 'ESE',
                 tooltip: 'Max orbs + 1. Esoteric skill +12% per orb held',
                 impl: { // how many orbs can a wardancer have?
                     dmg: (d, mspd, aspd) => { return d * 1.36 ; }
                 }
             },
             { //13
-                label: 'Firepower Enhancement', code: 'FE',
+                label: '(Artillerist) Firepower Enhancement', code: 'FE',
                 tooltip: 'Incoming damage -20% and Crit Rate +(30/35/40)% based on level of Firepower buff',
                 impl: {
                     dr: (d) => { return 1 - (1 - d) * (1 - .2); },
@@ -404,14 +404,14 @@ const engravings = [
                 }
             },      
             { //14
-                label: 'First Intention', code: 'FI',
+                label: '(Wardancer) First Intention', code: 'FI',
                 tooltip: 'Can no longer gain Esoteric Meter -> +32% DMG',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.32; }
                 }
             },            
             { //15
-                label: 'Gravity Training', code: 'GT',
+                label: '(Destroyer) Gravity Training', code: 'GT',
                 tooltip: 'Hypergravity mode -> +20% DMG. During Combat -> Meter recdover 2% every 1s. +30% Basic Atk and Vortex Gravity Crit Rate',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.2; },
@@ -419,20 +419,20 @@ const engravings = [
                 }
             },           
             { //16
-                label: 'Igniter', code: 'IGN',
-                tooltip: 'Magick Amplication -> Crit Rate +25% and Crit Dmg +50%. When Magic Maplication is triggered skill currently in cooldown -50% CD',
+                label: '(Sorceress) Igniter', code: 'IGN',
+                tooltip: 'Magick Amplification -> Crit Rate +25% and Crit Dmg +50%. When Magic Amplification is triggered skill currently in cooldown -50% CD',
                 impl: {
                     cr: (crit) => { return crit + .25; },
                     cd: (crit) => { return crit + .5; }
                 }
             },                  
             { //17
-                label: 'Judgement', code: 'JUD',
+                label: '(Paladin) Judgement', code: 'JUD',
                 tooltip: 'Duration of Sacred Executioner +150%. Punishment DMG +15%. When Punishment hits -> Piety Gain +100%. ',
                 impl: { }
             },                 
             { //18
-                label: 'Lone Knight', code: 'LK',
+                label: '(Gunlancer) Lone Knight', code: 'LK',
                 tooltip: 'Gunlance skills -> +15% Crit Rate and +50% Crit DMG. Battlefield Shield cannot be used. Consumpiton of Shield Meter during Defensive Stance +100%',
                 impl: {
                     cr: (crit) => { return crit + .15; },
@@ -440,7 +440,7 @@ const engravings = [
                 }
             },                
             { //19
-                label: 'Loyal Companion', code: 'LC',
+                label: '(Sharpshooter) Loyal Companion', code: 'LC',
                 tooltip: 'Mark of Death -> Foe DMG Taken + 14%. When hawk is summoned -> Atk Power +10%. Summons Silerhawk MK-II, allowing Move Speed +4%, Hawk\'s basic AoE range +60%, basic ATK DMG +300%, and summon duration +100%. Hawk inflicts Mark of Death.',
                 impl: {
                     atk: (a) => { return a * 1.1; },
@@ -448,7 +448,7 @@ const engravings = [
                 }
             },           
             { //20
-                label: 'Mayhem', code: 'MAY',
+                label: '(Berserker) Mayhem', code: 'MAY',
                 tooltip: '+16% DMG, +15% Atk and Move speed, 65% additional damage reduction, -75% Max HP, -60% healing received, -75% shield absorption',
                 impl: {
                     hp: (h) => { return h * .25; },
@@ -459,19 +459,19 @@ const engravings = [
                 }
             },                   
             { //21
-                label: 'Peacemaker', code: 'PEA',
+                label: '(Gunslinger) Peacemaker', code: 'PEA',
                 tooltip: 'Handgun -> Atk Speed +(8/12/16)%. Shotgun -> Crit Rate +(15/20/25)%. Rifle -> +10% DMG and if enemy HP < 50% -> +(10/20/30)% DMG for 9s',
                 impl: { } // there's so much going on here and none of the buffs are always on
             },                
             { //22
-                label: 'Perfect Suppression', code: 'PS',
+                label: '(Shadowhunter) Perfect Suppression', code: 'PS',
                 tooltip: 'Normal skill -> +30% DMG. Shadowburst Meter +50% for all skills. Disables Demonize',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.3; }
                 }
             },        
             { //23
-                label: 'Pinnacle (Flurry)', code: 'PIN',
+                label: '(Glaiver) Pinnacle (Flurry)', code: 'PIN',
                 tooltip: 'Max Dual Meter and Change Stance then: Flurry -> +15% Atk Speed, +15% DMG, +25% Crit Rate. Focus -> +15% Move Speed, +20% DMG, +50% Crit DMG',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.15; },
@@ -480,7 +480,7 @@ const engravings = [
                 }
             },          
             { //24
-                label: 'Pinnacle (Focus)', code: 'PIN',
+                label: '(Glaiver) Pinnacle (Focus)', code: 'PIN',
                 tooltip: 'Max Dual Meter and Change Stance then: Flurry -> +15% Atk Speed, +15% DMG, +25% Crit Rate. Focus -> +15% Move Speed, +20% DMG, +50% Crit DMG',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.2; },
@@ -489,14 +489,14 @@ const engravings = [
                 }
             },          
             { //25
-                label: 'Pistoleer', code: 'PIS',
+                label: '(Deadeye) Pistoleer', code: 'PIS',
                 tooltip: 'Can only use Handgun. Skill DMG +70%, Stagger +40%, Awakening skill DMG +30%',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.7; }
                 }
             },                 
             { //26  
-                label: 'Rage Hammer', code: 'RH', 
+                label: '(Destroyer) Rage Hammer', code: 'RH', 
                 tooltip: 'Use Gravity Release Skill -> +5% Crit Rate and 15% Crit Dmg based on Cores used',
                 impl: { // does this buff stack up higher with more cores? how does it work?
                     cr: (crit) => { return crit + .05; },
@@ -504,7 +504,7 @@ const engravings = [
                 }
             },                
             { //27
-                label: 'Reflux', code: 'REF', 
+                label: '(Sorceress) Reflux', code: 'REF', 
                 tooltip: 'Disable Arcane Rupture, 16% DMG, 10% CDR (except Awakening and movement skills)',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.16; },
@@ -512,7 +512,7 @@ const engravings = [
                 }
             },                    
             { //28
-                label: 'Remaining Energy', code: 'RE',
+                label: '(Deathblade) Remaining Energy', code: 'RE',
                 tooltip: 'Surge skill -> +12% Atk/Move Speed and +(12/24/36) Atk Power (30s). Art does not consume meter for 2s when activated',
                 impl: {
                     atk: (a) => { return a * 1.36; },
@@ -521,35 +521,35 @@ const engravings = [
                 }
             },           
             { //29
-                label: 'Robust Spirit', code: 'RS', 
+                label: '(Soulfist) Robust Spirit', code: 'RS', 
                 tooltip: 'Use Hype -> Enter lvl 3 immediately, Energy Recovery +200%, and +30% DMG',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.3; }
                 }
             },              
             { //30
-                label: 'Shock Training', code: 'ST',
+                label: '(Scrapper) Shock Training', code: 'ST',
                 tooltip: 'Shock skill +20% DMG. 4% of Shock Energy recovered every 1s',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.2; }
                 }
             },             
             { //31
-                label: 'Surge', code: 'SUR',
+                label: '(Deathblade) Surge', code: 'SUR',
                 tooltip: 'Surge casts at max with empty orbs. Remaining Energy buff does not activtate. During Surge -> skill attacks stack up to 20. 1% Atk Power and Surge +6% DMG per stack. Death Trance ends -> 100% Death Orb Meter per Surge Enhancement',
                 impl: {
                     atk: (a) => { return a * 1.2; }
                 }
             },                    
             { //32
-                label: 'Time to Hunt', code: 'TTH',
+                label: '(Gunslinger) Time to Hunt', code: 'TTH',
                 tooltip: 'Crit Rate +(20/30/40)%, but Shotgun disabled',
                 impl: {
                     cr: (crit) => { return crit + .4; }
                 }
             },             
             { //33
-                label: 'True Courage', code: 'TC',
+                label: '(Bard) True Courage', code: 'TC',
                 tooltip: 'Serenade of Courage -> You gain +20% DMG and +10% Crit Rate',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.2; },
@@ -557,7 +557,7 @@ const engravings = [
                 }
             },            
             { //34
-                label: 'Ultimate Skill: Taijutsu', code: 'UST',
+                label: '(Scrapper) Ultimate Skill: Taijutsu', code: 'UST',
                 tooltip: 'Stamina Skills -> +65% DMG, Shock Skills -> -30% DMG, Stamina Energy recovery + 300%',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.65; }
