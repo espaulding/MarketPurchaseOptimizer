@@ -27,15 +27,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'right',
     width: '100%',
-    height: '40px',
+    height: '30px',
     paddingRight: '15px'
   },
   input: {
-    height: 40,
+    height: '30px',
     margin: 0,
     marginLeft: '12px',
     borderRadius: '20px',
-    border: '1px solid cyan',
+    border: '1px solid #008b8b',
     padding: 10,
     boxSizing: 'border-box',
     color: 'cyan',

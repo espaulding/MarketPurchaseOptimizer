@@ -1,5 +1,9 @@
 .App {
+  width: 100vw;
+  height: 100vh;
   text-align: center;
+  background-color: #282c34;
+  overflow: auto;
 }
 
 .App-logo {
@@ -22,8 +26,6 @@ hr {
 td {
   font-size: var(--bs-body-font-size);
 }
-
-/* #282c34 */
 
 .stats {
   background-color: transparent;
@@ -54,15 +56,17 @@ td {
 
 .App-body {
   background-color: #282c34;
-  min-height: 90vh;
-  height: 90vh;
-  max-height: 90vh;
+  width: 100%;
+  min-height: 90%;
+  height: 100%;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(9px + 2vmin);
   color: white;
+  overflow: auto;
 }
 
 .App-link {
@@ -71,25 +75,25 @@ td {
 
 /* 3 main panels */
 .class-engraving-picker {
-  min-width: 33%;
-  width: 80%;
-  /* border:#61dafb 1px solid; */
+  min-width: 50%;
+  width: 1160px;
+  border:#61dafb 1px solid;
 }
 
 .stat-input {
   display: flex;
   align-items: center;
   justify-content: right;
-  width: 30%;
-  /* border:#61dafb 1px solid; */
+  width: 360px;
+  border:#61dafb 1px solid;
 }
 
 .stat-calc {
   display: flex;
   align-items: center;
-  width: 50%;
+  width: 800px;
   padding: 0 0 0 20px;
-  /* border:#61dafb 1px solid; */
+  border:#61dafb 1px solid;
 }
 /* ------- */
 
@@ -110,7 +114,7 @@ td {
   min-width: 15rem;
   max-width: 100%;
   max-height: 100%;
-  background-color: gray !important;
+  background-color: gray;
 }
 
 .p-checkbox-icon {
@@ -120,7 +124,8 @@ td {
 .p-checkbox-box  {
   background-color: gray !important;
   color: cyan !important;
-  border: 2px solid cyan !important
+  border: 2px solid cyan !important;
+  border-radius: 0px !important;
 }
 
 .p-multiselect-filter-icon {
@@ -129,8 +134,13 @@ td {
 }
 
 .p-multiselect-close-icon {
-  background: gray !important;
-  color: blue !important;
+  background: gray;
+  color: blue;
+}
+
+.selected-engraving-remove {
+  background-color: #282c34;
+  border: none;
 }
 
 .p-component {
@@ -154,14 +164,15 @@ li.p-multiselect-item-group {
 }
 
 .p-inputtext {
-  color: blue !important;
-  background: gray !important;
+  /* background: gray !important; */
   border: 1px solid cyan;
+  cursor: text !important;
 }
 
 .p-multiselect-filter {
   color: blue !important;
   background: gray !important;
+  cursor: pointer !important;
 }
 
 .p-multiselect-items {
@@ -170,7 +181,6 @@ li.p-multiselect-item-group {
 }
 
 .p-multiselect-item  {
-  color: green !important;
   background: gray !important;
 }
 
@@ -198,13 +208,18 @@ li.p-multiselect-item-group {
   display: flex;
   align-items: center;
   margin: 3px 0px 3px 0px;
-  background-color: transparent !important;
   color: cyan !important;
+  cursor: pointer;
 }
 
 .engraving-value {
   background-color: #282c34 !important;
   color: cyan !important;
+  cursor: default;
+}
+
+div.p-multiselect-header > .p-checkbox {
+  display: none;
 }
 
 @keyframes App-logo-spin {

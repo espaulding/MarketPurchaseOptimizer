@@ -181,7 +181,7 @@ const ComputedStats = (props) => {
           </tr>
           <tr>
               <td style={styles.labelCell}>DPS Gain (From Engravings)</td>
-              <td colSpan={2} style={styles.numberCell}><NumberFormat className="stats" disabled={true} prefix={'+'} suffix={'%'} value={convertPercent((baseDmgEngrave/baseDmg) - 1)}></NumberFormat></td>
+              <td colSpan={2} style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} prefix={'+'} suffix={'%'} value={convertPercent((baseDmgEngrave/baseDmg) - 1)}></NumberFormat></td>
           </tr>
         </tbody>
       </Table>          

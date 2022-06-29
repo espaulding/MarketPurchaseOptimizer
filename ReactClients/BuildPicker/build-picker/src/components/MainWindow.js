@@ -54,10 +54,10 @@ function MainWindow() {
         <div style={styles.mainPanel}>
             <div style={styles.topPanel}>
                 <div className="class-engraving-picker">
-                    <ClassChangeDD data={characterData} />
-                    <hr/>
+                    {/* <ClassChangeDD data={characterData} />
+                    <hr/> */}
                     <EngravingSelector selectedEngravings={selectedEngravings} setSelectedEngravings={setSelectedEngravings} />
-                    <hr />
+                    {/* <hr /> */}
                 </div>
             </div>
             <div style={styles.bottomPanel}>
@@ -83,14 +83,16 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        width: '100%',
-        marginBottom: '10px'
+        width: '95%',
+        maxHeight: '25%',
+        marginBottom: '10px',
+        overflow: 'auto'
     },
     bottomPanel: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        width: '100%',
+        width: '95%',
     }
 });
 

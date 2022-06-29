@@ -17,11 +17,16 @@ const EngravingSelector = (props) => {
     );
   };
 
+  const removeEngraving = (option) => {
+    let removed = props.selectedEngravings.filter(e => e.code !== option.code);
+    props.setSelectedEngravings(removed);
+  };
+
   const selectedEngravingTemplate = (option) => {
     if (option) {
         return (
             <div className="engraving engraving-value">
-                <div title={option.tooltip}>{option.label}</div>
+                <div title={option.tooltip}>{option.label} <button className="selected-engraving-remove p-multiselect-close-icon pi pi-times" onClick={()=>{ removeEngraving(option); }}></button></div>
             </div>
         );
     }
@@ -56,7 +61,11 @@ const EngravingSelector = (props) => {
       selectedItemTemplate={selectedEngravingTemplate}
       panelFooterTemplate={panelFooterTemplate}
       value={props.selectedEngravings} 
-      onChange={ (e) => props.setSelectedEngravings(e.value) } 
+      onChange={ (e) => { 
+        if (props.selectedEngravings.length < 10) {
+          props.setSelectedEngravings(e.value); 
+        }
+      } } 
       optionLabel="label"
       optionGroupLabel='label'
       placeholder="Select Engravings" 
@@ -66,7 +75,7 @@ const EngravingSelector = (props) => {
 
 const styles = StyleSheet.create({
   engravingSelector: {
-    width: '80%'
+    width: '100%'
   }
 });
 
