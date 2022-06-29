@@ -77,7 +77,7 @@ td {
 .class-engraving-picker {
   min-width: 50%;
   width: 1160px;
-  border:#61dafb 1px solid;
+  /* border:#61dafb 1px solid; */
 }
 
 .stat-input {
@@ -85,7 +85,7 @@ td {
   align-items: center;
   justify-content: right;
   width: 360px;
-  border:#61dafb 1px solid;
+  /* border:#61dafb 1px solid; */
 }
 
 .stat-calc {
@@ -93,7 +93,7 @@ td {
   align-items: center;
   width: 800px;
   padding: 0 0 0 20px;
-  border:#61dafb 1px solid;
+  /* border:#61dafb 1px solid; */
 }
 /* ------- */
 

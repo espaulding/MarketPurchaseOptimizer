@@ -9,7 +9,7 @@ import {
     computeMpWithEngravings, computeMpRegenWithEngravings,
     computeAttackPower, computeAttackPowerWithEngravings,
     computeCritRateEngrave, computeCritDmgEngrave,
-    computeCdrEngrave, computeAtkSpeedEngrave, computeMoveSpeedEngrave,
+    computeCdr, computeCdrEngrave, computeAtkSpeedEngrave, computeMoveSpeedEngrave,
     computeBaseDmg, computeBaseDmgEngrave
  } from '../calculations/Stats.js'
 
@@ -20,10 +20,15 @@ const ComputedStats = (props) => {
   }
 
   const characterData = props.data;
+  var hp = +characterData.hp; if(isNaN(hp)) { hp = 0; }
   var hpEngrave = computeHpWithEngravings(characterData, props.selectedEngravings);
+  var mp = +characterData.mp; if(isNaN(mp)) { mp = 0; }
   var mpEngrave = computeMpWithEngravings(characterData, props.selectedEngravings);
+  var mpRegen = +characterData.mpRegen; if(isNaN(mpRegen)) { mpRegen = 0; }
   var mpRegenEngrave = computeMpRegenWithEngravings(characterData, props.selectedEngravings);
+  var defensePhysical = +characterData.defensePhysical; if(isNaN(defensePhysical)) { defensePhysical = 0; }
   var physDefEngrave = computeDefWithEngravings(characterData, 'physical', props.selectedEngravings);
+  var defenseMagical = +characterData.defenseMagical; if(isNaN(defenseMagical)) { defenseMagical = 0; }
   var magDefEngrave = computeDefWithEngravings(characterData, 'magical', props.selectedEngravings);
   var physDr = computeDr(characterData, 'physical');
   var magDr = computeDr(characterData, 'magical');
@@ -35,10 +40,15 @@ const ComputedStats = (props) => {
   var magEffectiveHpEngrave = computeEffectiveHpWithEngravings(characterData, 'magical', props.selectedEngravings);
   var ap = computeAttackPower(characterData);
   var apEngrave = computeAttackPowerWithEngravings(characterData, props.selectedEngravings);
+  var atkSpeed = +characterData.atkSpeed; if(isNaN(atkSpeed)) { atkSpeed = 1; }
   var atkSpeedEngrave = computeAtkSpeedEngrave(characterData, props.selectedEngravings);
+  var moveSpeed = +characterData.moveSpeed; if(isNaN(moveSpeed)) { moveSpeed = 1; }
   var moveSpeedEngrave = computeMoveSpeedEngrave(characterData, props.selectedEngravings);
+  var cdr = computeCdr(characterData);
   var cdrEngrave = computeCdrEngrave(characterData, props.selectedEngravings);
+  var critRate = +characterData.critRate; if(isNaN(critRate)) { critRate = 0; }; if(critRate > 1) { critRate = 1; }
   var critRateEngrave = computeCritRateEngrave(characterData, props.selectedEngravings);
+  var critDmg = +characterData.critDmg; if(isNaN(critDmg)) { critDmg = 2; }; if(critDmg > 6) { critDmg = 6; }
   var critDmgEngrave = computeCritDmgEngrave(characterData, props.selectedEngravings);
   var baseDmg = computeBaseDmg(characterData);
   var baseDmgEngrave = computeBaseDmgEngrave(characterData, props.selectedEngravings)
@@ -56,16 +66,16 @@ const ComputedStats = (props) => {
         <tbody>
         <tr>
               <td style={styles.labelCell}>MP Regen</td>
-              <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={characterData.mpRegen}></NumberFormat></td>
+              <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mpRegen}></NumberFormat></td>
               <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mpRegenEngrave}></NumberFormat></td>
           </tr>
           <tr>
               <td style={styles.labelCell}>HP/MP</td>
               <td style={styles.numberCell}>
                 <div className="stats" style={styles.doubleCell}>
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={characterData.hp}></NumberFormat>
+                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={hp}></NumberFormat>
                   (HP), 
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={characterData.mp}></NumberFormat>
+                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mp}></NumberFormat>
                   (MP)
                 </div>
               </td>
@@ -92,9 +102,9 @@ const ComputedStats = (props) => {
               <td style={styles.labelCell}>Defense</td>
               <td style={styles.numberCell}>
                 <div className="stats" style={styles.doubleCell}>
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={characterData.defensePhysical}></NumberFormat>
+                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={defensePhysical}></NumberFormat>
                   (Phys), 
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={characterData.defenseMagical}></NumberFormat>
+                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={defenseMagical}></NumberFormat>
                   (Mag)
                 </div>
               </td>
@@ -130,9 +140,9 @@ const ComputedStats = (props) => {
               <td style={styles.labelCell}>Critical (Rate/Dmg)</td>
               <td style={styles.numberCell}>
                 <div className="stats" style={styles.doubleCell}>
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(characterData.critRate)}></NumberFormat>
+                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(critRate)}></NumberFormat>
                   (Rate), 
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(characterData.critDmg)}></NumberFormat>
+                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(critDmg)}></NumberFormat>
                   (Dmg)
                 </div>
               </td>
@@ -149,9 +159,9 @@ const ComputedStats = (props) => {
               <td style={styles.labelCell}>Speed (Atk/Move)</td>
               <td style={styles.numberCell}>
                 <div className="stats" style={styles.doubleCell}>
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(characterData.atkSpeed)}></NumberFormat>
+                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(atkSpeed)}></NumberFormat>
                   (Atk), 
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(characterData.moveSpeed)}></NumberFormat>
+                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(moveSpeed)}></NumberFormat>
                   (Move)
                 </div>
               </td>
@@ -166,7 +176,7 @@ const ComputedStats = (props) => {
           </tr>
           <tr>
               <td style={styles.labelCell}>Cooldown Reduction</td>
-              <td style={styles.numberCell}><NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(characterData.cdr)}></NumberFormat></td>
+              <td style={styles.numberCell}><NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(cdr)}></NumberFormat></td>
               <td style={styles.numberCell}><NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(cdrEngrave)}></NumberFormat></td>
           </tr>
           <tr>

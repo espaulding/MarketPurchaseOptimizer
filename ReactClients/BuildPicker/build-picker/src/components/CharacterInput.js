@@ -3,7 +3,6 @@ import Stack from 'react-bootstrap/Stack'
 import StatInput from './StatInput.js';
 
 const CharacterInput = (props) => {
-
   var data = props.data;
 
   return (
@@ -21,6 +20,7 @@ const CharacterInput = (props) => {
           <StatInput label={"Crit Rate"} value={data.critRate} setter={data.setCritRate} />
           <StatInput label={"Crit Damage"} value={data.critDmg} setter={data.setCritDmg} />
           <StatInput label={"Cooldown Reduction"} value={data.cdr} setter={data.setCdr} />
+          <StatInput label={"CDR Gem Level"} value={data.cdrGem} setter={data.setCdrGem} />
       </Stack>                
     </div>
   );

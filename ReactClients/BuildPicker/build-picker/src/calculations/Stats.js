@@ -4,7 +4,11 @@ const computeDr = (data, t) => {
     var defense = 0;
     if (t === 'physical') { defense = +data.defensePhysical }
     if (t === 'magical') { defense = +data.defenseMagical }
-    return defense / (defense + 6500);
+    if(isNaN(defense)) { defense = 0; }
+
+    var DR = 0;
+    if (defense > 0) { DR = defense / (defense + 6500); }
+    return DR;
 }
 
 // t -> type of defense
@@ -14,6 +18,7 @@ const computeDefWithEngravings = (data, t, selectedEngravings) => {
     if (t === 'physical') { defense = +data.defensePhysical }
     if (t === 'magical') { defense = +data.defenseMagical }
     const baseDefense = defense;
+    if(isNaN(defense)) { defense = 0; }
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.def !== undefined) {
@@ -28,8 +33,9 @@ const computeDefWithEngravings = (data, t, selectedEngravings) => {
 // physical or magical
 const computeDrWithEngravings = (data, t, selectedEngravings) => {
     var defense = computeDefWithEngravings(data, t, selectedEngravings);
-    var percentReduction = defense / (defense + 6500);
-
+    var percentReduction = 0;
+    if (defense > 0) { percentReduction = defense / (defense + 6500); }
+    
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.dr !== undefined) {
             percentReduction = e.impl.dr(percentReduction);
@@ -40,7 +46,7 @@ const computeDrWithEngravings = (data, t, selectedEngravings) => {
 }
 
 const computeHpWithEngravings = (data, selectedEngravings) => {
-    var HP = +data.hp;
+    var HP = +data.hp; if(isNaN(HP)) { HP = 0; }
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.hp !== undefined) {
@@ -52,7 +58,7 @@ const computeHpWithEngravings = (data, selectedEngravings) => {
 }
 
 const computeMpWithEngravings = (data, selectedEngravings) => {
-    var MP = +data.mp;
+    var MP = +data.mp; if(isNaN(MP)) { MP = 0; }
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.mp !== undefined) {
@@ -64,7 +70,7 @@ const computeMpWithEngravings = (data, selectedEngravings) => {
 }
 
 const computeMpRegenWithEngravings = (data, selectedEngravings) => {
-    var mpRegen = +data.mpRegen;
+    var mpRegen = +data.mpRegen; if(isNaN(mpRegen)) { mpRegen = 0; }
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.mpr !== undefined) {
@@ -78,30 +84,44 @@ const computeMpRegenWithEngravings = (data, selectedEngravings) => {
 // t -> type of defense
 // physical or magical
 const computeEffectiveHp = (data, t) => {
-    var PercentDamageTaken = (1 - computeDr(data, t))
-    return +data.hp / PercentDamageTaken;
+    var hp = +data.hp; if(isNaN(hp)) { hp = 0; }
+    var percentDamageTaken = (1 - computeDr(data, t))
+    var effHP = 0;
+    if(percentDamageTaken > 0 && hp > 0) {
+        effHP = hp / percentDamageTaken;
+    }
+
+    return  effHP;
 }
 
 // t -> type of defense
 // physical or magical
 const computeEffectiveHpWithEngravings = (data, t, selectedEngravings) => {
-    var HP = computeHpWithEngravings(data, selectedEngravings);
-    var PercentDamageTaken = (1 - computeDrWithEngravings(data, t, selectedEngravings))
+    var hp = computeHpWithEngravings(data, selectedEngravings);
+    var percentDamageTaken = (1 - computeDrWithEngravings(data, t, selectedEngravings))
 
-    return HP / PercentDamageTaken;
+    var effHP = 0;
+    if(percentDamageTaken > 0 && hp > 0) {
+        effHP = hp / percentDamageTaken;
+    }
+
+    return effHP;
 }
 
 const computeAttackPower = (data) => {
-    return Math.floor(Math.sqrt(+data.atkStat * +data.wpnDmg / 6));
+    var atkStat = +data.atkStat; if(isNaN(atkStat)) { atkStat = 0; }
+    var wpnDmg = +data.wpnDmg; if(isNaN(wpnDmg)) { wpnDmg = 0; }
+
+    var ap = 0;
+    if(atkStat > 0 && wpnDmg > 0) {
+        ap = Math.floor(Math.sqrt(atkStat * wpnDmg / 6));
+    }
+
+    return ap;
 }
 
 const computeAttackPowerWithEngravings = (data, selectedEngravings) => {
-    var atkStat = +data.atkStat;
-    var wpnDmg = +data.wpnDmg;
-
-    // leaving a spot here in case something can modify int/str/dex or wpn dmg
-
-    var ap = Math.floor(Math.sqrt(atkStat * wpnDmg / 6));
+    var ap = computeAttackPower(data);
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.atk !== undefined) {
@@ -113,21 +133,32 @@ const computeAttackPowerWithEngravings = (data, selectedEngravings) => {
 }
 
 const normalizeCrit = (ap, critRate, critDmg) => {
-    return (critRate * critDmg * ap) + (1 - critRate) * ap;
+    var dmg = ap;
+    if(critRate > 0 && critDmg > 0) {
+        dmg = (critRate * critDmg * ap) + (1 - critRate) * ap;
+    }
+    return dmg;
 }
 
 const normalizeCdr = (dmg, cdr) => {
-    return dmg / (1 - cdr);
+    if(cdr > 0) { dmg /= (1 - cdr); }
+    return dmg;
 }
 
 const computeBaseDmg = (data) => {
-    var dmg = normalizeCrit(computeAttackPower(data), +data.critRate, +data.critDmg);
-        dmg = normalizeCdr(dmg, +data.cdr);
+    var critRate = +data.critRate; if(isNaN(critRate)) { critRate = 0; }; if(critRate > 1) { critRate = 1; }
+    var critDmg = +data.critDmg; if(isNaN(critDmg)) { critDmg = 2; }; if(critDmg > 6) { critDmg = 6; }
+    var cdr = +data.cdr;
+    if(isNaN(cdr)) { cdr = 0; }
+
+    var dmg = normalizeCrit(computeAttackPower(data), critRate, critDmg);
+        dmg = normalizeCdr(dmg, cdr);
+    console.log(dmg);
     return dmg;
 }
 
 const computeCritRateEngrave = (data, selectedEngravings) => {
-    var critRate = +data.critRate;
+    var critRate = +data.critRate; if(isNaN(critRate)) { critRate = 0; }
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.cr !== undefined) {
@@ -139,7 +170,7 @@ const computeCritRateEngrave = (data, selectedEngravings) => {
 }
 
 const computeCritDmgEngrave = (data, selectedEngravings) => {
-    var critDmg = +data.critDmg;
+    var critDmg = +data.critDmg; if(isNaN(critDmg)) { critDmg = 2; }; if(critDmg > 6) { critDmg = 6; }
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.cd !== undefined) {
@@ -150,9 +181,17 @@ const computeCritDmgEngrave = (data, selectedEngravings) => {
     return critDmg;
 }
 
-const computeCdrEngrave = (data, selectedEngravings) => {
-    var cooldownReduction = +data.cdr;
+const computeCdr = (data) => {
+    var cooldownReduction = +data.cdr; if(isNaN(cooldownReduction)) { cooldownReduction = 0; }; if(cooldownReduction < 0) { cooldownReduction = 0; }
+    var gemLvl = +data.cdrGem; if(gemLvl < 0) { gemLvl = 0; }; if(gemLvl > 10) { gemLvl = 10; }
+    if(!isNaN(gemLvl) && gemLvl > 0) { cooldownReduction = 1 - ((1 - cooldownReduction) * (1 - (gemLvl * .02))); }
 
+    return cooldownReduction;
+};
+
+const computeCdrEngrave = (data, selectedEngravings) => {
+    var cooldownReduction = computeCdr(data);
+    
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.cdr !== undefined) {
             cooldownReduction = e.impl.cdr(cooldownReduction);
@@ -163,7 +202,7 @@ const computeCdrEngrave = (data, selectedEngravings) => {
 }
 
 const computeAtkSpeedEngrave = (data, selectedEngravings) => {
-    var atkSpeed = +data.atkSpeed;
+    var atkSpeed = +data.atkSpeed; if(isNaN(atkSpeed)) { atkSpeed = 1; }
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.aspd !== undefined) {
@@ -175,7 +214,7 @@ const computeAtkSpeedEngrave = (data, selectedEngravings) => {
 }
 
 const computeMoveSpeedEngrave = (data, selectedEngravings) => {
-    var moveSpeed = +data.moveSpeed;
+    var moveSpeed = +data.moveSpeed; if(isNaN(moveSpeed)) { moveSpeed = 1; }
 
     selectedEngravings.forEach(function (e) {
         if(e.impl !== undefined && e.impl.mspd !== undefined) {
@@ -211,6 +250,6 @@ export {
     computeMpWithEngravings, computeMpRegenWithEngravings,
     computeAttackPower, computeAttackPowerWithEngravings,
     computeCritRateEngrave, computeCritDmgEngrave,
-    computeCdrEngrave, computeAtkSpeedEngrave, computeMoveSpeedEngrave,
+    computeCdr, computeCdrEngrave, computeAtkSpeedEngrave, computeMoveSpeedEngrave,
     computeBaseDmg, computeBaseDmgEngrave
 };
