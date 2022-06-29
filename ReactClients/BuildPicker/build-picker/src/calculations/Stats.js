@@ -132,30 +132,6 @@ const computeAttackPowerWithEngravings = (data, selectedEngravings) => {
     return ap;
 }
 
-const normalizeCrit = (ap, critRate, critDmg) => {
-    var dmg = ap;
-    if(critRate > 0 && critDmg > 0) {
-        dmg = (critRate * critDmg * ap) + (1 - critRate) * ap;
-    }
-    return dmg;
-}
-
-const normalizeCdr = (dmg, cdr) => {
-    if(cdr > 0) { dmg /= (1 - cdr); }
-    return dmg;
-}
-
-const computeBaseDmg = (data) => {
-    var critRate = +data.critRate; if(isNaN(critRate)) { critRate = 0; }; if(critRate > 1) { critRate = 1; }
-    var critDmg = +data.critDmg; if(isNaN(critDmg)) { critDmg = 2; }; if(critDmg > 6) { critDmg = 6; }
-    var cdr = +data.cdr;
-    if(isNaN(cdr)) { cdr = 0; }
-
-    var dmg = normalizeCrit(computeAttackPower(data), critRate, critDmg);
-        dmg = normalizeCdr(dmg, cdr);
-    return dmg;
-}
-
 const computeCritRateEngrave = (data, selectedEngravings) => {
     var critRate = +data.critRate; if(isNaN(critRate)) { critRate = 0; }
 
@@ -222,6 +198,29 @@ const computeMoveSpeedEngrave = (data, selectedEngravings) => {
     });
 
     return moveSpeed < 1.4 ? moveSpeed : 1.4;
+}
+
+const normalizeCrit = (ap, critRate, critDmg) => {
+    var dmg = ap;
+    if(critRate > 0 && critDmg > 0) {
+        dmg = (critRate * critDmg * ap) + (1 - critRate) * ap;
+    }
+    return dmg;
+}
+
+const normalizeCdr = (dmg, cdr) => {
+    if(cdr > 0) { dmg /= (1 - cdr); }
+    return dmg;
+}
+
+const computeBaseDmg = (data) => {
+    var critRate = +data.critRate; if(isNaN(critRate)) { critRate = 0; }; if(critRate > 1) { critRate = 1; }
+    var critDmg = +data.critDmg; if(isNaN(critDmg)) { critDmg = 2; }; if(critDmg > 6) { critDmg = 6; }
+    var cdr = +data.cdr; if(isNaN(cdr)) { cdr = 0; }
+
+    var dmg = normalizeCrit(computeAttackPower(data), critRate, critDmg);
+        dmg = normalizeCdr(dmg, cdr);
+    return dmg;
 }
 
 const computeBaseDmgEngrave = (data, selectedEngravings) => {
