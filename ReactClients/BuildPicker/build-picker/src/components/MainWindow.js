@@ -3,19 +3,37 @@ import { StyleSheet } from "react-native";
 
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
+import Button from 'react-bootstrap/Button'
 
 import CharacterInput from './CharacterInput.js';
 import EngravingSelector from './EngravingSelector.js';
 import ComputedStats from './ComputedStats.js';
-import ClassChangeDD from './ClassChangeDD.js';
+import OptimizerResults from './OptimizerResults';
+//import ClassChangeDD from './ClassChangeDD.js';
 
 import subclassList from '../data/SubClasses';
 import engravings from '../data/Engravings.js';
 
 function MainWindow() {
     
-    const [possibleEngravings, setPossibleEngravings]  = useState([]);
-    const [lockedEngravings, setLockedEngravings]  = useState([]);
+    const [lockedEngravings, setLockedEngravings]  = useState([
+        engravings[1].items[27], // reflux
+        engravings[0].items[0],  // adrenaline
+    ]);
+    const [possibleEngravings, setPossibleEngravings]  = useState([
+        engravings[0].items[9],   // cursed doll
+        engravings[0].items[12],  // drops of ether
+        engravings[0].items[15],  // ether predator
+        engravings[0].items[19],  // grudge
+        engravings[0].items[21],  // hit master
+        engravings[0].items[22],  // increase mass
+        engravings[0].items[23],  // keen blunt weapon
+        engravings[0].items[25],  // mp efficiency increase
+        engravings[0].items[26],  // magick stream
+        engravings[0].items[32],  // precise dagger
+        engravings[0].items[35],  // raid captain
+        engravings[0].items[38],  // spirit absorbtion
+    ]);
     const [selectedEngravings, setSelectedEngravings]  = useState([
                                                                     engravings[1].items[27], // reflux
                                                                     engravings[0].items[0],  // adrenaline
@@ -73,18 +91,36 @@ function MainWindow() {
                 </Tab>
                 <Tab style={styles.tabWindow} eventKey="BuildOptimizer" title="Build Optimizer">
                     <div style={styles.topPanel}>
-                        <div>
-                            Locked : 
-                            <div className="class-engraving-picker">
-                                <EngravingSelector selectedEngravings={lockedEngravings} setSelectedEngravings={setLockedEngravings} />
+                        <div className="class-engraving-picker">
+                            <EngravingSelector 
+                                label={"Locked In Build: "} 
+                                maxItems={6}
+                                numItems={lockedEngravings.length}
+                                sibling={possibleEngravings}
+                                setSibling={setPossibleEngravings}
+                                selectedEngravings={lockedEngravings} 
+                                setSelectedEngravings={setLockedEngravings} />
+                        </div>
+                        <div className="class-engraving-picker">
+                            <EngravingSelector 
+                                label={"Build Using: "} 
+                                maxItems={15}
+                                numItems={possibleEngravings.length}
+                                sibling={lockedEngravings}
+                                setSibling={setLockedEngravings}
+                                selectedEngravings={possibleEngravings} 
+                                setSelectedEngravings={setPossibleEngravings} />
+                        </div>
+                        <div className='calc-button'>
+                            <div style={styles.spacer}></div>
+                            <div className='d-grid'>
+                                <Button size="lg">Calculate!</Button>
                             </div>
                         </div>
-                        <div>
-                            Choose From : 
-                            <div className="class-engraving-picker">
-                                <EngravingSelector selectedEngravings={possibleEngravings} setSelectedEngravings={setPossibleEngravings} />
-                            </div>
-                        </div>
+                    </div>
+                    <div style={styles.bottomPanel}>
+                        <CharacterInput data={characterData} />
+                        <OptimizerResults data={characterData} selectedEngravings={selectedEngravings}/>
                     </div>
                 </Tab>
             </Tabs>
@@ -93,6 +129,10 @@ function MainWindow() {
 }
 
 const styles = StyleSheet.create({
+    spacer: {
+        minWidth: '263px',
+        height: '100%',
+    },
     engravingPicker: {
         display: 'flex',
         flexDirection: 'row',
@@ -103,7 +143,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
-        border: '1px solid darkcyan',
+        //border: '1px solid darkcyan',
     },
     mainPanel: {
         textAlign: 'center',

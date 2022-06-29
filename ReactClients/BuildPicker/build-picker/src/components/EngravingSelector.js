@@ -2,13 +2,8 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-import PopoverBody from 'react-bootstrap/PopoverBody';
-import PopoverHeader from 'react-bootstrap/PopoverHeader';
-
 import { MultiSelect } from 'primereact/multiselect';
-
 import engravings from '../data/Engravings.js';
-import { Popover } from "bootstrap";
 
 const EngravingSelector = (props) => {
 
@@ -27,6 +22,11 @@ const EngravingSelector = (props) => {
     props.setSelectedEngravings(removed);
   };
 
+  const removeFromSibling = (selected) => {
+    let removed = props.sibling.filter(e => !selected.includes(e));
+    props.setSibling(removed);
+  };
+
   const selectedEngravingTemplate = (option) => {
     if (option) {
         return (
@@ -38,7 +38,7 @@ const EngravingSelector = (props) => {
                   {option.label} 
                   <button 
                     className="selected-engraving-remove p-multiselect-close-icon pi pi-times" 
-                    onClick={()=>{ removeEngraving(option); }}/>
+                    onClick={(e) => { removeEngraving(option); e.stopPropagation(); }}/>
                 </div>
             </OverlayTrigger>
         );
@@ -69,36 +69,63 @@ const EngravingSelector = (props) => {
     );
   };
 
+  var label = <div></div>;
+  if(props.label !== undefined){
+    label = <div style={styles.label}>{props.label}</div>;
+  }
+
+  var maxItems = 10; if(props.maxItems !== undefined) { maxItems = props.maxItems; }
+  var numItems = props.selectedEngravings.length; if(props.numItems !== undefined) { numItems = props.numItems; }
+
   return (
-    <MultiSelect 
-      style={styles.engravingSelector}
-      className="multiselect-custom"
-      options={engravings} 
-      itemTemplate={engravingTemplate}
-      optionGroupTemplate={groupedItemTemplate}
-      optionGroupChildren="items"
-      selectedItemTemplate={selectedEngravingTemplate}
-      panelFooterTemplate={panelFooterTemplate}
-      value={props.selectedEngravings} 
-      onChange={ (e) => { 
-          if (props.selectedEngravings.length < 10) {
-            props.setSelectedEngravings(e.value); 
-          }
+    <div style={styles.wrapper}>
+      {label}
+      <MultiSelect 
+        style={styles.engravingSelector}
+        className="multiselect-custom"
+        options={engravings} 
+        itemTemplate={engravingTemplate}
+        optionGroupTemplate={groupedItemTemplate}
+        optionGroupChildren="items"
+        selectedItemTemplate={selectedEngravingTemplate}
+        panelFooterTemplate={panelFooterTemplate}
+        value={props.selectedEngravings} 
+        onChange={ (e) => { 
+            if (numItems < maxItems) {
+              removeFromSibling(e.value);
+              props.setSelectedEngravings(e.value); 
+            }
+          } 
         } 
-      } 
-      optionLabel="label"
-      optionGroupLabel='label'
-      placeholder="Select Engravings" 
-      filter />
+        optionLabel="label"
+        optionGroupLabel='label'
+        placeholder="Select Engravings" 
+        filter />  
+    </div>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    //border: '1px solid cyan',
+  },
+  label: {
+    //border: '1px solid cyan',
+    display: 'flex',
+    width: '320px',
+    marginRight: '10px',
+    alignItems: 'center',
+    //alignContent: 'center',
+    justifyContent: 'right',
+  },
   engravingSelector: {
     width: '100%',
     marginTop: '10px',
     marginBottom: '10px',
-    borderRadius: '35px'
+    borderRadius: '35px',
   }
 });
 
