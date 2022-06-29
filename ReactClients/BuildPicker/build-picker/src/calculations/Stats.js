@@ -153,7 +153,6 @@ const computeBaseDmg = (data) => {
 
     var dmg = normalizeCrit(computeAttackPower(data), critRate, critDmg);
         dmg = normalizeCdr(dmg, cdr);
-    console.log(dmg);
     return dmg;
 }
 
