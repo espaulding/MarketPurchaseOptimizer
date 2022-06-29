@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet } from "react-native";
 
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
+
 import CharacterInput from './CharacterInput.js';
 import EngravingSelector from './EngravingSelector.js';
 import ComputedStats from './ComputedStats.js';
@@ -11,6 +14,8 @@ import engravings from '../data/Engravings.js';
 
 function MainWindow() {
     
+    const [possibleEngravings, setPossibleEngravings]  = useState([]);
+    const [lockedEngravings, setLockedEngravings]  = useState([]);
     const [selectedEngravings, setSelectedEngravings]  = useState([
                                                                     engravings[1].items[27], // reflux
                                                                     engravings[0].items[0],  // adrenaline
@@ -54,37 +59,62 @@ function MainWindow() {
 
     return (
         <div style={styles.mainPanel}>
-            <div style={styles.topPanel}>
-                <div className="class-engraving-picker">
-                    {/* <ClassChangeDD data={characterData} />
-                    <hr/> */}
-                    <EngravingSelector selectedEngravings={selectedEngravings} setSelectedEngravings={setSelectedEngravings} />
-                    {/* <hr /> */}
-                </div>
-            </div>
-            <div style={styles.bottomPanel}>
-                <CharacterInput data={characterData} />
-                <ComputedStats data={characterData} selectedEngravings={selectedEngravings}/>
-            </div>
+            <Tabs unmountOnExit="true">
+                <Tab style={styles.tabWindow} eventKey="BuildExplorer" title="Build Explorer">
+                    <div style={styles.topPanel}>
+                        <div className="class-engraving-picker">
+                            <EngravingSelector selectedEngravings={selectedEngravings} setSelectedEngravings={setSelectedEngravings} />
+                        </div>
+                    </div>
+                    <div style={styles.bottomPanel}>
+                        <CharacterInput data={characterData} />
+                        <ComputedStats data={characterData} selectedEngravings={selectedEngravings}/>
+                    </div>
+                </Tab>
+                <Tab style={styles.tabWindow} eventKey="BuildOptimizer" title="Build Optimizer">
+                    <div style={styles.topPanel}>
+                        <div>
+                            Locked : 
+                            <div className="class-engraving-picker">
+                                <EngravingSelector selectedEngravings={lockedEngravings} setSelectedEngravings={setLockedEngravings} />
+                            </div>
+                        </div>
+                        <div>
+                            Choose From : 
+                            <div className="class-engraving-picker">
+                                <EngravingSelector selectedEngravings={possibleEngravings} setSelectedEngravings={setPossibleEngravings} />
+                            </div>
+                        </div>
+                    </div>
+                </Tab>
+            </Tabs>
         </div>
     ); 
 }
 
 const styles = StyleSheet.create({
-    mainPanel: {
+    engravingPicker: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    tabWindow: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
+        border: '1px solid darkcyan',
+    },
+    mainPanel: {
         textAlign: 'center',
         width: '100vw',
         height: '100vh'
     },
     topPanel: {
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center',
+        alignItems: 'center',
         width: '95%',
         maxHeight: '25%',
         marginBottom: '10px',

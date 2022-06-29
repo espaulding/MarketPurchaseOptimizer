@@ -95,7 +95,10 @@ const EngravingSelector = (props) => {
 
 const styles = StyleSheet.create({
   engravingSelector: {
-    width: '100%'
+    width: '100%',
+    marginTop: '10px',
+    marginBottom: '10px',
+    borderRadius: '35px'
   }
 });
 

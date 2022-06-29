@@ -4,7 +4,7 @@ const engravings = [
         items: [
             { // 0
                 label: 'Adrenaline', code: 'ADR',
-                tooltip: 'Use Skill -> 1% AP, 6 stacks -> 15% crit (6 stacks max)',
+                tooltip: 'Use Skill -> 1% AP, 6 stacks -> +15% crit (6 stacks max)',
                 impl: {
                     atk: (a) => { return a * 1.06; },
                     cr: (crit) => { return crit + .15; }
@@ -12,7 +12,7 @@ const engravings = [
             },             
             { // 1
                 label: 'All-Out Attack', code: 'ALL', 
-                tooltip: 'Holding or Casting -> 20% DMG, 20% Atk Speed',
+                tooltip: 'Holding or Casting skill -> +20% DMG, +20% Atk Speed',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.2; },
                     aspd: (s) => { return s + .2; }
@@ -20,7 +20,7 @@ const engravings = [
             },       
             { // 2
                 label: 'Ambush Master', code: 'AM', 
-                tooltip: 'Back Attack -> 25% DMG',
+                tooltip: 'Back Attack -> +25% DMG',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.25; }
                 }
@@ -32,21 +32,21 @@ const engravings = [
             },              
             { // 4
                 label: 'Barricade', code: 'BAR',
-                tooltip: 'Shielded -> 16% DMG',
+                tooltip: 'Your Shielded -> +16% DMG',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.16; }
                 }
             },              
             { // 5
                 label: 'Broken Bone', code: 'BB',
-                tooltip: 'staggered enemy -> 40% DMG',
+                tooltip: 'staggered enemy -> +40% DMG',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.4; }
                 }
             },             
             { // 6
                 label: 'Contender', code: 'CON',
-                tooltip: 'Kill Foe -> 2.5% AP per stack (17.5% max)',
+                tooltip: 'Kill Foe -> +2.5% AP per stack (+17.5% max)',
                 impl: {
                     atk: (a) => { return a * 1.175; }
                 }
@@ -58,28 +58,28 @@ const engravings = [
             },         
             { // 8
                 label: 'Crushing Fist', code: 'CF',
-                tooltip: 'Counter Attack -> 20% Atk Power (duration???)',
+                tooltip: 'Counter Attack -> +20% Atk Power (duration???)',
                 impl: {
                     atk: (a) => { return a * 1.2; }
                 }
             },           
             { // 9
                 label: 'Cursed Doll', code: 'CD',
-                tooltip: '16% AP and 25% (Reduced Healing)',
+                tooltip: '+16% Atk Power and -25% Healing Received',
                 impl: {
                     atk: (a) => { return a * 1.16; }
                 }
             } ,          
             { //10
                 label: 'Disrespect', code: 'DIS',
-                tooltip: 'Enemy HP < 30% -> 36% DMG',
+                tooltip: 'Enemy HP < 30% -> +36% DMG',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.36; }
                 }
             },              
             { //11
                 label: 'Divine Protection', code: 'DP',
-                tooltip: '20% chance of 60% DR, cooldown (60/20/10) sec',
+                tooltip: '20% chance of -60% Dmg Taken, cooldown (60/20/10) sec',
                 impl: {
                     dr: (d) =>  {
                         var dr = 1 - (1 - d) * (1 - .6);    // reduction if 20% succeeds and not on cooldown
@@ -242,28 +242,28 @@ const engravings = [
             },       
             { //34
                 label: 'Propulsion', code: 'PRO',
-                tooltip: 'Use spacebar -> 16% DMG (5s)',
+                tooltip: 'Use spacebar -> +16% DMG (5s)',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.16; }
                 }
             },            
             { //35
                 label: 'Raid Captain', code: 'RC',
-                tooltip: '45% of movement bonus as % DMG (140% Move Speed -> 18% DMG)',
+                tooltip: '45% of movement bonus as % DMG (140% Move Speed = +18% DMG)',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * (((mspd - 1) * .45) + 1); }
                 }
             },            
             { //36
                 label: 'Shield Piercing', code: 'SP',
-                tooltip: 'Attacking shield -> 100% DMG ',
+                tooltip: 'Attacking shielded enemy -> +100% DMG ',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 2; }
                 }
             },        
             { //37 
                 label: 'Sight Focus', code: 'SF',
-                tooltip: 'Say "!!!!!" in Normal Chat (30s CD) -> 28% DMG (6s) ... max uptime of 20%',
+                tooltip: 'Say "!!!!!" in Normal Chat (30s CD) -> +28% DMG (6s) ... max uptime of 20%',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.28; }
                 }
@@ -420,7 +420,7 @@ const engravings = [
             },           
             { //16
                 label: '(Sorceress) Igniter', code: 'IGN',
-                tooltip: 'Magick Amplification -> Crit Rate +25% and Crit Dmg +50%. When Magic Amplification is triggered skill currently in cooldown -50% CD',
+                tooltip: 'Magick Amplification -> Crit Rate +25% and Crit Dmg +50%. When Magic Amplification is triggered skills currently in cooldown -50% CD',
                 impl: {
                     cr: (crit) => { return crit + .25; },
                     cd: (crit) => { return crit + .5; }
