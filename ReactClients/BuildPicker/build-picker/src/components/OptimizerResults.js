@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet } from "react-native";
 import NumberFormat from 'react-number-format';
 import Table from 'react-bootstrap/Table';

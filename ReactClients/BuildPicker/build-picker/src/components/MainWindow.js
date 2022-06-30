@@ -36,7 +36,8 @@ function MainWindow() {
     const [cdr, setCdr] = useState(.2583);                         // 25.83%
     const [cdrGem, setCdrGem] = useState(7);                       // level 7 gem means 14% addition cooldown reduction
     const [buildLimit, setBuildLimit] = useState(5);               // the number of engravings to optimize for
-    const [numResults, setNumResults] = useState(100);             // the number of results returned by the optimizer
+    //const [numResults, setNumResults] = useState(100);             // the number of results returned by the optimizer
+    const numResults = 100;
 
     // wrap all the react hooks for character data into an object so it can be passed around as a single variable
     const characterData = {

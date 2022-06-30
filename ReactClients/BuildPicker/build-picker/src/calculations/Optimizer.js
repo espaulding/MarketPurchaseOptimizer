@@ -7,7 +7,7 @@ function powerSet(list, sizeDesired) {
         combination;
 
     for (var i = 1; i < combinationsCount ; i++ ){
-        var combination = [];
+        combination = [];
         for (var j=0;j<listSize;j++){
             if ((i & (1 << j))){
                 combination.push(list[j]);

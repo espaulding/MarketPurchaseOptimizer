@@ -77,7 +77,6 @@ const EngravingSelector = (props) => {
   }
 
   var maxItems = 10; if(props.maxItems !== undefined) { maxItems = props.maxItems; }
-  var numItems = props.selectedEngravings.length; if(props.numItems !== undefined) { numItems = props.numItems; }
 
   return (
     <div style={styles.wrapper}>
