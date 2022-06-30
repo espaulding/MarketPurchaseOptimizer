@@ -85,11 +85,8 @@ const styles = StyleSheet.create({
     padding: '0',
   },
   resultRow: {
-    //height: '33.5px',
-    //maxHeight: '65.5px',
   },
   btnCell: {
-    //height: '30px',
   },
   labelCell: {
       display: 'flex',

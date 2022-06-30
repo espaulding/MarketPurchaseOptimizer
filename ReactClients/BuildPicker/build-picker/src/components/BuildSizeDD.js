@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       alignContent: 'center',
       justifyContent: 'center',
-      textAlign: 'center'
+      textAlign: 'center',
   },
   label: {
-    paddingRight: '15px'
-  }
+    paddingRight: '15px',
+  },
 });
 
 export default BuildSizeDD;

@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     justifyContent: 'right',
     width: '100%',
     height: '30px',
-    paddingRight: '15px'
+    paddingRight: '15px',
   },
   input: {
     height: '30px',

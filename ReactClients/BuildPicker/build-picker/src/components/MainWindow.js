@@ -155,7 +155,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
-        //border: '1px solid darkcyan',
     },
     mainPanel: {
         textAlign: 'center',

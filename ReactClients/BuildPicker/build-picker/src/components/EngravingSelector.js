@@ -25,7 +25,7 @@ const EngravingSelector = (props) => {
   const removeFromSibling = (selected) => {
     if (props.sibling !== undefined) {
       let removed = props.sibling.filter(e => !selected.includes(e));
-    props.setSibling(removed);
+      props.setSibling(removed);
     }
   };
 
@@ -112,15 +112,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
-    //border: '1px solid cyan',
   },
   label: {
-    //border: '1px solid cyan',
     display: 'flex',
     width: '320px',
     marginRight: '10px',
     alignItems: 'center',
-    //alignContent: 'center',
     justifyContent: 'right',
   },
   engravingSelector: {
@@ -128,7 +125,7 @@ const styles = StyleSheet.create({
     marginTop: '10px',
     marginBottom: '10px',
     borderRadius: '35px',
-  }
+  },
 });
 
 export default EngravingSelector;
