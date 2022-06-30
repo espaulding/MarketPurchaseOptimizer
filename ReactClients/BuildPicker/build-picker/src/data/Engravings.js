@@ -180,7 +180,7 @@ const engravings = [
                 label: 'MP Efficiency Increase', code: 'MEI',
                 tooltip: 'MP < 50% -> 12% DMG (+30% MP Regen)',
                 impl: {
-                    mpr: (m) => { return m * 1.3; },
+                    mpr: (m, base) => { return m + (base * .3); },
                     dmg: (d, mspd, aspd) => { return d * 1.12; }
                 }
             }, 
@@ -188,7 +188,7 @@ const engravings = [
                 label: 'Magick Stream', code: 'MS',
                 tooltip: 'Not hit for 3 sec -> 3% MP Regen, 5 stacks -> 10% CDR, On hit (10s CD) -> lose 1 stack',
                 impl: {
-                    mpr: (m) => { return m * 1.15; },
+                    mpr: (m, base) => { return m + (base * .15); },
                     cdr: (c) => { return (1 - (1 - c) * (1 - .1)); }
                 }
             },           
@@ -216,7 +216,7 @@ const engravings = [
                 tooltip: '30% MP',
                 impl: {
                     mp: (m) => { return m * 1.3; },
-                    mpr: (m) => { return m * 1.3; }
+                    mprBase: (m) => { return m * 1.3; }
                 }
             },       
             { //31
@@ -459,21 +459,21 @@ const engravings = [
                 }
             },                   
             { //21
-                label: '(Gunslinger) Peacemaker - Shotgun', code: 'PEA',
+                label: '(Gunslinger) Peacemaker - Shotgun', code: 'PES',
                 tooltip: 'Handgun -> Atk Speed +(8/12/16)%. Shotgun -> Crit Rate +(15/20/25)%. Rifle -> +10% DMG and if enemy HP < 50% -> +(10/20/30)% DMG for 9s',
                 impl: { 
                     cr: (crit) => { return crit + .25; },
                 } 
             },                
             { //22
-                label: '(Gunslinger) Peacemaker - Rifle', code: 'PEA',
+                label: '(Gunslinger) Peacemaker - Rifle', code: 'PER',
                 tooltip: 'Handgun -> Atk Speed +(8/12/16)%. Shotgun -> Crit Rate +(15/20/25)%. Rifle -> +10% DMG and if enemy HP < 50% -> +(10/20/30)% DMG for 9s',
                 impl: { 
                     dmg: (d, mspd, aspd) => { return d * 1.1 * 1.3; },
                 } 
             },  
             { //23
-                label: '(Gunslinger) Peacemaker - Handgun', code: 'PEA',
+                label: '(Gunslinger) Peacemaker - Handgun', code: 'PEH',
                 tooltip: 'Handgun -> Atk Speed +(8/12/16)%. Shotgun -> Crit Rate +(15/20/25)%. Rifle -> +10% DMG and if enemy HP < 50% -> +(10/20/30)% DMG for 9s',
                 impl: { 
                     aspd: (s) => { return s + .16; }

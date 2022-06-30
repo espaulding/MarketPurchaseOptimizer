@@ -13,7 +13,7 @@ const LostArkMath = {
             }
         });
     
-        return HP;
+        return Math.floor(HP);
     },
 
     // t -> type of defense 'physical' or 'magical'
@@ -23,7 +23,7 @@ const LostArkMath = {
         if (t === 'magical') { defense = +data.defenseMagical }
         if(isNaN(defense)) { defense = 0; }
 
-        return defense;
+        return Math.floor(defense);
     },
 
     // t -> type of defense 'physical' or 'magical'
@@ -37,7 +37,7 @@ const LostArkMath = {
             }
         });
 
-        return defense;
+        return Math.floor(defense);
     },
 
     // t -> type of defense 'physical' or 'magical'
@@ -68,7 +68,7 @@ const LostArkMath = {
         var hp = +data.hp; if(isNaN(hp)) { hp = 0; }
         var percentDamageTaken = (1 - this.computeDr(data, t));
         if(percentDamageTaken > 0 && hp > 0) { hp /= percentDamageTaken; }
-        return  hp;
+        return  Math.floor(hp);
     },
 
     // t -> type of defense physical or magical
@@ -76,12 +76,12 @@ const LostArkMath = {
         var hp = this.computeHpWithEngravings(data, selectedEngravings);
         var percentDamageTaken = (1 - this.computeDrWithEngravings(data, t, selectedEngravings));
         if(percentDamageTaken > 0 && hp > 0) { hp /= percentDamageTaken; }
-        return  hp;
+        return  Math.floor(hp);
     },
 
     computeMp: function(data) {
         var MP = +data.mp; if(isNaN(MP)) { MP = 0; }
-        return MP;
+        return Math.floor(MP);
     },
 
     computeMpWithEngravings: function(data, selectedEngravings) {
@@ -93,24 +93,32 @@ const LostArkMath = {
             }
         });
 
-        return MP;
+        return Math.floor(MP);
     },
 
     computeMpRegen: function(data) {
         var mpRegen = +data.mpRegen; if(isNaN(mpRegen)) { mpRegen = 0; }
-        return mpRegen;
+        return Math.floor(mpRegen);
     },
 
     computeMpRegenWithEngravings: function(data, selectedEngravings) {
         var mpRegen = this.computeMpRegen(data);
+        var baseRegen = mpRegen;
+
+        selectedEngravings.forEach(function (e) {
+            if(e.impl !== undefined && e.impl.mprBase !== undefined) {
+                baseRegen = e.impl.mprBase(baseRegen);
+            }
+        });
+        mpRegen = Math.floor(baseRegen) - 1;
 
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.mpr !== undefined) {
-                mpRegen = e.impl.mpr(mpRegen);
+                mpRegen = e.impl.mpr(mpRegen, baseRegen);
             }
         });
 
-        return mpRegen;
+        return Math.floor(mpRegen);
     },
 
     computeAttackPower: function(data) {
@@ -122,7 +130,7 @@ const LostArkMath = {
             ap = Math.floor(Math.sqrt(atkStat * wpnDmg / 6));
         }
 
-        return ap;
+        return Math.floor(ap);
     },
 
     computeAttackPowerWithEngravings: function(data, selectedEngravings) {
@@ -134,7 +142,7 @@ const LostArkMath = {
             }
         });
 
-        return ap;
+        return Math.floor(ap);
     },
 
     computeCritRate: function(data) {

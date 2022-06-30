@@ -162,6 +162,10 @@ table {
   background-color: gray;
 }
 
+.p-placeholder {
+  color: blue !important;
+}
+
 .p-checkbox-icon {
   color: cyan !important;
 }

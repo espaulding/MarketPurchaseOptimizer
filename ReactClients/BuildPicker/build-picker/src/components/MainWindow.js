@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet } from "react-native";
 
-import Tabs from 'react-bootstrap/Tabs'
-import Tab from 'react-bootstrap/Tab'
-import Button from 'react-bootstrap/Button'
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
+import Button from 'react-bootstrap/Button';
 
 import CharacterInput from './CharacterInput.js';
 import EngravingSelector from './EngravingSelector.js';
@@ -60,6 +60,21 @@ function MainWindow() {
         cdrGem : cdrGem, setCdrGem : setCdrGem
     }
 
+    const calculateBuildsHandler = (e) => {
+        e.target.disabled = true; // stop user from clicking the button again during optimization
+        //setOptimizerResults([]); 
+        optimizeBuild({
+            data : characterData,
+            numResults : numResults,
+            buildLimit : buildLimit,
+            lockedEngravings : lockedEngravings,
+            possibleEngravings : possibleEngravings,
+            setOptimizerResults : setOptimizerResults,
+            //completeCallback : () => { e.target.disabled = false; }
+        });
+        e.target.disabled = false;
+    };
+
     return (
         <div style={styles.mainPanel}>
             <Tabs unmountOnExit={true}>
@@ -104,16 +119,7 @@ function MainWindow() {
                                 <div className='d-grid'>
                                     <Button 
                                         size="lg" 
-                                        onClick={
-                                                () => { optimizeBuild({
-                                                    data : characterData,
-                                                    numResults : numResults,
-                                                    buildLimit : buildLimit,
-                                                    lockedEngravings : lockedEngravings,
-                                                    possibleEngravings : possibleEngravings,
-                                                    setOptimizerResults : setOptimizerResults
-                                                }); }
-                                            }>
+                                        onClick={calculateBuildsHandler}>
                                             Calculate Top Builds!
                                     </Button>
                                 </div>
