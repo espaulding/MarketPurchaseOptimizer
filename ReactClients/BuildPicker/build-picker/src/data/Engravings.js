@@ -4,7 +4,7 @@ const engravings = [
         items: [
             { // 0
                 label: 'Adrenaline', code: 'ADR',
-                tooltip: 'Use Skill -> 1% AP, 6 stacks -> +15% crit (6 stacks max)',
+                tooltip: 'Use Skill -> 1% Atk Power, 6 stacks -> +15% crit (6 stacks max)',
                 impl: {
                     atk: (a) => { return a * 1.06; },
                     cr: (crit) => { return crit + .15; }
@@ -46,7 +46,7 @@ const engravings = [
             },             
             { // 6
                 label: 'Contender', code: 'CON',
-                tooltip: 'Kill Foe -> +2.5% AP per stack (+17.5% max)',
+                tooltip: 'Kill Foe -> +2.5% Atk Power per stack (+17.5% max)',
                 impl: {
                     atk: (a) => { return a * 1.175; }
                 }
@@ -110,7 +110,7 @@ const engravings = [
             },        
             { //15
                 label: 'Ether Predator', code: 'EP',
-                tooltip: 'On hit -> .5% AP 1% Def for 90s up to 30 stacks (orb CD 10s)',
+                tooltip: 'On hit -> .5% Atk Power 1% Def for 90s up to 30 stacks (orb CD 10s)',
                 impl: {
                     def: (d, bd) => { return d + (bd * .3); },
                     atk: (a) => { return a * 1.15; }
@@ -128,7 +128,7 @@ const engravings = [
             },        
             { //18
                 label: 'Fortitude', code: 'FOR',
-                tooltip: 'Low HP -> 30% DR',
+                tooltip: 'Low HP -> Damage Taken -30%',
                 impl: {
                     dr: (d) => { return 1 - (1 - d) * (1 - .3); }
                 }
@@ -157,7 +157,7 @@ const engravings = [
             },              
             { //22
                 label: 'Increase Mass', code: 'IM',
-                tooltip: '18% AP (-10% Atk Speed)',
+                tooltip: '18% Atk Power (-10% Atk Speed)',
                 impl: {
                     atk: (a) => { return a * 1.18; },
                     aspd: (s) => { return s - .1; }
@@ -285,7 +285,7 @@ const engravings = [
             },       
             { //40
                 label: 'Strong Will', code: 'SW',
-                tooltip: 'Being pushed -> 30% DR',
+                tooltip: 'Being pushed -> Damage Taken -30%',
                 impl: {
                     dr: (d) => { return 1 - (1 - d) * (1 - .3); }
                 }
