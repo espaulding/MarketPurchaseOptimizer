@@ -12,7 +12,6 @@ import OptimizerResults from './OptimizerResults';
 import BuildSizeDD from './BuildSizeDD.js';
 
 import subclassList from '../data/SubClasses';
-//import engravings from '../data/Engravings.js';
 import recommendations from '../data/Recommended.js';
 import { optimizeBuild } from '../calculations/Optimizer'
 
@@ -20,30 +19,24 @@ function MainWindow() {
     
     const [lockedEngravings, setLockedEngravings]  = useState(recommendations.sorc.lockedEngravings);
     const [possibleEngravings, setPossibleEngravings]  = useState(recommendations.sorc.possibleEngravings);
-    const [selectedEngravings, setSelectedEngravings]  = useState([
-                                                                    // engravings[1].items[27], // reflux
-                                                                    // engravings[0].items[0],  // adrenaline
-                                                                    // engravings[0].items[23], // keen blunt weapon
-                                                                    // engravings[0].items[35], // raid captain
-                                                                    // engravings[0].items[21], // hit master 
-                                                                  ]);
-    const [subclass, setSubclass] = useState(subclassList.sorceress);
-    const [defensePhysical, setDefensePhysical] = useState(19963);
-    const [defenseMagical, setDefenseMagical] = useState(19800);
-    const [hp, setHp] = useState(93216);
-    const [mp, setMp] = useState(3594);
-    const [mpRegen, setMpRegen] = useState(159);
-    const [critRate, setCritRate] = useState(.4014);
-    const [critDmg, setCritDmg] = useState(2.00);
-    const [atkStat, setAtkStat] = useState(105603);
-    const [wpnDmg, setWpnDmg] = useState(24241);
-    const [atkSpeed, setAtkSpeed] = useState(1.2066);
-    const [moveSpeed, setMoveSpeed] = useState(1.3066);
-    const [cdr, setCdr] = useState(.2583); // 25.83%
-    const [cdrGem, setCdrGem] = useState(7); 
+    const [selectedEngravings, setSelectedEngravings]  = useState([]);
     const [optimizerResults, setOptimizerResults]  = useState([]);
-    const [buildLimit, setBuildLimit] = useState(5);
-    const [numResults, setNumResults] = useState(100);
+    const [subclass, setSubclass] = useState(subclassList.sorceress);
+    const [defensePhysical, setDefensePhysical] = useState(19963); // 19,963
+    const [defenseMagical, setDefenseMagical] = useState(19800);   // 19,800
+    const [hp, setHp] = useState(93216);                           // 93,216
+    const [mp, setMp] = useState(3594);                            // 3,594
+    const [mpRegen, setMpRegen] = useState(159);                   // 159
+    const [critRate, setCritRate] = useState(.4014);               // 40.14%
+    const [critDmg, setCritDmg] = useState(2.00);                  // 200%
+    const [atkStat, setAtkStat] = useState(105603);                // 105,603
+    const [wpnDmg, setWpnDmg] = useState(24241);                   // 24,241 
+    const [atkSpeed, setAtkSpeed] = useState(1.2066);              // 120.66%
+    const [moveSpeed, setMoveSpeed] = useState(1.3066);            // 130.66%
+    const [cdr, setCdr] = useState(.2583);                         // 25.83%
+    const [cdrGem, setCdrGem] = useState(7);                       // level 7 gem means 14% addition cooldown reduction
+    const [buildLimit, setBuildLimit] = useState(5);               // the number of engravings to optimize for
+    const [numResults, setNumResults] = useState(100);             // the number of results returned by the optimizer
 
     // wrap all the react hooks for character data into an object so it can be passed around as a single variable
     const characterData = {
@@ -54,8 +47,7 @@ function MainWindow() {
         subclass : subclass, setSubclass : setSubclass,
         defensePhysical : defensePhysical, setDefensePhysical : setDefensePhysical,
         defenseMagical : defenseMagical, setDefenseMagical : setDefenseMagical,
-        hp : hp, setHp : setHp,
-        mp : mp, setMp : setMp,
+        hp : hp, setHp : setHp, mp : mp, setMp : setMp,
         mpRegen : mpRegen, setMpRegen : setMpRegen,
         critRate : critRate, setCritRate : setCritRate,
         critDmg : critDmg, setCritDmg : setCritDmg,

@@ -60,28 +60,28 @@ const ComputedStats = (props) => {
         </thead>
         <tbody>
           <tr>
-              <td style={styles.labelCell}>MP Regen</td>
-              <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mpRegen}></NumberFormat></td>
-              <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mpRegenEngrave}></NumberFormat></td>
-          </tr>
-          <tr>
-              <td style={styles.labelCell}>HP/MP</td>
+              <td style={styles.labelCell}>MP</td>
               <td style={styles.numberCell}>
                 <div className="stats" style={styles.doubleCell}>
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={hp}></NumberFormat>
-                  (HP), 
+                <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mpRegen}></NumberFormat>
+                  (MP/s),
                   <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mp}></NumberFormat>
                   (MP)
                 </div>
               </td>
               <td style={styles.numberCell}>
                 <div className="stats" style={styles.doubleCell}>
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={hpEngrave}></NumberFormat>
-                  (HP), 
+                <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mpRegenEngrave}></NumberFormat>
+                  (MP/s),
                   <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mpEngrave}></NumberFormat>
                   (MP)
                 </div>
               </td>
+          </tr>
+          <tr>
+              <td style={styles.labelCell}>HP</td>
+              <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={hp}></NumberFormat></td>
+              <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={hpEngrave}></NumberFormat></td>
           </tr>
           <tr>
               <td style={styles.labelCell}>Effective HP (Physical)</td>
