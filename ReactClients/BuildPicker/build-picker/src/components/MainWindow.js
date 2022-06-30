@@ -112,7 +112,7 @@ function MainWindow() {
                                         onClick={
                                                 () => { optimizeBuild({
                                                     data : characterData,
-                                                    numResults : 15,
+                                                    numResults : 100,
                                                     buildLimit : buildLimit,
                                                     lockedEngravings : lockedEngravings,
                                                     possibleEngravings : possibleEngravings,

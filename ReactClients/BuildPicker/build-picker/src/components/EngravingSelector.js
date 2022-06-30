@@ -23,8 +23,10 @@ const EngravingSelector = (props) => {
   };
 
   const removeFromSibling = (selected) => {
-    let removed = props.sibling.filter(e => !selected.includes(e));
+    if (props.sibling !== undefined) {
+      let removed = props.sibling.filter(e => !selected.includes(e));
     props.setSibling(removed);
+    }
   };
 
   const selectedEngravingTemplate = (option) => {
@@ -91,7 +93,7 @@ const EngravingSelector = (props) => {
         panelFooterTemplate={panelFooterTemplate}
         value={props.selectedEngravings} 
         onChange={ (e) => { 
-            if (numItems < maxItems) {
+            if (e.value.length <= maxItems) {
               removeFromSibling(e.value);
               props.setSelectedEngravings(e.value); 
             }

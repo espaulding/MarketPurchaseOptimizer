@@ -29,7 +29,7 @@ const OptimizerResults = (props) => {
     return(
       results.map(
         (r, index) => {
-          return <tr key={index}>
+          return <tr key={index} style={styles.resultRow}>
                   <td style={styles.numberCell}>
                     <NumberFormat 
                       style={styles.inputCell}
@@ -41,7 +41,7 @@ const OptimizerResults = (props) => {
                       value={convertPercent(r.dpsGain)}/>
                   </td>
                   <td style={styles.labelCell}>
-                    {engravingToText(r.engravings)}
+                    <span>{engravingToText(r.engravings)}</span>
                   </td>
                   <td style={styles.btnCell}>
                     <Button 
@@ -61,18 +61,20 @@ const OptimizerResults = (props) => {
 
   return (
     <div className="stat-calc">
-      <Table striped bordered variant="dark" size="sm">
-        <thead>
-          <tr>
-            <td>DPS Gain</td>
-            <td>Engravings</td>
-            <td>Apply Build</td>
-          </tr>
-        </thead>
-        <tbody>
-          {renderResults()}
-        </tbody>
-      </Table>          
+      <div className="optimizer-result-table">
+        <Table striped bordered variant="dark" size="sm">
+          <thead>
+            <tr>
+              <td>DPS Gain</td>
+              <td>Engravings</td>
+              <td style={styles.numberCell}>Apply Build</td>
+            </tr>
+          </thead>
+          <tbody>
+            {renderResults()}
+          </tbody>
+        </Table>          
+      </div>
     </div>
   );
 }
@@ -82,31 +84,31 @@ const styles = StyleSheet.create({
     height: '30px',
     padding: '0',
   },
+  resultRow: {
+    //height: '33.5px',
+    //maxHeight: '65.5px',
+  },
   btnCell: {
-    height: '30px',
+    //height: '30px',
   },
   labelCell: {
       display: 'flex',
-      justifyContent: 'right',
-      minWidth: '500x',
-      height: '32px',
+      justifyContent: 'flex-start',
+      alignContent: 'center',
+      textAlign: 'left',
       paddingTop: '4px',
-      //paddingBottom: '7px',
       paddingLeft: '5px',
       paddingRight: '10px',
   },
   numberCell: {
-    //paddingTop: '10px',
+    textAlignVertical: 'middle',
     width: '100px',
-    height: '30px',
-    minWidth: '100px',
     maxWidth: '210px',
   },
   inputCell: {
     width: '90px',
     minWidth: '90px',
     maxWidth: '200px',
-    //paddingBottom: '3px',
   },
 });
 
