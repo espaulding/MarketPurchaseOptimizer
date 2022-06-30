@@ -1,4 +1,4 @@
-import { computeBaseDmg, computeBaseDmgEngrave } from '../calculations/Stats.js';
+import LostArkMath from '../calculations/Stats.js'
 
 function powerSet(list, sizeDesired) {
     var set = [],
@@ -33,7 +33,7 @@ const optimizeBuild = (props) => {
   combinations.forEach(
     e => { results.push(
       {
-        dpsGain: (computeBaseDmgEngrave(props.data, e)/computeBaseDmg(props.data)) - 1,
+        dpsGain: (LostArkMath.computeBaseDmgEngrave(props.data, e) / LostArkMath.computeBaseDmg(props.data)) - 1,
         engravings: e
       }
     )}

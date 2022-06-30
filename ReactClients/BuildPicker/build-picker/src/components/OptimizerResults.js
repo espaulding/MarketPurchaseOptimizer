@@ -4,12 +4,12 @@ import NumberFormat from 'react-number-format';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button'
 
-import { computeBaseDmg, computeBaseDmgEngrave } from '../calculations/Stats.js';
+import LostArkMath from '../calculations/Stats.js'
 
 const OptimizerResults = (props) => {
   const init = [
     {
-      dpsGain: (computeBaseDmgEngrave(props.data, props.selectedEngravings)/computeBaseDmg(props.data)) - 1,
+      dpsGain: (LostArkMath.computeBaseDmgEngrave(props.data, props.selectedEngravings) / LostArkMath.computeBaseDmg(props.data)) - 1,
       engravings: props.selectedEngravings
     }
   ];

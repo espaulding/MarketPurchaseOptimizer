@@ -9,6 +9,7 @@ import CharacterInput from './CharacterInput.js';
 import EngravingSelector from './EngravingSelector.js';
 import ComputedStats from './ComputedStats.js';
 import OptimizerResults from './OptimizerResults';
+import BuildSizeDD from './BuildSizeDD.js';
 
 import subclassList from '../data/SubClasses';
 //import engravings from '../data/Engravings.js';
@@ -42,6 +43,7 @@ function MainWindow() {
     const [cdrGem, setCdrGem] = useState(7); 
     const [optimizerResults, setOptimizerResults]  = useState([]);
     const [buildLimit, setBuildLimit] = useState(5);
+    const [numResults, setNumResults] = useState(100);
 
     // wrap all the react hooks for character data into an object so it can be passed around as a single variable
     const characterData = {
@@ -105,14 +107,14 @@ function MainWindow() {
                                     setSelectedEngravings={setPossibleEngravings} />
                             </div>
                             <div className='calc-button'>
-                                <div style={styles.spacer}>Build for 5 Engravings</div>
+                                <div style={styles.spacer}><BuildSizeDD buildLimit={buildLimit} setBuildLimit={setBuildLimit}/></div>
                                 <div className='d-grid'>
                                     <Button 
                                         size="lg" 
                                         onClick={
                                                 () => { optimizeBuild({
                                                     data : characterData,
-                                                    numResults : 100,
+                                                    numResults : numResults,
                                                     buildLimit : buildLimit,
                                                     lockedEngravings : lockedEngravings,
                                                     possibleEngravings : possibleEngravings,
@@ -175,8 +177,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '95%',
         maxHeight: '25%',
-        marginBottom: '10px',
-        overflow: 'auto'
+        marginBottom: '10px'
     },
     bottomPanel: {
         display: 'flex',

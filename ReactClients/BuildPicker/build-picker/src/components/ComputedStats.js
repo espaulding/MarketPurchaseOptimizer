@@ -3,15 +3,7 @@ import { StyleSheet } from "react-native";
 import NumberFormat from 'react-number-format';
 import Table from 'react-bootstrap/Table'
 
-import { 
-    computeDr, computeDrWithEngravings, computeDefWithEngravings,
-    computeEffectiveHp, computeEffectiveHpWithEngravings, computeHpWithEngravings,
-    computeMpWithEngravings, computeMpRegenWithEngravings,
-    computeAttackPower, computeAttackPowerWithEngravings,
-    computeCritRateEngrave, computeCritDmgEngrave,
-    computeCdr, computeCdrEngrave, computeAtkSpeedEngrave, computeMoveSpeedEngrave,
-    computeBaseDmg, computeBaseDmgEngrave
- } from '../calculations/Stats.js'
+import LostArkMath from '../calculations/Stats.js'
 
 const ComputedStats = (props) => {
 
@@ -20,38 +12,41 @@ const ComputedStats = (props) => {
   }
 
   const characterData = props.data;
-  var hp = +characterData.hp; if(isNaN(hp)) { hp = 0; }
-  var hpEngrave = computeHpWithEngravings(characterData, props.selectedEngravings);
-  var mp = +characterData.mp; if(isNaN(mp)) { mp = 0; }
-  var mpEngrave = computeMpWithEngravings(characterData, props.selectedEngravings);
-  var mpRegen = +characterData.mpRegen; if(isNaN(mpRegen)) { mpRegen = 0; }
-  var mpRegenEngrave = computeMpRegenWithEngravings(characterData, props.selectedEngravings);
-  var defensePhysical = +characterData.defensePhysical; if(isNaN(defensePhysical)) { defensePhysical = 0; }
-  var physDefEngrave = computeDefWithEngravings(characterData, 'physical', props.selectedEngravings);
-  var defenseMagical = +characterData.defenseMagical; if(isNaN(defenseMagical)) { defenseMagical = 0; }
-  var magDefEngrave = computeDefWithEngravings(characterData, 'magical', props.selectedEngravings);
-  var physDr = computeDr(characterData, 'physical');
-  var magDr = computeDr(characterData, 'magical');
-  var physDrEngrave = computeDrWithEngravings(characterData, 'physical', props.selectedEngravings);
-  var magDrEngrave = computeDrWithEngravings(characterData, 'magical', props.selectedEngravings);
-  var physEffectiveHp = computeEffectiveHp(characterData, 'physical');
-  var magEffectiveHp = computeEffectiveHp(characterData, 'magical');
-  var physEffectiveHpEngrave = computeEffectiveHpWithEngravings(characterData, 'physical', props.selectedEngravings);
-  var magEffectiveHpEngrave = computeEffectiveHpWithEngravings(characterData, 'magical', props.selectedEngravings);
-  var ap = computeAttackPower(characterData);
-  var apEngrave = computeAttackPowerWithEngravings(characterData, props.selectedEngravings);
-  var atkSpeed = +characterData.atkSpeed; if(isNaN(atkSpeed)) { atkSpeed = 1; }
-  var atkSpeedEngrave = computeAtkSpeedEngrave(characterData, props.selectedEngravings);
-  var moveSpeed = +characterData.moveSpeed; if(isNaN(moveSpeed)) { moveSpeed = 1; }
-  var moveSpeedEngrave = computeMoveSpeedEngrave(characterData, props.selectedEngravings);
-  var cdr = computeCdr(characterData);
-  var cdrEngrave = computeCdrEngrave(characterData, props.selectedEngravings);
-  var critRate = +characterData.critRate; if(isNaN(critRate)) { critRate = 0; }; if(critRate > 1) { critRate = 1; }
-  var critRateEngrave = computeCritRateEngrave(characterData, props.selectedEngravings);
-  var critDmg = +characterData.critDmg; if(isNaN(critDmg)) { critDmg = 2; }; if(critDmg > 6) { critDmg = 6; }
-  var critDmgEngrave = computeCritDmgEngrave(characterData, props.selectedEngravings);
-  var baseDmg = computeBaseDmg(characterData);
-  var baseDmgEngrave = computeBaseDmgEngrave(characterData, props.selectedEngravings)
+  var mp = LostArkMath.computeMp(characterData);
+  var mpEngrave = LostArkMath.computeMpWithEngravings(characterData, props.selectedEngravings);
+  var mpRegen = LostArkMath.computeMpRegen(characterData);
+  var mpRegenEngrave = LostArkMath.computeMpRegenWithEngravings(characterData, props.selectedEngravings);
+
+  var hp = LostArkMath.computeHp(characterData);
+  var hpEngrave = LostArkMath.computeHpWithEngravings(characterData, props.selectedEngravings);
+  var defensePhysical = LostArkMath.computeDef(characterData, 'physical');
+  var physDefEngrave = LostArkMath.computeDefWithEngravings(characterData, 'physical', props.selectedEngravings);
+  var defenseMagical = LostArkMath.computeDef(characterData, 'magical');
+  var magDefEngrave = LostArkMath.computeDefWithEngravings(characterData, 'magical', props.selectedEngravings);
+  var physDr = LostArkMath.computeDr(characterData, 'physical');
+  var physDrEngrave = LostArkMath.computeDrWithEngravings(characterData, 'physical', props.selectedEngravings);
+  var magDr = LostArkMath.computeDr(characterData, 'magical');
+  var magDrEngrave = LostArkMath.computeDrWithEngravings(characterData, 'magical', props.selectedEngravings);
+  var physEffectiveHp = LostArkMath.computeEffectiveHp(characterData, 'physical');
+  var magEffectiveHp = LostArkMath.computeEffectiveHp(characterData, 'magical');
+  var physEffectiveHpEngrave = LostArkMath.computeEffectiveHpWithEngravings(characterData, 'physical', props.selectedEngravings);
+  var magEffectiveHpEngrave = LostArkMath.computeEffectiveHpWithEngravings(characterData, 'magical', props.selectedEngravings);
+
+  var atkSpeed = LostArkMath.computeAtkSpeed(characterData);
+  var atkSpeedEngrave = LostArkMath.computeAtkSpeedEngrave(characterData, props.selectedEngravings);
+  var moveSpeed = LostArkMath.computeMoveSpeed(characterData);
+  var moveSpeedEngrave = LostArkMath.computeMoveSpeedEngrave(characterData, props.selectedEngravings);
+  var cdr = LostArkMath.computeCdr(characterData);
+  var cdrEngrave = LostArkMath.computeCdrEngrave(characterData, props.selectedEngravings);
+  var critRate = LostArkMath.computeCritRate(characterData);
+  var critRateEngrave = LostArkMath.computeCritRateEngrave(characterData, props.selectedEngravings);
+  var critDmg = LostArkMath.computeCritDmg(characterData);
+  var critDmgEngrave = LostArkMath.computeCritDmgEngrave(characterData, props.selectedEngravings);
+
+  var ap = LostArkMath.computeAttackPower(characterData);
+  var apEngrave = LostArkMath.computeAttackPowerWithEngravings(characterData, props.selectedEngravings);
+  var baseDmg = LostArkMath.computeBaseDmg(characterData);
+  var baseDmgEngrave = LostArkMath.computeBaseDmgEngrave(characterData, props.selectedEngravings)
 
   return (
     <div className="stat-calc">
