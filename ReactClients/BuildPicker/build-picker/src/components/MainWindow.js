@@ -23,6 +23,7 @@ function MainWindow() {
         engravings[0].items[0],  // adrenaline
         engravings[0].items[9],   // cursed doll
         //engravings[0].items[12],  // drops of ether
+        engravings[0].items[10],   // disrespect
         //engravings[0].items[15],  // ether predator
         engravings[0].items[19],  // grudge
         engravings[0].items[21],  // hit master
