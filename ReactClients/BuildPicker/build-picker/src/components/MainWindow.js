@@ -11,7 +11,7 @@ import ComputedStats from './ComputedStats.js';
 import OptimizerResults from './OptimizerResults';
 
 import subclassList from '../data/SubClasses';
-import engravings from '../data/Engravings.js';
+//import engravings from '../data/Engravings.js';
 import recommendations from '../data/Recommended.js';
 import { optimizeBuild } from '../calculations/Optimizer'
 
@@ -20,11 +20,11 @@ function MainWindow() {
     const [lockedEngravings, setLockedEngravings]  = useState(recommendations.sorc.lockedEngravings);
     const [possibleEngravings, setPossibleEngravings]  = useState(recommendations.sorc.possibleEngravings);
     const [selectedEngravings, setSelectedEngravings]  = useState([
-                                                                    engravings[1].items[27], // reflux
-                                                                    engravings[0].items[0],  // adrenaline
-                                                                    engravings[0].items[23], // keen blunt weapon
-                                                                    engravings[0].items[35], // raid captain
-                                                                    engravings[0].items[21], // hit master 
+                                                                    // engravings[1].items[27], // reflux
+                                                                    // engravings[0].items[0],  // adrenaline
+                                                                    // engravings[0].items[23], // keen blunt weapon
+                                                                    // engravings[0].items[35], // raid captain
+                                                                    // engravings[0].items[21], // hit master 
                                                                   ]);
     const [subclass, setSubclass] = useState(subclassList.sorceress);
     const [defensePhysical, setDefensePhysical] = useState(19963);
@@ -39,13 +39,15 @@ function MainWindow() {
     const [atkSpeed, setAtkSpeed] = useState(1.2066);
     const [moveSpeed, setMoveSpeed] = useState(1.3066);
     const [cdr, setCdr] = useState(.2583); // 25.83%
-    const [cdrGem, setCdrGem] = useState(7); // 25.83% + lvl 6 gem
-
+    const [cdrGem, setCdrGem] = useState(7); 
     const [optimizerResults, setOptimizerResults]  = useState([]);
     const [buildLimit, setBuildLimit] = useState(5);
 
     // wrap all the react hooks for character data into an object so it can be passed around as a single variable
     const characterData = {
+        buildLimit: buildLimit, setBuildLimit: setBuildLimit,
+        lockedEngravings : lockedEngravings, setLockedEngravings : setLockedEngravings,
+        possibleEngravings : possibleEngravings, setPossibleEngravings : setPossibleEngravings,
         selectedEngravings : selectedEngravings, setSelectedEngravings : setSelectedEngravings,
         subclass : subclass, setSubclass : setSubclass,
         defensePhysical : defensePhysical, setDefensePhysical : setDefensePhysical,

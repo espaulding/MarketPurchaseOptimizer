@@ -1,5 +1,5 @@
 const subclasses = { 
-  arcana : { code: 'arc', label: 'Arcana', hpModifier : 2, defModifier : .95, stat: 'Intelligence'  },
+  //arcana : { code: 'arc', label: 'Arcana', hpModifier : 2, defModifier : .95, stat: 'Intelligence'  },
   artillerist : { code: 'art', label: 'Artillerist', hpModifier : 2.1, defModifier : .95, stat: 'Dexterity' },
   //artilleristFirepower : { code: 'artfire', label: 'Artillerist (Firepower)', hpModifier : 2.1*(1/.8), defModifier : .95, stat: 'Dexterity' },
   bard : { code: 'bard', label: 'Bard', hpModifier : 1.9, defModifier : .9, stat: 'Intelligence' },
@@ -12,15 +12,15 @@ const subclasses = {
   gunlancer : { code: 'gl', label: 'Gunlancer', hpModifier : 2.5, defModifier : 1.2, stat: 'Strength' }, 
   gunslinger : { code: 'gs', label: 'Gunslinger', hpModifier : 2, defModifier : .9, stat: 'Dexterity' },
   paladin : { code: 'pali', label: 'Paladin', hpModifier : 2.1, defModifier : 1.1, stat: 'Strength' },
-  reaper : { code: 'reap', label: 'Reaper', hpModifier : 2, defModifier : .9, stat: 'Dexterity'  },
-  scouter : { code: 'scout', label: 'Scouter', hpModifier : 2, defModifier : .9, stat: 'Dexterity'  },
+  //reaper : { code: 'reap', label: 'Reaper', hpModifier : 2, defModifier : .9, stat: 'Dexterity'  },
+  //scouter : { code: 'scout', label: 'Scouter', hpModifier : 2, defModifier : .9, stat: 'Dexterity'  },
   scrapper : { code: 'scrap', label: 'Scrapper', hpModifier : 2.3, defModifier : 1.1, stat: 'Strength' },
   sharpshooter : { code: 'sharp', label: 'Sharpshooter', hpModifier : 2.1, defModifier : .95, stat: 'Dexterity' },
   shadowhunter : { code: 'sh', label: 'Shadowhunter', hpModifier : 2.1, defModifier : .95, stat: 'Dexterity'  },
   sorceress : { code: 'sorc', label: 'Sorceress', hpModifier : 2, defModifier : .95, stat: 'Intelligence'  },
   soulfist : { code: 'sf', label: 'Soulfist', hpModifier : 2.1, defModifier : 1.05, stat: 'Strength' },
   striker : { code: 'strike', label: 'Striker', hpModifier : 2.2, defModifier : 1.05, stat: 'Strength' },
-  summoner : { code: 'sum', label: 'Summoner', hpModifier : 2, defModifier : .95, stat: 'Intelligence'  },
+  //summoner : { code: 'sum', label: 'Summoner', hpModifier : 2, defModifier : .95, stat: 'Intelligence'  },
   wardancer : { code: 'wd', label: 'Wardancer', hpModifier : 2.2, defModifier : 1.1, stat: 'Dexterity' },
 };
 

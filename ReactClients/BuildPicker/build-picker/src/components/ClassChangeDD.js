@@ -4,6 +4,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 
 import subclassList from '../data/SubClasses';
+import recommendations from '../data/Recommended.js';
 
 const ClassChangeDD = (props) => {
 
@@ -15,7 +16,17 @@ const ClassChangeDD = (props) => {
           Object
               .keys(subclassList)
               .map((name, index) => {
-                  return (<Dropdown.Item key={index} onClick={() => {props.data.setSubclass(subclassList[name])}}>{subclassList[name].label}</Dropdown.Item>);
+                  return (
+                    <Dropdown.Item key={index} 
+                      onClick={() => {
+                        var subclass = subclassList[name];
+                        props.data.setSubclass(subclass);
+                        props.data.setLockedEngravings(recommendations[subclass.code].lockedEngravings);
+                        props.data.setPossibleEngravings(recommendations[subclass.code].possibleEngravings);
+                      }}>
+                        {subclassList[name].label}
+                    </Dropdown.Item>
+                  );
               })
         }
       </DropdownButton>
