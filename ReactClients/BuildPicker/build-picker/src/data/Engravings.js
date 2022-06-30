@@ -315,7 +315,7 @@ const engravings = [
             },        
             { // 1
                 label: '(Berserker) Berserker\'s Technique', code: 'BT',
-                tooltip: 'During Bust +70% Crit Dmg (Negates Exhausion after burst)',
+                tooltip: 'During Burst +70% Crit Dmg (Negates Exhausion after burst)',
                 impl: {
                     cd: (crit) => { return crit + .7; }
                 }
