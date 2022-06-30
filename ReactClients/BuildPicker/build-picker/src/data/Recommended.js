@@ -1,4 +1,6 @@
-const engravings = {
+import engravings from '../data/Engravings.js';
+
+const recommendations = {
   arc : { 
     lockedEngravings: [
       // not in game yet so no class engravings exist
@@ -76,3 +78,5 @@ const engravings = {
   sum : {   },
   wd : {  },
 };
+
+export default recommendations;
