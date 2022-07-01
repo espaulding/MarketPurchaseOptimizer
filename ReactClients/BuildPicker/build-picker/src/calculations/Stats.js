@@ -125,7 +125,7 @@ const LostArkMath = {
         var ap = 0;
         var atkStat = +data.atkStat; if(isNaN(atkStat)) { atkStat = 0; }
         var wpnDmg = +data.wpnDmg; if(isNaN(wpnDmg)) { wpnDmg = 0; }
-
+        
         if(atkStat > 0 && wpnDmg > 0) {
             ap = Math.floor(Math.sqrt(atkStat * wpnDmg / 6));
         }
@@ -135,10 +135,11 @@ const LostArkMath = {
 
     computeAttackPowerWithEngravings: function(data, selectedEngravings) {
         var ap = this.computeAttackPower(data);
+        var baseAP = ap;
 
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.atk !== undefined) {
-                ap = e.impl.atk(ap);
+                ap = e.impl.atk(ap, baseAP);
             }
         });
 

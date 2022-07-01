@@ -6,7 +6,7 @@ const engravings = [
                 label: 'Adrenaline', code: 'ADR',
                 tooltip: 'Use Skill -> 1% Atk Power, 6 stacks -> +15% crit (6 stacks max)',
                 impl: {
-                    atk: (a) => { return a * 1.06; },
+                    atk: (a, base) => { return a + (base * .06); },
                     cr: (crit) => { return crit + .15; }
                 }
             },             
@@ -48,7 +48,7 @@ const engravings = [
                 label: 'Contender', code: 'CON',
                 tooltip: 'Kill Foe -> +2.5% Atk Power per stack (+17.5% max)',
                 impl: {
-                    atk: (a) => { return a * 1.175; }
+                    atk: (a, base) => { return a + (base * .175); }
                 }
             },              
             { // 7
@@ -60,14 +60,14 @@ const engravings = [
                 label: 'Crushing Fist', code: 'CF',
                 tooltip: 'Counter Attack -> +20% Atk Power (duration???)',
                 impl: {
-                    atk: (a) => { return a * 1.2; }
+                    atk: (a, base) => { return a + (base * .2); }
                 }
             },           
             { // 9
                 label: 'Cursed Doll', code: 'CD',
                 tooltip: '+16% Atk Power and -25% Healing Received',
                 impl: {
-                    atk: (a) => { return a * 1.16; }
+                    atk: (a, base) => { return a + (base * .16); }
                 }
             } ,          
             { //10
@@ -93,7 +93,7 @@ const engravings = [
                 tooltip: '6 possible 30s buffs, 10s CD for orbs. +15% crit, +10% atk power, +10% defense, +10% move speed, restore MP, restore HP',
                 impl: {
                     def: (d, bd) => { return d + (bd * .1); },
-                    atk: (a) => { return a * 1.1; },
+                    atk: (a, base) => { return a + (base * .1); },
                     cr: (crit) => { return crit + .15; },
                     mspd: (s) => { return s + .1; }
                 }
@@ -113,7 +113,7 @@ const engravings = [
                 tooltip: 'On hit -> .5% Atk Power 1% Def for 90s up to 30 stacks (orb CD 10s)',
                 impl: {
                     def: (d, bd) => { return d + (bd * .3); },
-                    atk: (a) => { return a * 1.15; }
+                    atk: (a, base) => { return a + (base * .15); }
                 }
             },          
             { //16
@@ -159,7 +159,7 @@ const engravings = [
                 label: 'Increase Mass', code: 'IM',
                 tooltip: '18% Atk Power (-10% Atk Speed)',
                 impl: {
-                    atk: (a) => { return a * 1.18; },
+                    atk: (a, base) => { return a + (base * .18); },
                     aspd: (s) => { return s - .1; }
                 }
             },           
@@ -443,7 +443,7 @@ const engravings = [
                 label: '(Sharpshooter) Loyal Companion', code: 'LC',
                 tooltip: 'Mark of Death -> Foe DMG Taken + 14%. When hawk is summoned -> Atk Power +10%. Summons Silerhawk MK-II, allowing Move Speed +4%, Hawk\'s basic AoE range +60%, basic ATK DMG +300%, and summon duration +100%. Hawk inflicts Mark of Death.',
                 impl: {
-                    atk: (a) => { return a * 1.1; },
+                    atk: (a, base) => { return a + (base * .1); },
                     dmg: (d, mspd, aspd) => { return d * 1.14; }
                 }
             },           
@@ -531,7 +531,7 @@ const engravings = [
                 label: '(Deathblade) Remaining Energy', code: 'RE',
                 tooltip: 'Surge skill -> +12% Atk/Move Speed and +(12/24/36) Atk Power (30s). Art does not consume meter for 2s when activated',
                 impl: {
-                    atk: (a) => { return a * 1.36; },
+                    atk: (a, base) => { return a + (base * .36); },
                     aspd: (s) => { return s + .12; },
                     mspd: (s) => { return s + .12; }
                 }
@@ -554,7 +554,7 @@ const engravings = [
                 label: '(Deathblade) Surge', code: 'SUR',
                 tooltip: 'Surge casts at max with empty orbs. Remaining Energy buff does not activtate. During Surge -> skill attacks stack up to 20. 1% Atk Power and Surge +6% DMG per stack. Death Trance ends -> 100% Death Orb Meter per Surge Enhancement',
                 impl: {
-                    atk: (a) => { return a * 1.2; }
+                    atk: (a, base) => { return a + (base * .2); },
                 }
             },                    
             { //34
