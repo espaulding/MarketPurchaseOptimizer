@@ -328,14 +328,14 @@ const engravings = [
                 }
             },               
             { // 3
-                label: '(Gunlancer) Combat Readyness', code: 'CR',
+                label: '(Gunlancer) Combat Readiness', code: 'CR',
                 tooltip: 'Normal skills +20% DMG, Shield amount +50%. Defensive stance -> hit by enemy -> +6% DMG (10s) up to 3 stacks',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.2 * 1.18; }
                 }
             },           
             { // 4
-                label: '(Glaiver) Control', code: 'CON',
+                label: '(Glaivier) Control', code: 'CON',
                 tooltip: 'Cannot use Focus stance. Flurry skills +36% DMG',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.36; }
@@ -487,7 +487,7 @@ const engravings = [
                 }
             },        
             { //25
-                label: '(Glaiver) Pinnacle (Flurry)', code: 'PFL',
+                label: '(Glaivier) Pinnacle (Flurry)', code: 'PFL',
                 tooltip: 'Max Dual Meter and Change Stance then: Flurry -> +15% Atk Speed, +15% DMG, +25% Crit Rate. Focus -> +15% Move Speed, +20% DMG, +50% Crit DMG',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.15; },
@@ -496,7 +496,7 @@ const engravings = [
                 }
             },          
             { //26
-                label: '(Glaiver) Pinnacle (Focus)', code: 'PFO',
+                label: '(Glaivier) Pinnacle (Focus)', code: 'PFO',
                 tooltip: 'Max Dual Meter and Change Stance then: Flurry -> +15% Atk Speed, +15% DMG, +25% Crit Rate. Focus -> +15% Move Speed, +20% DMG, +50% Crit DMG',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.2; },

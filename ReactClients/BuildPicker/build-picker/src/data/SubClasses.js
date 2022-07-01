@@ -8,7 +8,7 @@ const subclasses = {
   deadeye : { code: 'dead', label: 'Deadeye', hpModifier : 2, defModifier : .9, stat: 'Dexterity' },
   deathblade : { code: 'db', label: 'Deathblade', hpModifier : 2.2, defModifier : 1, stat: 'Dexterity'  },
   destroyer : { code: 'destro', label: 'Destroyer', hpModifier : 2.3, defModifier : 1.15, stat: 'Strength' },
-  glaiver : { code: 'lm', label: 'Glavier', hpModifier : 2.2, defModifier : 1.05, stat: 'Strength' },
+  glaiver : { code: 'lm', label: 'Glaivier', hpModifier : 2.2, defModifier : 1.05, stat: 'Strength' },
   gunlancer : { code: 'gl', label: 'Gunlancer', hpModifier : 2.5, defModifier : 1.2, stat: 'Strength' }, 
   gunslinger : { code: 'gs', label: 'Gunslinger', hpModifier : 2, defModifier : .9, stat: 'Dexterity' },
   paladin : { code: 'pali', label: 'Paladin', hpModifier : 2.1, defModifier : 1.1, stat: 'Strength' },
