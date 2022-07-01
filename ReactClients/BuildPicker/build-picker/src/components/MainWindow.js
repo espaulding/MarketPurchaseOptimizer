@@ -20,26 +20,30 @@ function MainWindow() {
 
     const [cookies, setCookie] = useCookies(['user']);
     const path = { path: '/' };
+
+    const defaultVal = (input, alternative) => {
+        return typeof input !== 'undefined' ? input : alternative;
+    };
     
-    const [subclass, setSubclass] = useState(subclassList.sorceress);
-    const [lockedEngravings, setLockedEngravings]  = useState(recommendations.sorc.lockedEngravings);
-    const [possibleEngravings, setPossibleEngravings]  = useState(recommendations.sorc.possibleEngravings);
-    const [selectedEngravings, setSelectedEngravings]  = useState([]);
-    const [optimizerResults, setOptimizerResults]  = useState([]);
-    const [defensePhysical, setDefensePhysical] = useState(cookies.physDefense); 
-    const [defenseMagical, setDefenseMagical] = useState(cookies.magDefense);
-    const [hp, setHp] = useState(cookies.hp);                  
-    const [mp, setMp] = useState(cookies.mp);                  
-    const [mpRegen, setMpRegen] = useState(cookies.mpRegen);        
-    const [critRate, setCritRate] = useState(cookies.critRate);      
-    const [critDmg, setCritDmg] = useState(cookies.critDmg);        
-    const [atkStat, setAtkStat] = useState(cookies.atkStat);        
-    const [wpnDmg, setWpnDmg] = useState(cookies.wpnDmg);          
-    const [atkSpeed, setAtkSpeed] = useState(cookies.atkSpeed);      
-    const [moveSpeed, setMoveSpeed] = useState(cookies.moveSpeed);    
-    const [cdr, setCdr] = useState(cookies.cdr);                         
-    const [cdrGem, setCdrGem] = useState(cookies.cdrGem);                       
-    const [buildLimit, setBuildLimit] = useState(cookies.buildLimit); // the number of engravings to optimize for
+    const [subclass, setSubclass] = useState(defaultVal(cookies.subclass, subclassList.sorceress));
+    const [lockedEngravings, setLockedEngravings]  = useState(defaultVal(cookies.lockedEngravings, recommendations.sorc.lockedEngravings));
+    const [possibleEngravings, setPossibleEngravings]  = useState(defaultVal(cookies.possibleEngravings, recommendations.sorc.possibleEngravings));
+    const [selectedEngravings, setSelectedEngravings]  = useState(defaultVal(cookies.selectedEngravings, []));
+    const [optimizerResults, setOptimizerResults]  = useState(defaultVal([],[]));
+    const [defensePhysical, setDefensePhysical] = useState(defaultVal(cookies.physDefense, 10000)); 
+    const [defenseMagical, setDefenseMagical] = useState(defaultVal(cookies.magDefense,10000));
+    const [hp, setHp] = useState(defaultVal(cookies.hp, 75000));    
+    const [mp, setMp] = useState(defaultVal(cookies.mp, 3000));   
+    const [mpRegen, setMpRegen] = useState(defaultVal(cookies.mpRegen, 159));        
+    const [critRate, setCritRate] = useState(defaultVal(cookies.critRate, .2));      
+    const [critDmg, setCritDmg] = useState(defaultVal(cookies.critDmg, 2));        
+    const [atkStat, setAtkStat] = useState(defaultVal(cookies.atkStat, 95000));        
+    const [wpnDmg, setWpnDmg] = useState(defaultVal(cookies.wpnDmg, 20000));          
+    const [atkSpeed, setAtkSpeed] = useState(defaultVal(cookies.atkSpeed, 1));      
+    const [moveSpeed, setMoveSpeed] = useState(defaultVal(cookies.moveSpeed, 1));    
+    const [cdr, setCdr] = useState(defaultVal(cookies.cdr, .2583));                         
+    const [cdrGem, setCdrGem] = useState(defaultVal(cookies.cdrGem, 7));                       
+    const [buildLimit, setBuildLimit] = useState(defaultVal(cookies.buildLimit, 4)); // the number of engravings to optimize for
     const numResults = 100; // the number of results returned by the optimizer
 
     // wrap all the react hooks for character data into an object so it can be passed around as a single variable
@@ -49,10 +53,26 @@ function MainWindow() {
             setBuildLimit(e); 
             setCookie('buildLimit', e, path); 
         },
-        lockedEngravings : lockedEngravings, setLockedEngravings : setLockedEngravings,
-        possibleEngravings : possibleEngravings, setPossibleEngravings : setPossibleEngravings,
-        selectedEngravings : selectedEngravings, setSelectedEngravings : setSelectedEngravings,
-        subclass : subclass, setSubclass : setSubclass,
+        lockedEngravings : lockedEngravings, 
+        setLockedEngravings : (e) => { 
+            setLockedEngravings(e); 
+            //setCookie('lockedEngravings', e, path); 
+        },
+        possibleEngravings : possibleEngravings, 
+        setPossibleEngravings : (e) => { 
+            setPossibleEngravings(e); 
+            //setCookie('possibleEngravings', e, path); 
+        },
+        selectedEngravings : selectedEngravings, 
+        setSelectedEngravings : (e) => { 
+            setSelectedEngravings(e); 
+            //setCookie('selectedEngravings', e, path); 
+        },
+        subclass : subclass, 
+        setSubclass : (e) => { 
+            setSubclass(e); 
+            //setCookie('subclass', e, path); 
+        },
         defensePhysical : defensePhysical, 
         setDefensePhysical : (e) => { 
             setDefensePhysical(e); 
@@ -120,19 +140,12 @@ function MainWindow() {
         },
     }
 
-    function delay(time) {
-        return new Promise(resolve => setTimeout(resolve, time));
-    }
-
     const calculateBuildsHandler = (e) => {
         e.target.disabled = true; // stop user from clicking the button again during optimization
         //setOptimizerResults([]); 
         optimizeBuild({
             data : characterData,
             numResults : numResults,
-            buildLimit : buildLimit,
-            lockedEngravings : lockedEngravings,
-            possibleEngravings : possibleEngravings,
             setOptimizerResults : setOptimizerResults,
             //completeCallback : () => { e.target.disabled = false; }
         });
@@ -146,12 +159,12 @@ function MainWindow() {
                     <div style={styles.tabWindow}>
                         <div style={styles.topPanel}>
                             <div className="class-engraving-picker">
-                                <EngravingSelector selectedEngravings={selectedEngravings} setSelectedEngravings={setSelectedEngravings} />
+                                <EngravingSelector selectedEngravings={selectedEngravings} setSelectedEngravings={characterData.setSelectedEngravings} />
                             </div>
                         </div>
                         <div style={styles.bottomPanel}>
                             <CharacterInput data={characterData} />
-                            <ComputedStats data={characterData} selectedEngravings={selectedEngravings}/>
+                            <ComputedStats data={characterData} />
                         </div>
                     </div>
                 </Tab>
@@ -164,9 +177,9 @@ function MainWindow() {
                                     maxItems={6}
                                     numItems={lockedEngravings.length}
                                     sibling={possibleEngravings}
-                                    setSibling={setPossibleEngravings}
+                                    setSibling={characterData.setPossibleEngravings}
                                     selectedEngravings={lockedEngravings} 
-                                    setSelectedEngravings={setLockedEngravings} />
+                                    setSelectedEngravings={characterData.setLockedEngravings} />
                             </div>
                             <div className="class-engraving-picker">
                                 <EngravingSelector 
@@ -174,12 +187,12 @@ function MainWindow() {
                                     maxItems={15}
                                     numItems={possibleEngravings.length}
                                     sibling={lockedEngravings}
-                                    setSibling={setLockedEngravings}
+                                    setSibling={characterData.setLockedEngravings}
                                     selectedEngravings={possibleEngravings} 
-                                    setSelectedEngravings={setPossibleEngravings} />
+                                    setSelectedEngravings={characterData.setPossibleEngravings} />
                             </div>
                             <div className='calc-button'>
-                                <div style={styles.spacer}><BuildSizeDD buildLimit={buildLimit} setBuildLimit={setBuildLimit}/></div>
+                                <div style={styles.spacer}><BuildSizeDD buildLimit={buildLimit} setBuildLimit={characterData.setBuildLimit}/></div>
                                 <div className='d-grid'>
                                     <Button 
                                         size="lg" 
@@ -194,7 +207,7 @@ function MainWindow() {
                             <OptimizerResults 
                                 data={characterData}
                                 selectedEngravings={selectedEngravings}
-                                setSelectedEngravings={setSelectedEngravings}
+                                setSelectedEngravings={characterData.setSelectedEngravings}
                                 optimizerResults={optimizerResults} 
                                 setOptimizerResults={setOptimizerResults}
                             />
