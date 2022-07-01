@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet } from "react-native";
+import { useCookies } from 'react-cookie';
 
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
@@ -16,48 +17,127 @@ import recommendations from '../data/Recommended.js';
 import { optimizeBuild } from '../calculations/Optimizer'
 
 function MainWindow() {
+
+    const [cookies, setCookie] = useCookies(['user']);
+    const path = { path: '/' };
+
+    const defaultVal = (input, alternative) => {
+        return typeof input !== 'undefined' ? input : alternative;
+    };
     
-    const [lockedEngravings, setLockedEngravings]  = useState(recommendations.sorc.lockedEngravings);
-    const [possibleEngravings, setPossibleEngravings]  = useState(recommendations.sorc.possibleEngravings);
-    const [selectedEngravings, setSelectedEngravings]  = useState([]);
-    const [optimizerResults, setOptimizerResults]  = useState([]);
-    const [subclass, setSubclass] = useState(subclassList.sorceress);
-    const [defensePhysical, setDefensePhysical] = useState(19963); // 19,963
-    const [defenseMagical, setDefenseMagical] = useState(19800);   // 19,800
-    const [hp, setHp] = useState(93216);                           // 93,216
-    const [mp, setMp] = useState(3594);                            // 3,594
-    const [mpRegen, setMpRegen] = useState(159);                   // 159
-    const [critRate, setCritRate] = useState(.4014);               // 40.14%
-    const [critDmg, setCritDmg] = useState(2.00);                  // 200%
-    const [atkStat, setAtkStat] = useState(105603);                // 105,603
-    const [wpnDmg, setWpnDmg] = useState(24241);                   // 24,241 
-    const [atkSpeed, setAtkSpeed] = useState(1.2066);              // 120.66%
-    const [moveSpeed, setMoveSpeed] = useState(1.3066);            // 130.66%
-    const [cdr, setCdr] = useState(.2583);                         // 25.83%
-    const [cdrGem, setCdrGem] = useState(7);                       // level 7 gem means 14% addition cooldown reduction
-    const [buildLimit, setBuildLimit] = useState(5);               // the number of engravings to optimize for
-    //const [numResults, setNumResults] = useState(100);             // the number of results returned by the optimizer
-    const numResults = 100;
+    const [subclass, setSubclass] = useState(defaultVal(cookies.subclass, subclassList.sorceress));
+    const [lockedEngravings, setLockedEngravings]  = useState(defaultVal(cookies.lockedEngravings, recommendations.sorc.lockedEngravings));
+    const [possibleEngravings, setPossibleEngravings]  = useState(defaultVal(cookies.possibleEngravings, recommendations.sorc.possibleEngravings));
+    const [selectedEngravings, setSelectedEngravings]  = useState(defaultVal(cookies.selectedEngravings, []));
+    const [optimizerResults, setOptimizerResults]  = useState(defaultVal([],[]));
+    const [defensePhysical, setDefensePhysical] = useState(defaultVal(cookies.physDefense, 10000)); 
+    const [defenseMagical, setDefenseMagical] = useState(defaultVal(cookies.magDefense,10000));
+    const [hp, setHp] = useState(defaultVal(cookies.hp, 75000));    
+    const [mp, setMp] = useState(defaultVal(cookies.mp, 3000));   
+    const [mpRegen, setMpRegen] = useState(defaultVal(cookies.mpRegen, 159));        
+    const [critRate, setCritRate] = useState(defaultVal(cookies.critRate, .2));      
+    const [critDmg, setCritDmg] = useState(defaultVal(cookies.critDmg, 2));        
+    const [atkStat, setAtkStat] = useState(defaultVal(cookies.atkStat, 95000));        
+    const [wpnDmg, setWpnDmg] = useState(defaultVal(cookies.wpnDmg, 20000));          
+    const [atkSpeed, setAtkSpeed] = useState(defaultVal(cookies.atkSpeed, 1));      
+    const [moveSpeed, setMoveSpeed] = useState(defaultVal(cookies.moveSpeed, 1));    
+    const [cdr, setCdr] = useState(defaultVal(cookies.cdr, .2583));                         
+    const [cdrGem, setCdrGem] = useState(defaultVal(cookies.cdrGem, 7));                       
+    const [buildLimit, setBuildLimit] = useState(defaultVal(cookies.buildLimit, 4)); // the number of engravings to optimize for
+    const numResults = 100; // the number of results returned by the optimizer
 
     // wrap all the react hooks for character data into an object so it can be passed around as a single variable
     const characterData = {
-        buildLimit: buildLimit, setBuildLimit: setBuildLimit,
-        lockedEngravings : lockedEngravings, setLockedEngravings : setLockedEngravings,
-        possibleEngravings : possibleEngravings, setPossibleEngravings : setPossibleEngravings,
-        selectedEngravings : selectedEngravings, setSelectedEngravings : setSelectedEngravings,
-        subclass : subclass, setSubclass : setSubclass,
-        defensePhysical : defensePhysical, setDefensePhysical : setDefensePhysical,
-        defenseMagical : defenseMagical, setDefenseMagical : setDefenseMagical,
-        hp : hp, setHp : setHp, mp : mp, setMp : setMp,
-        mpRegen : mpRegen, setMpRegen : setMpRegen,
-        critRate : critRate, setCritRate : setCritRate,
-        critDmg : critDmg, setCritDmg : setCritDmg,
-        atkStat : atkStat, setAtkStat : setAtkStat,
-        wpnDmg : wpnDmg, setWpnDmg : setWpnDmg,
-        atkSpeed : atkSpeed, setAtkSpeed : setAtkSpeed,
-        moveSpeed : moveSpeed, setMoveSpeed : setMoveSpeed,
-        cdr : cdr, setCdr : setCdr,
-        cdrGem : cdrGem, setCdrGem : setCdrGem
+        buildLimit: buildLimit, 
+        setBuildLimit : (e) => { 
+            setBuildLimit(e); 
+            setCookie('buildLimit', e, path); 
+        },
+        lockedEngravings : lockedEngravings, 
+        setLockedEngravings : (e) => { 
+            setLockedEngravings(e); 
+            //setCookie('lockedEngravings', e, path); 
+        },
+        possibleEngravings : possibleEngravings, 
+        setPossibleEngravings : (e) => { 
+            setPossibleEngravings(e); 
+            //setCookie('possibleEngravings', e, path); 
+        },
+        selectedEngravings : selectedEngravings, 
+        setSelectedEngravings : (e) => { 
+            setSelectedEngravings(e); 
+            //setCookie('selectedEngravings', e, path); 
+        },
+        subclass : subclass, 
+        setSubclass : (e) => { 
+            setSubclass(e); 
+            //setCookie('subclass', e, path); 
+        },
+        defensePhysical : defensePhysical, 
+        setDefensePhysical : (e) => { 
+            setDefensePhysical(e); 
+            setCookie('physDefense', e, path); 
+        },
+        defenseMagical : defenseMagical, 
+        setDefenseMagical : (e) => { 
+            setDefenseMagical(e); 
+            setCookie('magDefense', e, path); 
+        },
+        hp : hp, 
+        setHp : (e) => { 
+            setHp(e); 
+            setCookie('hp', e, path); 
+        },
+        mp : mp, 
+        setMp : (e) => { 
+            setMp(e); 
+            setCookie('mp', e, path); 
+        },
+        mpRegen : mpRegen, 
+        setMpRegen : (e) => { 
+            setMpRegen(e); 
+            setCookie('mpRegen', e, path); 
+        },
+        critRate : critRate, 
+        setCritRate : (e) => { 
+            setCritRate(e); 
+            setCookie('critRate', e, path); 
+        },
+        critDmg : critDmg, 
+        setCritDmg : (e) => { 
+            setCritDmg(e); 
+            setCookie('critDmg', e, path); 
+        },
+        atkStat : atkStat, 
+        setAtkStat : (e) => { 
+            setAtkStat(e); 
+            setCookie('atkStat', e, path); 
+        },
+        wpnDmg : wpnDmg, 
+        setWpnDmg : (e) => { 
+            setWpnDmg(e); 
+            setCookie('wpnDmg', e, path); 
+        },
+        atkSpeed : atkSpeed, 
+        setAtkSpeed : (e) => { 
+            setAtkSpeed(e); 
+            setCookie('atkSpeed', e, path); 
+        },
+        moveSpeed : moveSpeed, 
+        setMoveSpeed : (e) => { 
+            setMoveSpeed(e); 
+            setCookie('moveSpeed', e, path); 
+        },
+        cdr : cdr, 
+        setCdr : (e) => { 
+            setCdr(e); 
+            setCookie('cdr', e, path); 
+        },
+        cdrGem : cdrGem, 
+        setCdrGem : (e) => { 
+            setCdrGem(e); 
+            setCookie('cdrGem', e, path); 
+        },
     }
 
     const calculateBuildsHandler = (e) => {
@@ -66,9 +146,6 @@ function MainWindow() {
         optimizeBuild({
             data : characterData,
             numResults : numResults,
-            buildLimit : buildLimit,
-            lockedEngravings : lockedEngravings,
-            possibleEngravings : possibleEngravings,
             setOptimizerResults : setOptimizerResults,
             //completeCallback : () => { e.target.disabled = false; }
         });
@@ -82,12 +159,12 @@ function MainWindow() {
                     <div style={styles.tabWindow}>
                         <div style={styles.topPanel}>
                             <div className="class-engraving-picker">
-                                <EngravingSelector selectedEngravings={selectedEngravings} setSelectedEngravings={setSelectedEngravings} />
+                                <EngravingSelector selectedEngravings={selectedEngravings} setSelectedEngravings={characterData.setSelectedEngravings} />
                             </div>
                         </div>
                         <div style={styles.bottomPanel}>
                             <CharacterInput data={characterData} />
-                            <ComputedStats data={characterData} selectedEngravings={selectedEngravings}/>
+                            <ComputedStats data={characterData} />
                         </div>
                     </div>
                 </Tab>
@@ -100,9 +177,9 @@ function MainWindow() {
                                     maxItems={6}
                                     numItems={lockedEngravings.length}
                                     sibling={possibleEngravings}
-                                    setSibling={setPossibleEngravings}
+                                    setSibling={characterData.setPossibleEngravings}
                                     selectedEngravings={lockedEngravings} 
-                                    setSelectedEngravings={setLockedEngravings} />
+                                    setSelectedEngravings={characterData.setLockedEngravings} />
                             </div>
                             <div className="class-engraving-picker">
                                 <EngravingSelector 
@@ -110,12 +187,12 @@ function MainWindow() {
                                     maxItems={15}
                                     numItems={possibleEngravings.length}
                                     sibling={lockedEngravings}
-                                    setSibling={setLockedEngravings}
+                                    setSibling={characterData.setLockedEngravings}
                                     selectedEngravings={possibleEngravings} 
-                                    setSelectedEngravings={setPossibleEngravings} />
+                                    setSelectedEngravings={characterData.setPossibleEngravings} />
                             </div>
                             <div className='calc-button'>
-                                <div style={styles.spacer}><BuildSizeDD buildLimit={buildLimit} setBuildLimit={setBuildLimit}/></div>
+                                <div style={styles.spacer}><BuildSizeDD buildLimit={buildLimit} setBuildLimit={characterData.setBuildLimit}/></div>
                                 <div className='d-grid'>
                                     <Button 
                                         size="lg" 
@@ -130,7 +207,7 @@ function MainWindow() {
                             <OptimizerResults 
                                 data={characterData}
                                 selectedEngravings={selectedEngravings}
-                                setSelectedEngravings={setSelectedEngravings}
+                                setSelectedEngravings={characterData.setSelectedEngravings}
                                 optimizerResults={optimizerResults} 
                                 setOptimizerResults={setOptimizerResults}
                             />

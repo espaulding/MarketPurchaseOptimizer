@@ -12,41 +12,42 @@ const ComputedStats = (props) => {
   }
 
   const characterData = props.data;
+  const selectedEngravings = props.data.selectedEngravings;
   var mp = LostArkMath.computeMp(characterData);
-  var mpEngrave = LostArkMath.computeMpWithEngravings(characterData, props.selectedEngravings);
+  var mpEngrave = LostArkMath.computeMpWithEngravings(characterData, selectedEngravings);
   var mpRegen = LostArkMath.computeMpRegen(characterData);
-  var mpRegenEngrave = LostArkMath.computeMpRegenWithEngravings(characterData, props.selectedEngravings);
+  var mpRegenEngrave = LostArkMath.computeMpRegenWithEngravings(characterData, selectedEngravings);
 
   var hp = LostArkMath.computeHp(characterData);
-  var hpEngrave = LostArkMath.computeHpWithEngravings(characterData, props.selectedEngravings);
+  var hpEngrave = LostArkMath.computeHpWithEngravings(characterData, selectedEngravings);
   var defensePhysical = LostArkMath.computeDef(characterData, 'physical');
-  var physDefEngrave = LostArkMath.computeDefWithEngravings(characterData, 'physical', props.selectedEngravings);
+  var physDefEngrave = LostArkMath.computeDefWithEngravings(characterData, 'physical', selectedEngravings);
   var defenseMagical = LostArkMath.computeDef(characterData, 'magical');
-  var magDefEngrave = LostArkMath.computeDefWithEngravings(characterData, 'magical', props.selectedEngravings);
+  var magDefEngrave = LostArkMath.computeDefWithEngravings(characterData, 'magical', selectedEngravings);
   var physDr = LostArkMath.computeDr(characterData, 'physical');
-  var physDrEngrave = LostArkMath.computeDrWithEngravings(characterData, 'physical', props.selectedEngravings);
+  var physDrEngrave = LostArkMath.computeDrWithEngravings(characterData, 'physical', selectedEngravings);
   var magDr = LostArkMath.computeDr(characterData, 'magical');
-  var magDrEngrave = LostArkMath.computeDrWithEngravings(characterData, 'magical', props.selectedEngravings);
+  var magDrEngrave = LostArkMath.computeDrWithEngravings(characterData, 'magical', selectedEngravings);
   var physEffectiveHp = LostArkMath.computeEffectiveHp(characterData, 'physical');
   var magEffectiveHp = LostArkMath.computeEffectiveHp(characterData, 'magical');
-  var physEffectiveHpEngrave = LostArkMath.computeEffectiveHpWithEngravings(characterData, 'physical', props.selectedEngravings);
-  var magEffectiveHpEngrave = LostArkMath.computeEffectiveHpWithEngravings(characterData, 'magical', props.selectedEngravings);
+  var physEffectiveHpEngrave = LostArkMath.computeEffectiveHpWithEngravings(characterData, 'physical', selectedEngravings);
+  var magEffectiveHpEngrave = LostArkMath.computeEffectiveHpWithEngravings(characterData, 'magical', selectedEngravings);
 
   var atkSpeed = LostArkMath.computeAtkSpeed(characterData);
-  var atkSpeedEngrave = LostArkMath.computeAtkSpeedEngrave(characterData, props.selectedEngravings);
+  var atkSpeedEngrave = LostArkMath.computeAtkSpeedEngrave(characterData, selectedEngravings);
   var moveSpeed = LostArkMath.computeMoveSpeed(characterData);
-  var moveSpeedEngrave = LostArkMath.computeMoveSpeedEngrave(characterData, props.selectedEngravings);
+  var moveSpeedEngrave = LostArkMath.computeMoveSpeedEngrave(characterData, selectedEngravings);
   var cdr = LostArkMath.computeCdr(characterData);
-  var cdrEngrave = LostArkMath.computeCdrEngrave(characterData, props.selectedEngravings);
+  var cdrEngrave = LostArkMath.computeCdrEngrave(characterData, selectedEngravings);
   var critRate = LostArkMath.computeCritRate(characterData);
-  var critRateEngrave = LostArkMath.computeCritRateEngrave(characterData, props.selectedEngravings);
+  var critRateEngrave = LostArkMath.computeCritRateEngrave(characterData, selectedEngravings);
   var critDmg = LostArkMath.computeCritDmg(characterData);
-  var critDmgEngrave = LostArkMath.computeCritDmgEngrave(characterData, props.selectedEngravings);
+  var critDmgEngrave = LostArkMath.computeCritDmgEngrave(characterData, selectedEngravings);
 
   var ap = LostArkMath.computeAttackPower(characterData);
-  var apEngrave = LostArkMath.computeAttackPowerWithEngravings(characterData, props.selectedEngravings);
+  var apEngrave = LostArkMath.computeAttackPowerWithEngravings(characterData, selectedEngravings);
   var baseDmg = LostArkMath.computeBaseDmg(characterData);
-  var baseDmgEngrave = LostArkMath.computeBaseDmgEngrave(characterData, props.selectedEngravings)
+  var baseDmgEngrave = LostArkMath.computeBaseDmgEngrave(characterData, selectedEngravings)
 
   return (
     <div className="stat-calc">
