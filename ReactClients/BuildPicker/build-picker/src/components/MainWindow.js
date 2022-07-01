@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet } from "react-native";
+import { useCookies } from 'react-cookie';
 
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
@@ -16,48 +17,111 @@ import recommendations from '../data/Recommended.js';
 import { optimizeBuild } from '../calculations/Optimizer'
 
 function MainWindow() {
+
+    const [cookies, setCookie] = useCookies(['user']);
+    const path = { path: '/' };
     
+    const [subclass, setSubclass] = useState(subclassList.sorceress);
     const [lockedEngravings, setLockedEngravings]  = useState(recommendations.sorc.lockedEngravings);
     const [possibleEngravings, setPossibleEngravings]  = useState(recommendations.sorc.possibleEngravings);
     const [selectedEngravings, setSelectedEngravings]  = useState([]);
     const [optimizerResults, setOptimizerResults]  = useState([]);
-    const [subclass, setSubclass] = useState(subclassList.sorceress);
-    const [defensePhysical, setDefensePhysical] = useState(19963); // 19,963
-    const [defenseMagical, setDefenseMagical] = useState(19800);   // 19,800
-    const [hp, setHp] = useState(93216);                           // 93,216
-    const [mp, setMp] = useState(3594);                            // 3,594
-    const [mpRegen, setMpRegen] = useState(159);                   // 159
-    const [critRate, setCritRate] = useState(.4014);               // 40.14%
-    const [critDmg, setCritDmg] = useState(2.00);                  // 200%
-    const [atkStat, setAtkStat] = useState(105603);                // 105,603
-    const [wpnDmg, setWpnDmg] = useState(24241);                   // 24,241 
-    const [atkSpeed, setAtkSpeed] = useState(1.2066);              // 120.66%
-    const [moveSpeed, setMoveSpeed] = useState(1.3066);            // 130.66%
-    const [cdr, setCdr] = useState(.2583);                         // 25.83%
-    const [cdrGem, setCdrGem] = useState(7);                       // level 7 gem means 14% addition cooldown reduction
-    const [buildLimit, setBuildLimit] = useState(5);               // the number of engravings to optimize for
-    //const [numResults, setNumResults] = useState(100);             // the number of results returned by the optimizer
-    const numResults = 100;
+    const [defensePhysical, setDefensePhysical] = useState(cookies.physDefense); 
+    const [defenseMagical, setDefenseMagical] = useState(cookies.magDefense);
+    const [hp, setHp] = useState(cookies.hp);                  
+    const [mp, setMp] = useState(cookies.mp);                  
+    const [mpRegen, setMpRegen] = useState(cookies.mpRegen);        
+    const [critRate, setCritRate] = useState(cookies.critRate);      
+    const [critDmg, setCritDmg] = useState(cookies.critDmg);        
+    const [atkStat, setAtkStat] = useState(cookies.atkStat);        
+    const [wpnDmg, setWpnDmg] = useState(cookies.wpnDmg);          
+    const [atkSpeed, setAtkSpeed] = useState(cookies.atkSpeed);      
+    const [moveSpeed, setMoveSpeed] = useState(cookies.moveSpeed);    
+    const [cdr, setCdr] = useState(cookies.cdr);                         
+    const [cdrGem, setCdrGem] = useState(cookies.cdrGem);                       
+    const [buildLimit, setBuildLimit] = useState(cookies.buildLimit); // the number of engravings to optimize for
+    const numResults = 100; // the number of results returned by the optimizer
 
     // wrap all the react hooks for character data into an object so it can be passed around as a single variable
     const characterData = {
-        buildLimit: buildLimit, setBuildLimit: setBuildLimit,
+        buildLimit: buildLimit, 
+        setBuildLimit : (e) => { 
+            setBuildLimit(e); 
+            setCookie('buildLimit', e, path); 
+        },
         lockedEngravings : lockedEngravings, setLockedEngravings : setLockedEngravings,
         possibleEngravings : possibleEngravings, setPossibleEngravings : setPossibleEngravings,
         selectedEngravings : selectedEngravings, setSelectedEngravings : setSelectedEngravings,
         subclass : subclass, setSubclass : setSubclass,
-        defensePhysical : defensePhysical, setDefensePhysical : setDefensePhysical,
-        defenseMagical : defenseMagical, setDefenseMagical : setDefenseMagical,
-        hp : hp, setHp : setHp, mp : mp, setMp : setMp,
-        mpRegen : mpRegen, setMpRegen : setMpRegen,
-        critRate : critRate, setCritRate : setCritRate,
-        critDmg : critDmg, setCritDmg : setCritDmg,
-        atkStat : atkStat, setAtkStat : setAtkStat,
-        wpnDmg : wpnDmg, setWpnDmg : setWpnDmg,
-        atkSpeed : atkSpeed, setAtkSpeed : setAtkSpeed,
-        moveSpeed : moveSpeed, setMoveSpeed : setMoveSpeed,
-        cdr : cdr, setCdr : setCdr,
-        cdrGem : cdrGem, setCdrGem : setCdrGem
+        defensePhysical : defensePhysical, 
+        setDefensePhysical : (e) => { 
+            setDefensePhysical(e); 
+            setCookie('physDefense', e, path); 
+        },
+        defenseMagical : defenseMagical, 
+        setDefenseMagical : (e) => { 
+            setDefenseMagical(e); 
+            setCookie('magDefense', e, path); 
+        },
+        hp : hp, 
+        setHp : (e) => { 
+            setHp(e); 
+            setCookie('hp', e, path); 
+        },
+        mp : mp, 
+        setMp : (e) => { 
+            setMp(e); 
+            setCookie('mp', e, path); 
+        },
+        mpRegen : mpRegen, 
+        setMpRegen : (e) => { 
+            setMpRegen(e); 
+            setCookie('mpRegen', e, path); 
+        },
+        critRate : critRate, 
+        setCritRate : (e) => { 
+            setCritRate(e); 
+            setCookie('critRate', e, path); 
+        },
+        critDmg : critDmg, 
+        setCritDmg : (e) => { 
+            setCritDmg(e); 
+            setCookie('critDmg', e, path); 
+        },
+        atkStat : atkStat, 
+        setAtkStat : (e) => { 
+            setAtkStat(e); 
+            setCookie('atkStat', e, path); 
+        },
+        wpnDmg : wpnDmg, 
+        setWpnDmg : (e) => { 
+            setWpnDmg(e); 
+            setCookie('wpnDmg', e, path); 
+        },
+        atkSpeed : atkSpeed, 
+        setAtkSpeed : (e) => { 
+            setAtkSpeed(e); 
+            setCookie('atkSpeed', e, path); 
+        },
+        moveSpeed : moveSpeed, 
+        setMoveSpeed : (e) => { 
+            setMoveSpeed(e); 
+            setCookie('moveSpeed', e, path); 
+        },
+        cdr : cdr, 
+        setCdr : (e) => { 
+            setCdr(e); 
+            setCookie('cdr', e, path); 
+        },
+        cdrGem : cdrGem, 
+        setCdrGem : (e) => { 
+            setCdrGem(e); 
+            setCookie('cdrGem', e, path); 
+        },
+    }
+
+    function delay(time) {
+        return new Promise(resolve => setTimeout(resolve, time));
     }
 
     const calculateBuildsHandler = (e) => {
