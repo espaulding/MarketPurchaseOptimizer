@@ -15,7 +15,7 @@ const engravings = [
                 tooltip: 'Holding or Casting skill -> +20% DMG, +20% Atk Speed',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.2; },
-                    aspd: (s) => { return s + .2; }
+                    //aspd: (s) => { return s + .2; } // only applies to a few skills so this is too much here
                 }
             },       
             { // 2

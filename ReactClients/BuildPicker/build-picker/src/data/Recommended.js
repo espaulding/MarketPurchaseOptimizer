@@ -305,7 +305,7 @@ const recommendations = {
       engravings[1].items[29], // reflux
       engravings[1].items[16], // igniter
       engravings[0].items[0],  // adrenaline
-      engravings[0].items[1],  // all-out-attack
+      //engravings[0].items[1],  // all-out-attack
       engravings[0].items[9],   // cursed doll
       //engravings[0].items[12],  // drops of ether
       //engravings[0].items[10],   // disrespect
