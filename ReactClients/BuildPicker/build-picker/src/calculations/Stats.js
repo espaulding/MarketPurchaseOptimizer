@@ -110,11 +110,11 @@ const LostArkMath = {
                 baseRegen = e.impl.mprBase(baseRegen);
             }
         });
-        mpRegen = Math.floor(baseRegen) - 1;
+        mpRegen = Math.floor(baseRegen);
 
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.mpr !== undefined) {
-                mpRegen = e.impl.mpr(mpRegen, baseRegen);
+                mpRegen = e.impl.mpr(mpRegen, Math.floor(baseRegen) - 1);
             }
         });
 
@@ -202,6 +202,7 @@ const LostArkMath = {
 
     computeAtkSpeed: function(data) {
         var atkSpeed = +data.atkSpeed; if(isNaN(atkSpeed)) { atkSpeed = 1; }
+        atkSpeed = atkSpeed > .5 ? atkSpeed : .5;
         return atkSpeed < 1.4 ? atkSpeed : 1.4;
     },
 
@@ -214,11 +215,13 @@ const LostArkMath = {
             }
         });
 
+        atkSpeed = atkSpeed > .5 ? atkSpeed : .5;
         return atkSpeed < 1.4 ? atkSpeed : 1.4;
     },
 
     computeMoveSpeed: function(data) {
         var moveSpeed = +data.moveSpeed; if(isNaN(moveSpeed)) { moveSpeed = 1; }
+        moveSpeed = moveSpeed > .5 ? moveSpeed : .5;
         return moveSpeed < 1.4 ? moveSpeed : 1.4;
     },
 
@@ -231,6 +234,7 @@ const LostArkMath = {
             }
         });
 
+        moveSpeed = moveSpeed > .5 ? moveSpeed : .5;
         return moveSpeed < 1.4 ? moveSpeed : 1.4;
     },
 
@@ -247,14 +251,25 @@ const LostArkMath = {
         return dmg;
     },
 
+    // I'm taking inspiration from raid captain's 45% here as a form of tuning
+    // because often cooldowns are the bottleneck or characters have to move and avoid stuff
+    // it's unreasonable to say that attack speed does not increase dps
+    // but it's equally unreasonable to assume 100% of attack speed bonus is a dps increase
+    normalizeAtkSpeed: function(dmg, atkSpeed) {
+        if (atkSpeed >= 1) { atkSpeed = atkSpeed - (atkSpeed - 1) * .45; }
+        return dmg * atkSpeed;
+    },
+
     computeBaseDmg: function(data) {
-        var critRate = +data.critRate; if(isNaN(critRate)) { critRate = 0; }; if(critRate > 1) { critRate = 1; }
-        var critDmg = +data.critDmg; if(isNaN(critDmg)) { critDmg = 2; }; if(critDmg > 6) { critDmg = 6; }
+        var critRate = this.computeCritRate(data);
+        var critDmg = this.computeCritDmg(data);
+        var atkSpeed = this.computeAtkSpeed(data);
         var cdr = this.computeCdr(data);
         var dmg = this.normalizeCrit(this.computeAttackPower(data), critRate, critDmg);
             dmg = this.normalizeCdr(dmg, cdr);
+            dmg = this.normalizeAtkSpeed(dmg, atkSpeed);
         
-        return dmg;
+        return dmg; 
     },
 
     computeBaseDmgEngrave: function(data, selectedEngravings) {
@@ -266,6 +281,7 @@ const LostArkMath = {
         var ap = this.computeAttackPowerWithEngravings(data, selectedEngravings);
         var baseDmgEngrave = this.normalizeCrit(ap, critRate, critDmg);
             baseDmgEngrave = this.normalizeCdr(baseDmgEngrave, cdr);
+            baseDmgEngrave = this.normalizeAtkSpeed(baseDmgEngrave, atkSpeed);
 
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.dmg !== undefined) {

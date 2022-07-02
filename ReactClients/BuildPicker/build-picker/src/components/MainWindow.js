@@ -30,7 +30,6 @@ function MainWindow() {
         setCookie(name, JSON.stringify(value), path); 
     };
 
-    //let removed = props.selectedEngravings.filter(e => e.code !== option.code);
     const remapEngravings = (cookie) => {
         if(cookie !== undefined) {
             cookie.forEach((c) => {
