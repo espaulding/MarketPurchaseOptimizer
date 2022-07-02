@@ -255,8 +255,12 @@ const LostArkMath = {
     // because often cooldowns are the bottleneck or characters have to move and avoid stuff
     // it's unreasonable to say that attack speed does not increase dps
     // but it's equally unreasonable to assume 100% of attack speed bonus is a dps increase
-    normalizeAtkSpeed: function(dmg, atkSpeed) {
-        if (atkSpeed >= 1) { atkSpeed = atkSpeed - (atkSpeed - 1) * .45; }
+    // give up to a 60% boost for bonus atk speed based on CDR
+    normalizeAtkSpeed: function(dmg, atkSpeed, cdr) {
+        var percentBonusAtkSpeed = .6;
+        var cdrCap = .75;
+        var bonus = (cdr / cdrCap) * percentBonusAtkSpeed; 
+        if (atkSpeed >= 1 && cdr > 0) { atkSpeed = atkSpeed - (atkSpeed - 1) * bonus; }
         return dmg * atkSpeed;
     },
 
@@ -267,7 +271,7 @@ const LostArkMath = {
         var cdr = this.computeCdr(data);
         var dmg = this.normalizeCrit(this.computeAttackPower(data), critRate, critDmg);
             dmg = this.normalizeCdr(dmg, cdr);
-            dmg = this.normalizeAtkSpeed(dmg, atkSpeed);
+            dmg = this.normalizeAtkSpeed(dmg, atkSpeed, cdr);
         
         return dmg; 
     },
@@ -281,7 +285,7 @@ const LostArkMath = {
         var ap = this.computeAttackPowerWithEngravings(data, selectedEngravings);
         var baseDmgEngrave = this.normalizeCrit(ap, critRate, critDmg);
             baseDmgEngrave = this.normalizeCdr(baseDmgEngrave, cdr);
-            baseDmgEngrave = this.normalizeAtkSpeed(baseDmgEngrave, atkSpeed);
+            baseDmgEngrave = this.normalizeAtkSpeed(baseDmgEngrave, atkSpeed, cdr);
 
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.dmg !== undefined) {
