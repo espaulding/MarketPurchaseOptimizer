@@ -295,7 +295,7 @@ const engravings = [
                 tooltip: 'Charge Skill -> 20% DMG, 40% Charging Speed',
                 impl: {
                     dmg: (d, mspd, aspd) => { return d * 1.2; },
-                    aspd: (s) => { return s + .4; }
+                    //aspd: (s) => { return s + .4; }
                 }
             },            
             { //42
