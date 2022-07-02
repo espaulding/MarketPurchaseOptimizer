@@ -9,7 +9,7 @@ const LostArkMath = {
     
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.hp !== undefined) {
-                HP = e.impl.hp(HP);
+                HP = e.impl.hp(e.expUptime, HP);
             }
         });
     
@@ -33,7 +33,7 @@ const LostArkMath = {
 
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.def !== undefined) {
-                defense = e.impl.def(defense, baseDefense);
+                defense = e.impl.def(e.expUptime, defense, baseDefense);
             }
         });
 
@@ -56,7 +56,7 @@ const LostArkMath = {
         
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.dr !== undefined) {
-                percentReduction = e.impl.dr(percentReduction);
+                percentReduction = e.impl.dr(e.expUptime, percentReduction);
             }
         });
 
@@ -89,7 +89,7 @@ const LostArkMath = {
 
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.mp !== undefined) {
-                MP = e.impl.mp(MP);
+                MP = e.impl.mp(e.expUptime, MP);
             }
         });
 
@@ -107,14 +107,14 @@ const LostArkMath = {
 
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.mprBase !== undefined) {
-                baseRegen = e.impl.mprBase(baseRegen);
+                baseRegen = e.impl.mprBase(e.expUptime, baseRegen);
             }
         });
         mpRegen = Math.floor(baseRegen);
 
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.mpr !== undefined) {
-                mpRegen = e.impl.mpr(mpRegen, Math.floor(baseRegen) - 1);
+                mpRegen = e.impl.mpr(e.expUptime, mpRegen, Math.floor(baseRegen) - 1);
             }
         });
 
@@ -139,7 +139,7 @@ const LostArkMath = {
 
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.atk !== undefined) {
-                ap = e.impl.atk(ap, baseAP);
+                ap = e.impl.atk(e.expUptime, ap, baseAP);
             }
         });
 
@@ -156,7 +156,7 @@ const LostArkMath = {
 
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.cr !== undefined) {
-                critRate = e.impl.cr(critRate);
+                critRate = e.impl.cr(e.expUptime, critRate);
             }
         });
 
@@ -173,7 +173,7 @@ const LostArkMath = {
 
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.cd !== undefined) {
-                critDmg = e.impl.cd(critDmg);
+                critDmg = e.impl.cd(e.expUptime, critDmg);
             }
         });
 
@@ -193,7 +193,7 @@ const LostArkMath = {
         
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.cdr !== undefined) {
-                cooldownReduction = e.impl.cdr(cooldownReduction);
+                cooldownReduction = e.impl.cdr(e.expUptime, cooldownReduction);
             }
         });
 
@@ -211,7 +211,7 @@ const LostArkMath = {
 
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.aspd !== undefined) {
-                atkSpeed = e.impl.aspd(atkSpeed);
+                atkSpeed = e.impl.aspd(e.expUptime, atkSpeed);
             }
         });
 
@@ -230,7 +230,7 @@ const LostArkMath = {
 
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.mspd !== undefined) {
-                moveSpeed = e.impl.mspd(moveSpeed);
+                moveSpeed = e.impl.mspd(e.expUptime, moveSpeed);
             }
         });
 
@@ -253,9 +253,8 @@ const LostArkMath = {
 
     // I'm taking inspiration from raid captain's 45% here as a form of tuning
     // because often cooldowns are the bottleneck or characters have to move and avoid stuff
-    // it's unreasonable to say that attack speed does not increase dps
-    // but it's equally unreasonable to assume 100% of attack speed bonus is a dps increase
-    // give up to a 60% boost for bonus atk speed based on CDR
+    // however it's also unreasonable to say that attack speed does not increase dps
+    // but it's equally unreasonable to assume 100% of attack speed bonus is not a dps increase
     normalizeAtkSpeed: function(dmg, atkSpeed, cdr) {
         var bonus = .45, cdrCap = .75;
             //bonus *= ((1 - cdr) / cdrCap); 
@@ -291,7 +290,7 @@ const LostArkMath = {
 
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.dmg !== undefined) {
-                baseDmgEngrave = e.impl.dmg(baseDmgEngrave, moveSpeed, atkSpeed);
+                baseDmgEngrave = e.impl.dmg(e.expUptime, baseDmgEngrave, moveSpeed, atkSpeed);
             }
         });
 
