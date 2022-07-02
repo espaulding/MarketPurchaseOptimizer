@@ -288,7 +288,6 @@ const recommendations = {
       engravings[1].items[7],   // demon
       engravings[1].items[24],  // suppress
       engravings[0].items[0],   // adrenaline
-      engravings[0].items[1],   // all-out-attack
       engravings[0].items[2],   // ambush master
       engravings[0].items[9],   // cursed doll
       engravings[0].items[19],  // grudge
