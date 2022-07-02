@@ -271,7 +271,6 @@ const recommendations = {
       engravings[1].items[5],   // death strike
       engravings[1].items[19],  // loyal companion
       engravings[0].items[0],   // adrenaline
-      engravings[0].items[1],   // all-out-attack
       engravings[0].items[9],   // cursed doll
       engravings[0].items[19],  // grudge
       engravings[0].items[21],  // hit master
@@ -304,7 +303,7 @@ const recommendations = {
       engravings[1].items[29], // reflux
       engravings[1].items[16], // igniter
       engravings[0].items[0],  // adrenaline
-      //engravings[0].items[1],  // all-out-attack
+      engravings[0].items[1],  // all-out-attack
       engravings[0].items[9],   // cursed doll
       //engravings[0].items[12],  // drops of ether
       //engravings[0].items[10],   // disrespect
