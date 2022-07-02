@@ -257,11 +257,18 @@ const LostArkMath = {
     // but it's equally unreasonable to assume 100% of attack speed bonus is a dps increase
     // give up to a 60% boost for bonus atk speed based on CDR
     normalizeAtkSpeed: function(dmg, atkSpeed, cdr) {
-        var percentBonusAtkSpeed = .6;
+        var percentBonusAtkSpeed = .1;
         var cdrCap = .75;
-        var bonus = (cdr / cdrCap) * percentBonusAtkSpeed; 
-        if (atkSpeed >= 1 && cdr > 0) { atkSpeed = atkSpeed - (atkSpeed - 1) * bonus; }
-        return dmg * atkSpeed;
+        var bonus = percentBonusAtkSpeed;
+            bonus *= ((1 - cdr) / cdrCap); 
+        var bonusAtkSpeed = (atkSpeed > 1) ? (atkSpeed - 1) : 0;
+        //console.log('bonus before ' + bonus + ' speed: ' + bonusAtkSpeed);
+        bonus = (bonus + 1) * bonusAtkSpeed;
+        //console.log('dmg: ' + dmg);
+        //console.log('bonus after ' + bonus);
+        if (atkSpeed >= 1 && cdr > 0) { dmg *= (bonus / 3 + 1); }
+        //console.log('dmg: ' + dmg);
+        return dmg;
     },
 
     computeBaseDmg: function(data) {
