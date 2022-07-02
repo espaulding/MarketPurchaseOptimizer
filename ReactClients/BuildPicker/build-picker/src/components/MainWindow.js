@@ -13,22 +13,39 @@ import OptimizerResults from './OptimizerResults';
 import BuildSizeDD from './BuildSizeDD.js';
 
 import subclassList from '../data/SubClasses';
+import engravings from '../data/Engravings.js';
 import recommendations from '../data/Recommended.js';
 import { optimizeBuild } from '../calculations/Optimizer'
 
 function MainWindow() {
 
-    const [cookies, setCookie] = useCookies(['user']);
+    const [cookies, setCookie] = useCookies(['engravingoptimizer']);
     const path = { path: '/' };
 
     const defaultVal = (input, alternative) => {
         return typeof input !== 'undefined' ? input : alternative;
     };
+
+    const saveJsonCookie = (name, value) => {
+        setCookie(name, JSON.stringify(value), path); 
+    };
+
+    //let removed = props.selectedEngravings.filter(e => e.code !== option.code);
+    const remapEngravings = (cookie) => {
+        if(cookie !== undefined) {
+            cookie.forEach((c) => {
+                const commonEngraving = engravings[0].items.filter(e => e.code === c.code);
+                const classEngraving = engravings[1].items.filter(e => e.code === c.code);
+                c.impl = (commonEngraving.length > 0) ? commonEngraving[0].impl : classEngraving[0].impl;
+            });
+        }
+        return cookie;
+    };
     
-    const [subclass, setSubclass] = useState(defaultVal(cookies.subclass, subclassList.sorceress));
-    const [lockedEngravings, setLockedEngravings]  = useState(defaultVal(cookies.lockedEngravings, recommendations.sorc.lockedEngravings));
-    const [possibleEngravings, setPossibleEngravings]  = useState(defaultVal(cookies.possibleEngravings, recommendations.sorc.possibleEngravings));
-    const [selectedEngravings, setSelectedEngravings]  = useState(defaultVal(cookies.selectedEngravings, []));
+    const [subclass, setSubclass] = useState(defaultVal(cookies.subclass, subclassList.sorc), subclassList.sorc);
+    const [lockedEngravings, setLockedEngravings]  = useState(defaultVal(remapEngravings(cookies.lockedEngravings), recommendations[subclass.code].lockedEngravings));
+    const [possibleEngravings, setPossibleEngravings]  = useState(defaultVal(remapEngravings(cookies.possibleEngravings), recommendations[subclass.code].possibleEngravings)); 
+    const [selectedEngravings, setSelectedEngravings]  = useState(defaultVal(remapEngravings(cookies.selectedEngravings), []));
     const [optimizerResults, setOptimizerResults]  = useState(defaultVal([],[]));
     const [defensePhysical, setDefensePhysical] = useState(defaultVal(cookies.physDefense, 10000)); 
     const [defenseMagical, setDefenseMagical] = useState(defaultVal(cookies.magDefense,10000));
@@ -56,22 +73,22 @@ function MainWindow() {
         lockedEngravings : lockedEngravings, 
         setLockedEngravings : (e) => { 
             setLockedEngravings(e); 
-            //setCookie('lockedEngravings', e, path); 
+            saveJsonCookie('lockedEngravings', e);
         },
         possibleEngravings : possibleEngravings, 
         setPossibleEngravings : (e) => { 
             setPossibleEngravings(e); 
-            //setCookie('possibleEngravings', e, path); 
+            saveJsonCookie('possibleEngravings', e);
         },
         selectedEngravings : selectedEngravings, 
         setSelectedEngravings : (e) => { 
             setSelectedEngravings(e); 
-            //setCookie('selectedEngravings', e, path); 
+            saveJsonCookie('selectedEngravings', e);
         },
         subclass : subclass, 
         setSubclass : (e) => { 
             setSubclass(e); 
-            //setCookie('subclass', e, path); 
+            saveJsonCookie('subclass', e);
         },
         defensePhysical : defensePhysical, 
         setDefensePhysical : (e) => { 
@@ -208,8 +225,7 @@ function MainWindow() {
                                 data={characterData}
                                 selectedEngravings={selectedEngravings}
                                 setSelectedEngravings={characterData.setSelectedEngravings}
-                                optimizerResults={optimizerResults} 
-                                setOptimizerResults={setOptimizerResults}
+                                optimizerResults={optimizerResults}
                             />
                         </div>
                     </div>
