@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   inputCell: {
-    width: '70px',
+    width: '85px',
     paddingBottom: '3px',
   },
 });
