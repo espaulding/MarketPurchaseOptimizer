@@ -5,7 +5,7 @@ const engravings = [
             { // 0
                 label: 'Adrenaline', code: 'ADR',
                 tooltip: 'Use Skill -> 1% Atk Power, 6 stacks -> +15% crit (6 stacks max)',
-                expUptime: .6, maxUptime: .9, difficulty: 3, 
+                expUptime: .6, maxUptime: 1, difficulty: 3, 
                 impl: {
                     atk: (uptime, a, base) => { 
                         var scaled = (uptime * .06);
@@ -17,7 +17,7 @@ const engravings = [
             { // 1
                 label: 'All-Out Attack', code: 'ALL', 
                 tooltip: 'Holding or Casting skill -> +20% DMG, +20% Atk Speed',
-                expUptime: 3/8, maxUptime: .7, difficulty: 1, 
+                expUptime: 3/8, maxUptime: .8, difficulty: 1, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
                         var scaled = (uptime * .12);
@@ -29,7 +29,7 @@ const engravings = [
             { // 2
                 label: 'Ambush Master', code: 'AM', 
                 tooltip: 'Back Attack -> +25% DMG',
-                expUptime: 16/24, maxUptime: .8, difficulty: 5, 
+                expUptime: 16/24, maxUptime: 1, difficulty: 5, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
                         var scaled = (uptime * .25);
@@ -130,7 +130,7 @@ const engravings = [
             { //12 
                 label: 'Drops of Ether', code: 'DOE',
                 tooltip: '6 possible 30s buffs, 10s CD for orbs. +15% crit, +10% atk power, +10% defense, +10% move speed, restore MP, restore HP',
-                expUptime: .1, maxUptime: .3, difficulty: 7, 
+                expUptime: .1, maxUptime: 1, difficulty: 7, 
                 impl: {
                     def: (uptime, d, bd) => { return d + (bd * (uptime * .1)); },
                     atk: (uptime, a, base) => { 
@@ -156,7 +156,7 @@ const engravings = [
             { //15
                 label: 'Ether Predator', code: 'EP',
                 tooltip: 'On hit -> .5% Atk Power 1% Def for 90s up to 30 stacks (orb CD 10s)',
-                expUptime: .1, maxUptime: .3, difficulty: 7, 
+                expUptime: .1, maxUptime: 1, difficulty: 7, 
                 impl: {
                     def: (uptime, d, bd) => { return d + (bd * (uptime * .3)); },
                     atk: (uptime, a, base) => { 
@@ -246,7 +246,7 @@ const engravings = [
             { //25
                 label: 'MP Efficiency Increase', code: 'MEI',
                 tooltip: 'MP < 50% -> 12% DMG (+30% MP Regen)',
-                expUptime: .5, maxUptime: .9, difficulty: 5, 
+                expUptime: .5, maxUptime: 1, difficulty: 5, 
                 impl: {
                     mpr: (uptime, m, base) => { return m + (base * (uptime * .3)); },
                     dmg: (uptime, d, mspd, aspd) => { 
@@ -258,7 +258,7 @@ const engravings = [
             { //26
                 label: 'Magick Stream', code: 'MS',
                 tooltip: 'Not hit for 3 sec -> 3% MP Regen, 5 stacks -> 10% CDR, On hit (10s CD) -> lose 1 stack',
-                expUptime: .3, maxUptime: .5, difficulty: 10, 
+                expUptime: .3, maxUptime: 1, difficulty: 10, 
                 impl: {
                     mpr: (uptime, m, base) => { return m + (base * (uptime * .15)); },
                     cdr: (uptime, c) => { return (1 - (1 - c) * (1 - (uptime * .1))); }
@@ -267,7 +267,7 @@ const engravings = [
             { //27
                 label: 'Master Brawler', code: 'MB',
                 tooltip: 'Frontal Attack -> 25% DMG',
-                expUptime: .7, maxUptime: .9, difficulty: 2, 
+                expUptime: .7, maxUptime: 1, difficulty: 2, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
                         var scaled = (uptime * .25);
@@ -319,7 +319,7 @@ const engravings = [
             { //33
                 label: 'Preemptive Strike', code: 'PS',
                 tooltip: 'Enemy full HP -> 100% Crit Chance and +160% DMG',
-                expUptime: .05, maxUptime: .3, difficulty: 1, 
+                expUptime: .05, maxUptime: 1, difficulty: 1, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
                         var scaled = (uptime * 1.6);
@@ -434,7 +434,7 @@ const engravings = [
             { // 2
                 label: '(Paladin) Blessed Aura', code: 'BA',
                 tooltip: 'With aura -> (10/15/20)% Damage Reduction, 2% HP restored every (2.5/2/1.5) seconds',
-                expUptime: .1, maxUptime: .2, difficulty: -1, 
+                expUptime: .1, maxUptime: 1, difficulty: -1, 
                 impl: {
                     dr: (uptime, d) => { return 1 - (1 - d) * (1 - (uptime * .2)); }
                 }
@@ -494,7 +494,7 @@ const engravings = [
             { // 9
                 label: '(Soulfist) Energy Overflow', code: 'EO',
                 tooltip: 'Energy < 30% -> +15% DMG. Energy does not go below 1. Hype -> no longer recovers additional energy.',
-                expUptime: .3, maxUptime: .6, difficulty: 5, 
+                expUptime: .3, maxUptime: 1, difficulty: 5, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
                         var scaled = (uptime * .15);
@@ -524,7 +524,7 @@ const engravings = [
             { //12
                 label: '(Wardancer) Esoteric Skill Enhancement', code: 'ESE',
                 tooltip: 'Max orbs + 1. Esoteric skill +12% per orb held',
-                expUptime: 1/3, maxUptime: .7, difficulty: 2, 
+                expUptime: 1/3, maxUptime: 1, difficulty: 2, 
                 impl: { // how many orbs can a dancer have?
                     dmg: (uptime, d, mspd, aspd) => { 
                         var scaled = (uptime * .36);
@@ -535,7 +535,7 @@ const engravings = [
             { //13
                 label: '(Artillerist) Firepower Enhancement', code: 'FE',
                 tooltip: 'Incoming damage -20% and Crit Rate +(30/35/40)% based on level of Firepower buff',
-                expUptime: .4, maxUptime: .8, difficulty: 3, 
+                expUptime: .75, maxUptime: 1, difficulty: 3, 
                 impl: {
                     dr: (uptime, d) => { return 1 - (1 - d) * (1 - (uptime * .2)); },
                     cr: (uptime, crit) => { return crit + (uptime * .4); }
@@ -567,7 +567,7 @@ const engravings = [
             { //16
                 label: '(Sorceress) Igniter', code: 'IGN',
                 tooltip: 'Magick Amplification -> Crit Rate +25% and Crit Dmg +50%. When Magic Amplification is triggered skills currently in cooldown -50% CD',
-                expUptime: .75, maxUptime: .9, difficulty: 5, 
+                expUptime: .75, maxUptime: 1, difficulty: 5, 
                 impl: {
                     cr: (uptime, crit) => { return crit + (uptime * .25); },
                     cd: (uptime, crit) => { return crit + (uptime * .5); }
@@ -576,7 +576,7 @@ const engravings = [
             { //17
                 label: '(Paladin) Judgement', code: 'JUD',
                 tooltip: 'Duration of Sacred Executioner +150%. Punishment DMG +15%. When Punishment hits -> Piety Gain +100%. ',
-                expUptime: .6, maxUptime: .8, difficulty: 1, 
+                expUptime: .6, maxUptime: 1, difficulty: 1, 
                 impl: { }
             },                 
             { //18
@@ -678,7 +678,7 @@ const engravings = [
             { //28  
                 label: '(Destroyer) Rage Hammer', code: 'RH', 
                 tooltip: 'Use Gravity Release Skill -> +5% Crit Rate and 15% Crit Dmg based on Cores used',
-                expUptime: .5, maxUptime: .8, difficulty: 5,
+                expUptime: .5, maxUptime: 1, difficulty: 5,
                 impl: { // does this buff stack up higher with more cores? how does it work?
                     cr: (uptime, crit) => { return crit + (uptime * .05); },
                     cd: (uptime, crit) => { return crit + (uptime * .15); },
@@ -731,7 +731,7 @@ const engravings = [
             { //33
                 label: '(Deathblade) Surge', code: 'SUR',
                 tooltip: 'Surge casts at max with empty orbs. Remaining Energy buff does not activtate. During Surge -> skill attacks stack up to 20. 1% Atk Power and Surge +6% DMG per stack. Death Trance ends -> 100% Death Orb Meter per Surge Enhancement',
-                expUptime: .5, maxUptime: .9, difficulty: 6,
+                expUptime: .5, maxUptime: 1, difficulty: 6,
                 impl: {
                     atk: (uptime, a, base) => { 
                         var scaled = (uptime * .2);
@@ -750,7 +750,7 @@ const engravings = [
             { //35
                 label: '(Bard) True Courage', code: 'TC',
                 tooltip: 'Serenade of Courage -> You gain +20% DMG and +10% Crit Rate',
-                expUptime: .5, maxUptime: .8, difficulty: 3,
+                expUptime: .5, maxUptime: 1, difficulty: 3,
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
                         var scaled = (uptime * .2);
@@ -762,7 +762,7 @@ const engravings = [
             { //36
                 label: '(Scrapper) Ultimate Skill: Taijutsu', code: 'UST',
                 tooltip: 'Stamina Skills -> +65% DMG, Shock Skills -> -30% DMG, Stamina Energy recovery + 300%',
-                expUptime: .5, maxUptime: .8, difficulty: 3,
+                expUptime: .5, maxUptime: 1, difficulty: 3,
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
                         var scaled = (uptime * .65);

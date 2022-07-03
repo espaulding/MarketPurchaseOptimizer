@@ -49,6 +49,9 @@ const ComputedStats = (props) => {
   var baseDmg = LostArkMath.computeBaseDmg(characterData);
   var baseDmgEngrave = LostArkMath.computeBaseDmgEngrave(characterData, selectedEngravings)
 
+  var dpsGainExpected = (baseDmgEngrave.expected/baseDmg) - 1;
+  var dpsGainMaximum = (baseDmgEngrave.maximum/baseDmg) - 1;
+
   return (
     <div className="stat-calc">
       <Table striped bordered variant="dark" size="sm">
@@ -64,52 +67,68 @@ const ComputedStats = (props) => {
               <td style={styles.labelCell}>MP</td>
               <td style={styles.numberCell}>
                 <div className="stats" style={styles.doubleCell}>
-                <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mpRegen}></NumberFormat>
-                  (MP/s),
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mp}></NumberFormat>
-                  (MP)
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mpRegen}></NumberFormat>
+                    (MP/s),
+                  </div>
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mp}></NumberFormat>
+                    (MP)
+                  </div>
                 </div>
               </td>
               <td style={styles.numberCell}>
                 <div className="stats" style={styles.doubleCell}>
-                <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mpRegenEngrave}></NumberFormat>
-                  (MP/s),
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mpEngrave}></NumberFormat>
-                  (MP)
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mpRegenEngrave.maximum}></NumberFormat>
+                    (MP/s),
+                  </div>
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={mpEngrave.maximum}></NumberFormat>
+                    (MP)
+                  </div>
                 </div>
               </td>
           </tr>
           <tr>
               <td style={styles.labelCell}>HP</td>
               <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={hp}></NumberFormat></td>
-              <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={hpEngrave}></NumberFormat></td>
+              <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={hpEngrave.maximum}></NumberFormat></td>
           </tr>
           <tr>
               <td style={styles.labelCell}>Effective HP (Physical)</td>
               <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={physEffectiveHp}></NumberFormat></td>
-              <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={physEffectiveHpEngrave}></NumberFormat></td>
+              <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={physEffectiveHpEngrave.maximum}></NumberFormat></td>
           </tr>
           <tr>
               <td style={styles.labelCell}>Effective HP (Magical)</td>
               <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={magEffectiveHp}></NumberFormat></td>
-              <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={magEffectiveHpEngrave}></NumberFormat></td>
+              <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={magEffectiveHpEngrave.maximum}></NumberFormat></td>
           </tr>
           <tr>
               <td style={styles.labelCell}>Defense</td>
               <td style={styles.numberCell}>
                 <div className="stats" style={styles.doubleCell}>
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={defensePhysical}></NumberFormat>
-                  (Phys), 
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={defenseMagical}></NumberFormat>
-                  (Mag)
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={defensePhysical}></NumberFormat>
+                    (Phys), 
+                  </div>
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={defenseMagical}></NumberFormat>
+                    (Mag)
+                  </div>
                 </div>
               </td>
               <td style={styles.numberCell}>
                 <div className="stats" style={styles.doubleCell}>
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={physDefEngrave}></NumberFormat>
-                  (Phys), 
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={magDefEngrave}></NumberFormat>
-                  (Mag)
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={physDefEngrave.maximum}></NumberFormat>
+                    (Phys), 
+                  </div>
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={magDefEngrave.maximum}></NumberFormat>
+                    (Mag)
+                  </div>
                 </div>
               </td>
           </tr>
@@ -117,18 +136,26 @@ const ComputedStats = (props) => {
               <td style={styles.labelCell}>Damage Reduction</td>
               <td style={styles.numberCell}>
                 <div className="stats" style={styles.doubleCell}>
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(physDr)}></NumberFormat>
-                  (Phys), 
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(magDr)}></NumberFormat>
-                  (Mag)
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(physDr)}></NumberFormat>
+                    (Phys), 
+                  </div>
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(magDr)}></NumberFormat>
+                    (Mag)
+                  </div>
                 </div>
               </td>
               <td style={styles.numberCell}>
                 <div className="stats" style={styles.doubleCell}>
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(physDrEngrave)}></NumberFormat>
-                  (Phys), 
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(magDrEngrave)}></NumberFormat>
-                  (Mag)
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(physDrEngrave.maximum)}></NumberFormat>
+                    (Phys), 
+                  </div>
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(magDrEngrave.maximum)}></NumberFormat>
+                    (Mag)
+                  </div>
                 </div>
               </td>
           </tr>
@@ -136,18 +163,26 @@ const ComputedStats = (props) => {
               <td style={styles.labelCell}>Critical (Rate/Dmg)</td>
               <td style={styles.numberCell}>
                 <div className="stats" style={styles.doubleCell}>
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(critRate)}></NumberFormat>
-                  (Rate), 
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(critDmg)}></NumberFormat>
-                  (Dmg)
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(critRate)}></NumberFormat>
+                    (Rate), 
+                  </div>
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(critDmg)}></NumberFormat>
+                    (Dmg)
+                  </div>
                 </div>
               </td>
               <td style={styles.numberCell}>
                 <div className="stats" style={styles.doubleCell}>
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(critRateEngrave)}></NumberFormat>
-                  (Rate), 
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(critDmgEngrave)}></NumberFormat>
-                  (Dmg)
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(critRateEngrave.maximum)}></NumberFormat>
+                    (Rate), 
+                  </div>
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(critDmgEngrave.maximum)}></NumberFormat>
+                    (Dmg)
+                  </div>
                 </div>
               </td>
           </tr>
@@ -155,39 +190,69 @@ const ComputedStats = (props) => {
               <td style={styles.labelCell}>Speed (Atk/Move)</td>
               <td style={styles.numberCell}>
                 <div className="stats" style={styles.doubleCell}>
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(atkSpeed)}></NumberFormat>
-                  (Atk), 
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(moveSpeed)}></NumberFormat>
-                  (Move)
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(atkSpeed)}></NumberFormat>
+                    (Atk), 
+                  </div>
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(moveSpeed)}></NumberFormat>
+                    (Move)
+                  </div>
                 </div>
               </td>
               <td style={styles.numberCell}>
                 <div className="stats" style={styles.doubleCell}>
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(atkSpeedEngrave)}></NumberFormat>
-                  (Atk), 
-                  <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(moveSpeedEngrave)}></NumberFormat>
-                  (Move)
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(atkSpeedEngrave.maximum)}></NumberFormat>
+                    (Atk), 
+                  </div>
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(moveSpeedEngrave.maximum)}></NumberFormat>
+                    (Move)
+                  </div>
                 </div>
               </td>
           </tr>
           <tr>
               <td style={styles.labelCell}>Cooldown Reduction</td>
               <td style={styles.numberCell}><NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(cdr)}></NumberFormat></td>
-              <td style={styles.numberCell}><NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(cdrEngrave)}></NumberFormat></td>
+              <td style={styles.numberCell}><NumberFormat style={styles.inputCell} className="stats" disabled={true} suffix={'%'} value={convertPercent(cdrEngrave.maximum)}></NumberFormat></td>
           </tr>
           <tr>
               <td style={styles.labelCell}>Attack Power</td>
-              <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={ap}></NumberFormat></td>
-              <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={apEngrave}></NumberFormat></td>
+              <td style={styles.numberCell}><NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={ap}></NumberFormat></td>
+              <td style={styles.numberCell}><NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={apEngrave.maximum}></NumberFormat></td>
           </tr>
           <tr>
               <td style={styles.labelCell}>Normalized (Base DMG)</td>
-              <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={baseDmg}></NumberFormat></td>
-              <td style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={baseDmgEngrave}></NumberFormat></td>
+              <td style={styles.numberCell}><NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={baseDmg}></NumberFormat></td>
+              <td style={styles.numberCell}>
+                <div className="stats" style={styles.doubleCell}>
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={baseDmgEngrave.expected}></NumberFormat>
+                    (Expected), 
+                  </div>
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={baseDmgEngrave.maximum}></NumberFormat>
+                    (Maximum)
+                  </div>
+                </div>
+              </td>
           </tr>
           <tr>
-              <td style={styles.labelCell}>DPS Gain (From Engravings)</td>
-              <td colSpan={2} style={styles.numberCell}><NumberFormat className="stats" disabled={true} thousandSeparator={','} prefix={'+'} suffix={'%'} value={convertPercent((baseDmgEngrave/baseDmg) - 1)}></NumberFormat></td>
+              <td style={styles.labelCell}>DPS Gain (Expected/Maximum)</td>
+              <td colSpan={2} style={styles.numberCell}>
+                <div className="stats" style={styles.doubleCell}>
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} prefix={'+'} suffix={'%'} value={convertPercent(dpsGainExpected)}></NumberFormat>
+                    (Expected), 
+                  </div>
+                  <div>
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} prefix={'+'} suffix={'%'} value={convertPercent(dpsGainMaximum)}></NumberFormat>
+                    (Maximum)
+                  </div>
+                </div>
+              </td>
           </tr>
         </tbody>
       </Table>          
@@ -210,7 +275,9 @@ const styles = StyleSheet.create({
     paddingTop: '6px',
   },
   doubleCell: {
-    width: '250px',
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%',
   },
   inputCell: {
     width: '70px',

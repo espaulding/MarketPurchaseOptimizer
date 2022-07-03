@@ -36,16 +36,20 @@ const optimizeBuild = (props) => {
 
   // compute the dps gain for each build
   combinations.forEach(
-    e => { results.push(
+    e => { 
+      var baseDmg = LostArkMath.computeBaseDmg(props.data);
+      var baseDmgEngrave = LostArkMath.computeBaseDmgEngrave(props.data, e);
+      results.push(
       {
-        dpsGain: (LostArkMath.computeBaseDmgEngrave(props.data, e) / LostArkMath.computeBaseDmg(props.data)) - 1,
+        dpsGainExpected: (baseDmgEngrave.expected / baseDmg) - 1,
+        dpsGainMaximum: (baseDmgEngrave.maximum / baseDmg) - 1,
         engravings: e
       }
     )}
   );
 
   //put the results in order
-  results.sort((a,b) => a.dpsGain > b.dpsGain ? -1 : 1);
+  results.sort((a,b) => a.dpsGainExpected > b.dpsGainExpected ? -1 : 1);
 
   //cut the results down to size if we have more than requested
   if (results.length > props.numResults) { results = results.slice(0, props.numResults); }
