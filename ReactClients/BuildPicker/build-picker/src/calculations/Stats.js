@@ -88,7 +88,6 @@ const LostArkMath = {
         if (objDefense.maximum > 0) { maximum = objDefense.maximum / (objDefense.maximum + 6500); }
         
         var difficulty = objDefense.difficulty;
-        
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.dr !== undefined) {
                 expected = e.impl.dr(e.expUptime, expected);
@@ -97,7 +96,7 @@ const LostArkMath = {
             }
         });
 
-        return { expected: Math.floor(expected), maximum: Math.floor(maximum), difficulty: difficulty };
+        return { expected: expected, maximum: maximum, difficulty: difficulty };
     },
 
     // t -> type of defense physical or magical
