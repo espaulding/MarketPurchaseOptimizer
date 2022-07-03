@@ -17,7 +17,7 @@ const engravings = [
             { // 1
                 label: 'All-Out Attack', code: 'ALL', 
                 tooltip: 'Holding or Casting skill -> +20% DMG, +20% Atk Speed',
-                expUptime: 3/8, maxUptime: .8, difficulty: 1, 
+                expUptime: .375, maxUptime: .8, difficulty: 1, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
                         var scaled = (uptime * .12);

@@ -404,7 +404,7 @@ const LostArkMath = {
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.dmg !== undefined) {
                 baseDmgEngraveExpected = e.impl.dmg(e.expUptime, baseDmgEngraveExpected, moveSpeed.expected, atkSpeed.expected);
-                baseDmgEngraveMaximum = e.impl.dmg(e.expUptime, baseDmgEngraveMaximum, moveSpeed.maximum, atkSpeed.maximum);
+                baseDmgEngraveMaximum = e.impl.dmg(e.maxUptime, baseDmgEngraveMaximum, moveSpeed.maximum, atkSpeed.maximum);
                 difficulty[e.code] = e.difficulty;
             }
         });
