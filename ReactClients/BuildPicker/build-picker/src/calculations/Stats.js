@@ -15,11 +15,7 @@ const LostArkMath = {
 
     sumDifficulty: function(d) {
         var difficulty = 0;
-        Object
-            .keys(d)
-            .map((name, index) => {
-                difficulty += d[name];
-            });
+        Object.values(d).forEach((e) => { difficulty += e} );
         return difficulty;
     },
 

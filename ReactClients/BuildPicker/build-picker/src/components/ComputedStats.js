@@ -51,6 +51,7 @@ const ComputedStats = (props) => {
 
   var dpsGainExpected = (baseDmgEngrave.expected/baseDmg) - 1;
   var dpsGainMaximum = (baseDmgEngrave.maximum/baseDmg) - 1;
+  var buildDifficulty = baseDmgEngrave.difficulty;
 
   return (
     <div className="stat-calc">
@@ -249,7 +250,11 @@ const ComputedStats = (props) => {
                   </div>
                   <div>
                     <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} prefix={'+'} suffix={'%'} value={convertPercent(dpsGainMaximum)}></NumberFormat>
-                    (Maximum)
+                    <span>(Maximum),&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  </div>
+                  <div>
+                      Build Challenge:
+                    <NumberFormat style={styles.inputCell} className="stats" disabled={true} thousandSeparator={','} decimalScale={0} value={buildDifficulty}></NumberFormat>
                   </div>
                 </div>
               </td>
