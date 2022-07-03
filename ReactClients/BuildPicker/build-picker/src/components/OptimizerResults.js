@@ -2,14 +2,19 @@ import React from 'react';
 import { StyleSheet } from "react-native";
 import NumberFormat from 'react-number-format';
 import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 import LostArkMath from '../calculations/Stats.js'
 
 const OptimizerResults = (props) => {
+  var baseDmg = LostArkMath.computeBaseDmg(props.data);
+  var baseDmgEngrave = LostArkMath.computeBaseDmgEngrave(props.data, props.selectedEngravings);
   const init = [
     {
-      dpsGain: (LostArkMath.computeBaseDmgEngrave(props.data, props.selectedEngravings) / LostArkMath.computeBaseDmg(props.data)) - 1,
+      dpsGainExpected: (baseDmgEngrave.expected / baseDmg) - 1,
+      dpsGainMaximum: (baseDmgEngrave.maximum / baseDmg) - 1,
       engravings: props.selectedEngravings
     }
   ];
@@ -38,7 +43,17 @@ const OptimizerResults = (props) => {
                       thousandSeparator={','} 
                       prefix={'+'} 
                       suffix={'%'} 
-                      value={convertPercent(r.dpsGain)}/>
+                      value={convertPercent(r.dpsGainExpected)}/>
+                  </td>
+                  <td style={styles.numberCell}>
+                    <NumberFormat 
+                      style={styles.inputCell}
+                      className="stats" 
+                      disabled={true} 
+                      thousandSeparator={','} 
+                      prefix={'+'} 
+                      suffix={'%'} 
+                      value={convertPercent(r.dpsGainMaximum)}/>
                   </td>
                   <td style={styles.labelCell}>
                     <span>{engravingToText(r.engravings)}</span>
@@ -65,7 +80,22 @@ const OptimizerResults = (props) => {
         <Table striped bordered variant="dark" size="sm">
           <thead>
             <tr>
-              <td>DPS Gain</td>
+              <td>
+              <OverlayTrigger
+                  placement="top" 
+                  overlay={<Tooltip>The expected DPS gain from the engravings</Tooltip>} 
+                  delay={{ show: 350, hide: 350 }}>
+                  <div>+Dps</div>
+                </OverlayTrigger>
+              </td>
+              <td>
+                <OverlayTrigger
+                  placement="top" 
+                  overlay={<Tooltip>The idealized maximum DPS gain, given perfect play with 100% engraving effect uptime.</Tooltip>} 
+                  delay={{ show: 350, hide: 350 }}>
+                  <div>Max +Dps</div>
+                </OverlayTrigger>
+              </td>
               <td>Engravings</td>
               <td style={styles.numberCell}>Apply Build</td>
             </tr>
@@ -92,8 +122,10 @@ const styles = StyleSheet.create({
       display: 'flex',
       justifyContent: 'flex-start',
       alignContent: 'center',
+      fontSize: '12px',
+      height: '31.5px',
       textAlign: 'left',
-      paddingTop: '4px',
+      paddingTop: '6px',
       paddingLeft: '5px',
       paddingRight: '10px',
   },
