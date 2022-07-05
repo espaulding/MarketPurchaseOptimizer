@@ -41,10 +41,13 @@ function MainWindow() {
         return cookie;
     };
     
-    const [subclass, setSubclass] = useState(defaultVal(cookies.subclass, subclassList.sorc), subclassList.sorc);
-    const [lockedEngravings, setLockedEngravings]  = useState(defaultVal(remapEngravings(cookies.lockedEngravings), recommendations[subclass.code].lockedEngravings));
-    const [possibleEngravings, setPossibleEngravings]  = useState(defaultVal(remapEngravings(cookies.possibleEngravings), recommendations[subclass.code].possibleEngravings)); 
-    const [selectedEngravings, setSelectedEngravings]  = useState(defaultVal(remapEngravings(cookies.selectedEngravings), []));
+    // const [subclass, setSubclass] = useState(defaultVal(cookies.subclass, subclassList.bard), subclassList.bard);
+    // const [lockedEngravings, setLockedEngravings]  = useState(defaultVal(remapEngravings(cookies.lockedEngravings), recommendations[subclass.code].lockedEngravings));
+    // const [possibleEngravings, setPossibleEngravings]  = useState(defaultVal(remapEngravings(cookies.possibleEngravings), recommendations[subclass.code].possibleEngravings)); 
+    const [subclass, setSubclass] = useState(subclassList.sorc);
+    const [lockedEngravings, setLockedEngravings]  = useState(recommendations.sorc.lockedEngravings);
+    const [possibleEngravings, setPossibleEngravings]  = useState(recommendations.sorc.possibleEngravings); 
+    const [selectedEngravings, setSelectedEngravings]  = useState([]);
     const [optimizerResults, setOptimizerResults]  = useState(defaultVal([],[]));
     const [defensePhysical, setDefensePhysical] = useState(defaultVal(cookies.physDefense, 10000)); 
     const [defenseMagical, setDefenseMagical] = useState(defaultVal(cookies.magDefense,10000));
