@@ -26,29 +26,41 @@ function MainWindow() {
         return typeof input !== 'undefined' ? input : alternative;
     };
 
-    const saveJsonCookie = (name, value) => {
-        setCookie(name, JSON.stringify(value), path); 
+    const saveEngravingsAsCookie = (name, value) => {
+        setCookie(name, value.map((e) => { return e.code; }).join(','), path); 
     };
 
-    const remapEngravings = (cookie) => {
+    const remapEngravingsFromCookie = (cookie) => {
+        var output = [];
         if(cookie !== undefined) {
-            cookie.forEach((c) => {
-                const commonEngraving = engravings[0].items.filter(e => e.code === c.code);
-                const classEngraving = engravings[1].items.filter(e => e.code === c.code);
-                c.impl = (commonEngraving.length > 0) ? commonEngraving[0].impl : classEngraving[0].impl;
+            var engravingCodes = cookie.split(',');
+            engravingCodes.forEach(code => { 
+                const commonEngraving = engravings[0].items.filter(e => e.code === code);
+                const classEngraving = engravings[1].items.filter(e => e.code === code);
+                if(commonEngraving.length > 0) {
+                    output.push(commonEngraving[0]);
+                }
+                if(classEngraving.length > 0) {
+                    output.push(classEngraving[0]);
+                }
             });
         }
-        return cookie;
+        return output;
+    };
+
+    const remapSubclassFromCookie = (cookie) => {
+        var subclass = undefined;
+        if(cookie !== undefined) {
+            subclass = subclassList[cookie];
+        }
+        return subclass;
     };
     
-    // const [subclass, setSubclass] = useState(defaultVal(cookies.subclass, subclassList.bard), subclassList.bard);
-    // const [lockedEngravings, setLockedEngravings]  = useState(defaultVal(remapEngravings(cookies.lockedEngravings), recommendations[subclass.code].lockedEngravings));
-    // const [possibleEngravings, setPossibleEngravings]  = useState(defaultVal(remapEngravings(cookies.possibleEngravings), recommendations[subclass.code].possibleEngravings)); 
-    const [subclass, setSubclass] = useState(subclassList.sorc);
-    const [lockedEngravings, setLockedEngravings]  = useState(recommendations.sorc.lockedEngravings);
-    const [possibleEngravings, setPossibleEngravings]  = useState(recommendations.sorc.possibleEngravings); 
-    const [selectedEngravings, setSelectedEngravings]  = useState([]);
-    const [optimizerResults, setOptimizerResults]  = useState(defaultVal([],[]));
+    const [subclass, setSubclass] = useState(defaultVal(remapSubclassFromCookie(cookies.strSubclass), subclassList.art));
+    const [lockedEngravings, setLockedEngravings]  = useState(remapEngravingsFromCookie(cookies.strLockedEngravings));
+    const [possibleEngravings, setPossibleEngravings]  = useState(remapEngravingsFromCookie(cookies.strPossibleEngravings));
+    const [selectedEngravings, setSelectedEngravings]  = useState(remapEngravingsFromCookie(cookies.strSelectedEngravings));
+    const [optimizerResults, setOptimizerResults]  = useState([]);
     const [defensePhysical, setDefensePhysical] = useState(defaultVal(cookies.physDefense, 10000)); 
     const [defenseMagical, setDefenseMagical] = useState(defaultVal(cookies.magDefense,10000));
     const [hp, setHp] = useState(defaultVal(cookies.hp, 75000));    
@@ -75,22 +87,22 @@ function MainWindow() {
         lockedEngravings : lockedEngravings, 
         setLockedEngravings : (e) => { 
             setLockedEngravings(e); 
-            saveJsonCookie('lockedEngravings', e);
+            saveEngravingsAsCookie('strLockedEngravings', e);
         },
         possibleEngravings : possibleEngravings, 
         setPossibleEngravings : (e) => { 
             setPossibleEngravings(e); 
-            saveJsonCookie('possibleEngravings', e);
+            saveEngravingsAsCookie('strPossibleEngravings', e);
         },
         selectedEngravings : selectedEngravings, 
         setSelectedEngravings : (e) => { 
             setSelectedEngravings(e); 
-            saveJsonCookie('selectedEngravings', e);
+            saveEngravingsAsCookie('strSelectedEngravings', e);
         },
         subclass : subclass, 
         setSubclass : (e) => { 
             setSubclass(e); 
-            saveJsonCookie('subclass', e);
+            setCookie('strSubclass', e.code, path);
         },
         defensePhysical : defensePhysical, 
         setDefensePhysical : (e) => { 
