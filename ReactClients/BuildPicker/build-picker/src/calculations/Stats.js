@@ -358,10 +358,10 @@ const LostArkMath = {
     normalizeAtkSpeed: function(dmg, atkSpeed, cdr) {
         var bonus = .45, cdrCap = .75;
             //bonus *= ((1 - cdr) / cdrCap); 
-        var bonusAtkSpeed = (atkSpeed > 1) ? (atkSpeed - 1) : 0;
+        var bonusAtkSpeed = (atkSpeed > .5) ? (atkSpeed - 1) : 0;
         //console.log('bonus before ' + bonus + ' speed: ' + bonusAtkSpeed);
         bonus = (bonus + 1) * bonusAtkSpeed;
-        if (atkSpeed >= 1 && cdr > 0) { dmg *= (bonus / 4 + 1); }
+        if (atkSpeed >= .5 && cdr > 0) { dmg *= (bonus / 4 + 1); }
         return dmg;
     },
 

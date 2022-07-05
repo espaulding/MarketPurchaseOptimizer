@@ -26,6 +26,13 @@ Use incoming market data and a desired purchase outcome to choose an optimal set
   - to make a new project -> "npx create-react-app build-picker"
 
 ## Running a React app in a local development environment
+In order to pull down updated version of the packages idenfified by the project browse to the root folder.
+ - For example, 'CD ReactClients/BuildPicker/build-picker'
+ - Run the commands
+   - npm cache clean --force
+   - npm rebuild
+   - npm install
+
 - npm start - starts the development server
 - npm run build - bundles the app into static files for deployment
 - npm test - starts the test runner
