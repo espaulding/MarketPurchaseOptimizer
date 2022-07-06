@@ -553,8 +553,8 @@ const engravings = [
                     dmg: (uptime, d, mspd, aspd, spec) => {  // there's some damage bonus here based on spec as well
                         var dmgDuringMA = (1 + (uptime * 1.00)); // estimating 100% damage bonus for average sorc with 1k spec
                                                                  // todo - take in spec and compute dmg bonus correctly
-                        return d * dmgDuringMA;                  // ** assume that damage to charge up the next MA is negligable **
-                    }                                            // ** because charging is done with low dmg skills using wealth runes **
+                        return d * dmgDuringMA;                  
+                    }                                           
                 }
             },                  
             { //17
@@ -592,7 +592,7 @@ const engravings = [
             { //20
                 label: '(Berserker) Mayhem', code: 'MAY',
                 tooltip: '+16% DMG, +15% Atk and Move speed, 65% additional damage reduction, -75% Max HP, -60% healing received, -75% shield absorption',
-                expUptime: 1, maxUptime: 1, difficulty: 0,
+                expUptime: 1, maxUptime: 1, difficulty: -1,
                 impl: { // manual cancel of zerker mode heals hp to 50% roughly and can be used as a potion but ruins dps while zerker mode is on cd
                         // running arounding doing nothing for 20s is better than being dead though
                     hp: (uptime, h) => { return h * .25; }, 

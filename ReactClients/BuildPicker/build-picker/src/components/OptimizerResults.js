@@ -109,8 +109,10 @@ const styles = StyleSheet.create({
       height: '31.5px',
       textAlign: 'left',
       paddingTop: '6px',
+      paddingBottom: '5px',
       paddingLeft: '5px',
       paddingRight: '10px',
+      height: 'fit-content'
   },
   numberCell: {
     textAlignVertical: 'middle',
