@@ -546,13 +546,15 @@ const engravings = [
             { //16
                 label: '(Sorceress) Igniter', code: 'IGN',
                 tooltip: 'Magick Amplification -> Crit Rate +25% and Crit Dmg +50%. When Magic Amplification is triggered skills currently in cooldown -50% CD',
-                expUptime: 15/50, maxUptime: 15/50, difficulty: 0, //estimate 35s to build meter and then 15s to dump rotation (2 meteors is ideal)
-                impl: {
+                expUptime: 10/(15+60), maxUptime: 10/(10+30), difficulty: 0,//optimistic - estimate 30s to build meter and then 10s for skill rotation
+                impl: {                                                    //pessimistic - estimate 60s to build meter and then 10s for skill rotation
                     cr: (uptime, crit) => { return crit + (uptime * .25); },
                     cd: (uptime, crit) => { return crit + (uptime * .5); },
-                    dmg: (uptime, d, mspd, aspd) => {  // there's some damage bonus here based on spec as well
-                        return d * (1 + (uptime * 1.00)); // estimating 100% damage bonus for average sorc with 1k spec
-                    }
+                    dmg: (uptime, d, mspd, aspd, spec) => {  // there's some damage bonus here based on spec as well
+                        var dmgDuringMA = (1 + (uptime * 1.00)); // estimating 100% damage bonus for average sorc with 1k spec
+                                                                 // todo - take in spec and compute dmg bonus correctly
+                        return d * dmgDuringMA;                  // ** assume that damage to charge up the next MA is negligable **
+                    }                                            // ** because charging is done with low dmg skills using wealth runes **
                 }
             },                  
             { //17
