@@ -8,8 +8,7 @@ const engravings = [
                 expUptime: .6, maxUptime: 1, difficulty: 1, 
                 impl: {
                     atk: (uptime, a, base) => { 
-                        var scaled = (uptime * .06);
-                        return a + (base * scaled); 
+                        return a + (base * (uptime * .06)); 
                     },
                     cr: (uptime, crit) => { return crit + (uptime * .15); }
                 }
@@ -20,8 +19,7 @@ const engravings = [
                 expUptime: 3/8, maxUptime: 7/8, difficulty: -1,  // how many holding + casting skills can be on the bar?
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .12);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .12)); 
                     },
                     aspd: (uptime, s) => { return s + (uptime * .2); } // only applies to a few skills
                 }
@@ -32,8 +30,7 @@ const engravings = [
                 expUptime: 16/24, maxUptime: 1, difficulty: 1, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .25);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .25)); 
                     }
                 }
             },       
@@ -49,8 +46,7 @@ const engravings = [
                 expUptime: .8, maxUptime: 1, difficulty: 0, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .16);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .16)); 
                     }
                 }
             },              
@@ -60,8 +56,7 @@ const engravings = [
                 expUptime: .1, maxUptime: .2, difficulty: 0, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .4);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .4)); 
                     }
                 }
             },             
@@ -71,8 +66,7 @@ const engravings = [
                 expUptime: .4, maxUptime: 1, difficulty: 0,  // situational uptime like chaos dungeon (good), boss fight (bad)
                 impl: {                                  
                     atk: (uptime, a, base) => { 
-                        var scaled = (uptime * .175);
-                        return a + (base * scaled); 
+                        return a + (base * (uptime * .175)); 
                     }
                 }
             },              
@@ -88,8 +82,7 @@ const engravings = [
                 expUptime: .05, maxUptime: .1, difficulty: 1,  //extremely low uptime unless you can counter a lot and even then low uptime.
                 impl: {
                     atk: (uptime, a, base) => { 
-                        var scaled = (uptime * .2);
-                        return a + (base * scaled); 
+                        return a + (base * (uptime * .2)); 
                     }
                 }
             },           
@@ -99,8 +92,7 @@ const engravings = [
                 expUptime: 1, maxUptime: 1, difficulty: 1, 
                 impl: {
                     atk: (uptime, a, base) => { 
-                        var scaled = (uptime * .16);
-                        return a + (base * scaled); 
+                        return a + (base * (uptime * .16)); 
                     }
                 }
             } ,          
@@ -110,8 +102,7 @@ const engravings = [
                 expUptime: .3, maxUptime: .5, difficulty: 0,  //since bosses are much harder at low hp, perhaps deceptively good?
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .36);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .36)); 
                     }
                 }
             },              
@@ -133,8 +124,7 @@ const engravings = [
                 impl: {
                     def: (uptime, d, bd) => { return d + (bd * (uptime * .1)); },
                     atk: (uptime, a, base) => { 
-                        var scaled = (uptime * .1);
-                        return a + (base * scaled); 
+                        return a + (base * (uptime * .1)); 
                     },
                     cr: (uptime, crit) => { return crit + (uptime * .15); },
                     mspd: (uptime, s) => { return s + (uptime * .1); }
@@ -159,8 +149,7 @@ const engravings = [
                 impl: {
                     def: (uptime, d, bd) => { return d + (bd * (uptime * .3)); },
                     atk: (uptime, a, base) => { 
-                        var scaled = (uptime * .15);
-                        return a + (base * scaled); 
+                        return a + (base * (uptime * .15)); 
                     }
                 }
             },          
@@ -395,8 +384,7 @@ const engravings = [
                 expUptime: 3/8, maxUptime: 6/8, difficulty: -1,  // how many charge skills be on the bar?
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .2);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .2)); 
                     },
                     aspd: (uptime, s) => { return s + (uptime * .4); } //only applies to a few skills
                 }
@@ -558,7 +546,7 @@ const engravings = [
             { //16
                 label: '(Sorceress) Igniter', code: 'IGN',
                 tooltip: 'Magick Amplification -> Crit Rate +25% and Crit Dmg +50%. When Magic Amplification is triggered skills currently in cooldown -50% CD',
-                expUptime: 15/45, maxUptime: 1, difficulty: 0, //estimate 30s to build meter and then 15s to dump rotation (2 meteors is ideal)
+                expUptime: 15/50, maxUptime: 15/50, difficulty: 0, //estimate 35s to build meter and then 15s to dump rotation (2 meteors is ideal)
                 impl: {
                     cr: (uptime, crit) => { return crit + (uptime * .25); },
                     cd: (uptime, crit) => { return crit + (uptime * .5); },
@@ -570,8 +558,12 @@ const engravings = [
             { //17
                 label: '(Paladin) Judgement', code: 'JUD',
                 tooltip: 'Duration of Sacred Executioner +150%. Punishment DMG +15%. When Punishment hits -> Piety Gain +100%. ',
-                expUptime: .6, maxUptime: 1, difficulty: 0, 
-                impl: { }
+                expUptime: .6, maxUptime: 1, difficulty: 0, //how long to charge piety? duration? % of punishment skills in build?
+                impl: { 
+                    dmg: (uptime, d, mspd, aspd) => {  
+                        return d * (1 + (uptime * .15)); 
+                    }
+                }
             },                 
             { //18
                 label: '(Gunlancer) Lone Knight', code: 'LK',
@@ -698,8 +690,7 @@ const engravings = [
                 expUptime: .6, maxUptime: 1, difficulty: 0,
                 impl: {
                     atk: (uptime, a, base) => { 
-                        var scaled = (uptime * .36);
-                        return a + (base * scaled); 
+                        return a + (base * (uptime * .36)); 
                     },
                     aspd: (uptime, s) => { return s + (uptime * .12); },
                     mspd: (uptime, s) => { return s + (uptime * .12); }
