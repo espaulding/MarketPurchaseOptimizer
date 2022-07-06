@@ -1,10 +1,8 @@
 import React from 'react';
 import { StyleSheet } from "react-native";
 import NumberFormat from 'react-number-format';
-import Table from 'react-bootstrap/Table';
+import BootstrapTable from 'react-bootstrap-table-next';
 import Button from 'react-bootstrap/Button';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
 
 import LostArkMath from '../calculations/Stats.js'
 
@@ -15,6 +13,7 @@ const OptimizerResults = (props) => {
     {
       dpsGainExpected: (baseDmgEngrave.expected / baseDmg) - 1,
       dpsGainMaximum: (baseDmgEngrave.maximum / baseDmg) - 1,
+      difficulty: baseDmgEngrave.difficulty,
       engravings: props.selectedEngravings
     }
   ];
@@ -27,83 +26,67 @@ const OptimizerResults = (props) => {
     return engravings.map((e) => { return e.label; }).join(', ');
   };
 
-  const renderResults = () => {
-    var results = init;
-    if(props.optimizerResults.length > 0) { results = props.optimizerResults; }
+  var columns = [
+    {dataField: 'difficulty', text: 'Challenge', sort: true, sortValue: (cell, row) => { return +row.difficulty; } },
+    {dataField: 'dpsGainExpected', text: '+Dps', sort: true, sortValue: (cell, row) => { return +row.dpsGainExpectedSort; } },
+    {dataField: 'dpsGainMaximum', text: 'Max +Dps', sort: true, sortValue: (cell, row) => { return +row.dpsGainMaximumSort; } },
+    {dataField: 'strEngravings', text: 'Engravings'},
+    {dataField: 'link', text: 'Apply Build'}
+  ];
+  var tableData = [];
 
-    return(
-      results.map(
-        (r, index) => {
-          return <tr key={index} style={styles.resultRow}>
-                  <td style={styles.numberCell}>
-                    <NumberFormat 
-                      style={styles.inputCell}
-                      className="stats" 
-                      disabled={true} 
-                      thousandSeparator={','} 
-                      prefix={'+'} 
-                      suffix={'%'} 
-                      value={convertPercent(r.dpsGainExpected)}/>
-                  </td>
-                  <td style={styles.numberCell}>
-                    <NumberFormat 
-                      style={styles.inputCell}
-                      className="stats" 
-                      disabled={true} 
-                      thousandSeparator={','} 
-                      prefix={'+'} 
-                      suffix={'%'} 
-                      value={convertPercent(r.dpsGainMaximum)}/>
-                  </td>
-                  <td style={styles.labelCell}>
-                    <span>{engravingToText(r.engravings)}</span>
-                  </td>
-                  <td style={styles.btnCell}>
-                    <Button 
-                      style={styles.apply} 
-                      variant="link" 
-                      onClick={() => { 
-                        props.setSelectedEngravings(r.engravings);
-                        document.querySelector("[data-rr-ui-event-key='BuildExplorer']").click();
-                      }}>
-                        Apply</Button>
-                  </td>
-                </tr>
+  var results = init;
+  if(props.optimizerResults.length > 0) { results = props.optimizerResults; }
+  
+  results.map(
+    (r, index) => {
+      tableData.push(
+        {
+          key: index,
+          difficulty: r.difficulty,
+          dpsGainExpectedSort: r.dpsGainExpected,
+          dpsGainExpected: <div style={styles.numberCell}><NumberFormat 
+                            style={styles.inputCell}
+                            className="stats" 
+                            disabled={true} 
+                            thousandSeparator={','} 
+                            prefix={'+'} 
+                            suffix={'%'} 
+                            value={convertPercent(r.dpsGainExpected)}/></div>,
+          dpsGainMaximumSort: r.dpsGainMaximum,                            
+          dpsGainMaximum: <div style={styles.numberCell}><NumberFormat 
+                            style={styles.inputCell}
+                            className="stats" 
+                            disabled={true} 
+                            thousandSeparator={','} 
+                            prefix={'+'} 
+                            suffix={'%'} 
+                            value={convertPercent(r.dpsGainMaximum)}/></div>,
+          strEngravings: <div style={styles.labelCell}>{engravingToText(r.engravings)}</div>,
+          link: <div style={styles.btnCell}><Button 
+                  style={styles.apply} 
+                  variant="link" 
+                  onClick={() => { 
+                    props.setSelectedEngravings(r.engravings);
+                    document.querySelector("[data-rr-ui-event-key='BuildExplorer']").click();
+                  }}>
+                    Apply</Button></div>
         }
-      )
-    );
-  };
+      );
+    }
+  );
 
   return (
     <div className="stat-calc">
       <div className="optimizer-result-table">
-        <Table striped bordered variant="dark" size="sm">
-          <thead>
-            <tr>
-              <td>
-              <OverlayTrigger
-                  placement="top" 
-                  overlay={<Tooltip>The expected DPS gain from the engravings</Tooltip>} 
-                  delay={{ show: 350, hide: 350 }}>
-                  <div>+Dps</div>
-                </OverlayTrigger>
-              </td>
-              <td>
-                <OverlayTrigger
-                  placement="top" 
-                  overlay={<Tooltip>The idealized maximum DPS gain, given perfect play with 100% engraving effect uptime.</Tooltip>} 
-                  delay={{ show: 350, hide: 350 }}>
-                  <div>Max +Dps</div>
-                </OverlayTrigger>
-              </td>
-              <td>Engravings</td>
-              <td style={styles.numberCell}>Apply Build</td>
-            </tr>
-          </thead>
-          <tbody>
-            {renderResults()}
-          </tbody>
-        </Table>          
+        <BootstrapTable 
+            bootstrap4 condensed
+            bordered={false} 
+            keyField='key' data={ tableData } columns={ columns } 
+            sort={ {
+              dataField: 'dpsGainExpected',
+              order: 'desc'
+            } } />
       </div>
     </div>
   );

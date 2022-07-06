@@ -29,7 +29,7 @@ td {
 
 .stats {
   background-color: transparent;
-  color: cyan;
+  color: #00cfcf;
   box-shadow: none;
   border-color: transparent;
   text-align: center;
@@ -135,6 +135,37 @@ table {
   overflow: auto;
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
   scrollbar-width: none;  /* Firefox */
+}
+
+/* div.react-bootstrap-table > table > tbody {
+  position: absolute;
+  top: 23px;
+  bottom: 0;
+  left: 0;
+  right: -17px;
+  overflow-y: auto;
+  -ms-overflow-style: none;  
+  scrollbar-width: none; 
+} */
+
+.react-bootstrap-table table {
+  table-layout: auto;
+}
+
+div.react-bootstrap-table > table > tbody > tr {
+  min-width: 900px;
+  width: 900px;
+  max-width: 900px;
+}
+
+div.react-bootstrap-table > table > tbody > tr > td {
+  color: #00cfcf;
+}
+
+div.react-bootstrap-table > table > thead > tr > th {
+  color: white;
+  font-size: 15px;
+  text-align: center;
 }
 
 .optimizer-result-table::-webkit-scrollbar { 
