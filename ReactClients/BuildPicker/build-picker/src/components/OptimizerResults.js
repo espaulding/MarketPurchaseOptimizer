@@ -80,7 +80,7 @@ const OptimizerResults = (props) => {
     <div className="stat-calc">
       <div className="optimizer-result-table">
         <BootstrapTable 
-            bootstrap4 condensed responsive
+            bootstrap4 condensed
             bordered={false} 
             keyField='key' data={ tableData } columns={ columns } 
             sort={ {
