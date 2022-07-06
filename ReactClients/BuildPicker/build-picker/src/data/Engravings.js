@@ -17,13 +17,13 @@ const engravings = [
             { // 1
                 label: 'All-Out Attack', code: 'ALL', 
                 tooltip: 'Holding or Casting skill -> +20% DMG, +20% Atk Speed',
-                expUptime: .375, maxUptime: .8, difficulty: -1, 
+                expUptime: 3/8, maxUptime: 7/8, difficulty: -1,  // how many holding + casting skills can be on the bar?
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
                         var scaled = (uptime * .12);
                         return d * (1 + scaled); 
                     },
-                    //aspd: (uptime, s) => { return s + .2; } // only applies to a few skills so this is too much here
+                    aspd: (uptime, s) => { return s + (uptime * .2); } // only applies to a few skills
                 }
             },       
             { // 2
@@ -68,8 +68,8 @@ const engravings = [
             { // 6
                 label: 'Contender', code: 'CON',
                 tooltip: 'Kill Foe -> +2.5% Atk Power per stack (+17.5% max)',
-                expUptime: .3, maxUptime: 1, difficulty: 0,  // situational uptime like chaos vs boss
-                impl: {
+                expUptime: .4, maxUptime: 1, difficulty: 0,  // situational uptime like chaos dungeon (good), boss fight (bad)
+                impl: {                                  
                     atk: (uptime, a, base) => { 
                         var scaled = (uptime * .175);
                         return a + (base * scaled); 
@@ -85,7 +85,7 @@ const engravings = [
             { // 8
                 label: 'Crushing Fist', code: 'CF',
                 tooltip: 'Counter Attack -> +20% Atk Power (duration???)',
-                expUptime: .05, maxUptime: .1, difficulty: 1, 
+                expUptime: .05, maxUptime: .1, difficulty: 1,  //extremely low uptime unless you can counter a lot and even then low uptime.
                 impl: {
                     atk: (uptime, a, base) => { 
                         var scaled = (uptime * .2);
@@ -107,7 +107,7 @@ const engravings = [
             { //10
                 label: 'Disrespect', code: 'DIS',
                 tooltip: 'Enemy HP < 30% -> +36% DMG',
-                expUptime: .3, maxUptime: .5, difficulty: 0, 
+                expUptime: .3, maxUptime: .5, difficulty: 0,  //since bosses are much harder at low hp, perhaps deceptively good?
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
                         var scaled = (uptime * .36);
@@ -122,7 +122,6 @@ const engravings = [
                 impl: {
                     dr: (uptime, d) =>  {
                         var dr = 1 - (1 - d) * (1 - (uptime * .6));    // reduction if 20% succeeds and not on cooldown
-                        //var adjusted = (.8 * d) + (.2 * dr) // normalize for 20% to proc if not on cooldown
                         return dr; // ignoring the cooldown makes this look better than it really is
                     }
                 }
@@ -192,8 +191,7 @@ const engravings = [
                 impl: {
                     dr: (uptime, d) => { return 1 - (1 - d) * 1.2; },
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .2);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .2)); 
                     }
                 }
             },                
@@ -202,7 +200,7 @@ const engravings = [
                 tooltip: 'defense +(20/50/100)%',
                 expUptime: 1, maxUptime: 1, difficulty: -1, 
                 impl: {
-                    def: (uptime, d, bd) => { return d + bd; }
+                    def: (uptime, d, bd) => { return d + (uptime * bd); }
                 } 
             },            
             { //21
@@ -211,8 +209,7 @@ const engravings = [
                 expUptime: 1, maxUptime: 1, difficulty: 0, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .16);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .16)); 
                     }
                 }
             },              
@@ -222,8 +219,7 @@ const engravings = [
                 expUptime: 1, maxUptime: 1, difficulty: 1, 
                 impl: {
                     atk: (uptime, a, base) => { 
-                        var scaled = (uptime * .18);
-                        return a + (base * scaled); 
+                        return a + (base * (uptime * .18)); 
                     },
                     aspd: (uptime, s) => { return s - (uptime * .1); }
                 }
@@ -233,8 +229,11 @@ const engravings = [
                 tooltip: '50% Crit Dmg (10% chance of -20% DMG)',
                 expUptime: 1, maxUptime: 1, difficulty: 0, 
                 impl: {
-                    dmg: (uptime, d, mspd, aspd) => { return (.9 * d) + (.1 * .8 * d); },
-                    cd: (uptime, crit) => { return crit + .5; }
+                    dmg: (uptime, d, mspd, aspd) => { 
+                        var kbwNormalized = (.9 * d) + (.1 * .8 * d);
+                        return (uptime * kbwNormalized) + ((1 - uptime) * d);
+                    },
+                    cd: (uptime, crit) => { return crit + (uptime * .5); }
                 }
             },      
             { //24
@@ -250,8 +249,7 @@ const engravings = [
                 impl: {
                     mpr: (uptime, m, base) => { return m + (base * (uptime * .3)); },
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .12);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .12)); 
                     }
                 }
             }, 
@@ -270,8 +268,7 @@ const engravings = [
                 expUptime: .7, maxUptime: 1, difficulty: 1, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .25);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .25)); 
                     }
                 }
             },          
@@ -287,8 +284,7 @@ const engravings = [
                 expUptime: .5, maxUptime: 1, difficulty: 0, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .16);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .16)); 
                     }
                 }
             },      
@@ -297,8 +293,8 @@ const engravings = [
                 tooltip: '30% MP',
                 expUptime: 1, maxUptime: 1, difficulty: 0, 
                 impl: {
-                    mp: (uptime, m) => { return m * 1.3; },
-                    mprBase: (uptime, m) => { return m * 1.3; }
+                    mp: (uptime, m) => { return m * (1 + (uptime * .3)); },
+                    mprBase: (uptime, m) => { return m * (1 + (uptime * .3)); }
                 }
             },       
             { //31
@@ -312,18 +308,17 @@ const engravings = [
                 tooltip: '20% Crit, -12% Crit Dmg',
                 expUptime: 1, maxUptime: 1, difficulty: 0, 
                 impl: {
-                    cr: (uptime, crit) => { return crit + .2; },
-                    cd: (uptime, crit) => { return crit - .12; },
+                    cr: (uptime, crit) => { return crit + (uptime * .2); },
+                    cd: (uptime, crit) => { return crit - (uptime * .12); },
                 }
             },          
             { //33
                 label: 'Preemptive Strike', code: 'PS',
                 tooltip: 'Enemy full HP -> 100% Crit Chance and +160% DMG',
-                expUptime: .05, maxUptime: 1, difficulty: 0, 
+                expUptime: .05, maxUptime: 1, difficulty: 0,  // only good in chaos dungeon
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * 1.6);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * 1.6)); 
                     },
                     cr: (uptime, crit) => { return crit + (uptime * 1); }
                 }
@@ -331,11 +326,10 @@ const engravings = [
             { //34
                 label: 'Propulsion', code: 'PRO',
                 tooltip: 'Use spacebar -> +16% DMG (5s)',
-                expUptime: .3, maxUptime: 1, difficulty: 1, 
+                expUptime: .3, maxUptime: 1, difficulty: 1, // maybe with enough CDR on spacebar 100% uptime? seems like a huge pain for only 16% bonus
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .16);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .16)); 
                     }
                 }
             },            
@@ -344,7 +338,10 @@ const engravings = [
                 tooltip: '45% of movement bonus as % DMG (140% Move Speed = +18% DMG)',
                 expUptime: 1, maxUptime: 1, difficulty: 0, 
                 impl: {
-                    dmg: (uptime, d, mspd, aspd) => { return d * (((mspd - 1) * .45) + 1); }
+                    dmg: (uptime, d, mspd, aspd) => { 
+                        var mv = (mspd > 1) ? (mspd - 1) : 0;
+                        var dmgBonus = mv * .45;
+                        return d * (1 + (uptime * dmgBonus)); }
                 }
             },            
             { //36
@@ -352,7 +349,7 @@ const engravings = [
                 tooltip: 'Attacking shielded enemy -> +100% DMG ',
                 expUptime: 1, maxUptime: 1, difficulty: 0, 
                 impl: {
-                    dmg: (uptime, d, mspd, aspd) => { return d * 2; }
+                    dmg: (uptime, d, mspd, aspd) => { return d * (1 + uptime); }
                 }
             },        
             { //37 
@@ -361,8 +358,7 @@ const engravings = [
                 expUptime: .1, maxUptime: .2, difficulty: 1, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .28);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .28)); 
                     }
                 }
             },             
@@ -371,25 +367,24 @@ const engravings = [
                 tooltip: '15% Atk Speed, 15% Move Speed',
                 expUptime: 1, maxUptime: 1, difficulty: -1, 
                 impl: {
-                    aspd: (uptime, s) => { return s + .15; },
-                    mspd: (uptime, s) => { return s + .15; }
+                    aspd: (uptime, s) => { return s + (uptime * .15); },
+                    mspd: (uptime, s) => { return s + (uptime * .15); }
                 }
             },        
             { //39
                 label: 'Stabilized Status', code: 'SS',
                 tooltip: 'HP > 80% -> 16% DMG',
-                expUptime: .4, maxUptime: 1, difficulty: 0, 
+                expUptime: .4, maxUptime: 1, difficulty: 0, //higher expected uptime with supports
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .16);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .16)); 
                     }
                 }
             },       
             { //40
                 label: 'Strong Will', code: 'SW',
                 tooltip: 'Being pushed -> Damage Taken -30%',
-                expUptime: .5, maxUptime: 1, difficulty: 0, 
+                expUptime: .5, maxUptime: 1, difficulty: 0, // pvp engraving 
                 impl: {
                     dr: (uptime, d) => { return 1 - (1 - d) * (1 - (uptime * .3)); }
                 }
@@ -397,13 +392,13 @@ const engravings = [
             { //41
                 label: 'Super Charge', code: 'SC',
                 tooltip: 'Charge Skill -> 20% DMG, 40% Charging Speed',
-                expUptime: 3/8, maxUptime: .8, difficulty: -1, 
+                expUptime: 3/8, maxUptime: 6/8, difficulty: -1,  // how many charge skills be on the bar?
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
                         var scaled = (uptime * .2);
                         return d * (1 + scaled); 
                     },
-                    //aspd: (uptime, s) => { return s + .4; }
+                    aspd: (uptime, s) => { return s + (uptime * .4); } //only applies to a few skills
                 }
             },            
             { //42
@@ -445,8 +440,7 @@ const engravings = [
                 expUptime: .8, maxUptime: 1, difficulty: 0, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .18);
-                        return d * 1.2 * (1 + scaled); 
+                        return d * 1.2 * (1 + (uptime * .18)); 
                     }
                 }
             },           
@@ -456,31 +450,33 @@ const engravings = [
                 expUptime: .9, maxUptime: 1, difficulty: 0, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .36);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .36)); 
                     }
                 }
             },                   
             { // 5
                 label: '(Sharpshooter) Death Strike', code: 'DST',
                 tooltip: 'Use Last Rush -> Recover 50% Hawk Meter and Damage taken +(22/33/44)% for 8s',
-                expUptime: 1, maxUptime: 1, difficulty: 0, 
+                expUptime: .5, maxUptime: 1, difficulty: 0,  //how often will this be in effect? use Last Rush every 16s?
                 impl: {
-                    dr: (uptime, d) => { return 1 - (1 - d) * 1.44; },
+                    dr: (uptime, d) => { return 1 - (1 - d) * (1 + (uptime * .44)); },
                 }
             },              
             { // 6
                 label: '(Striker) Deathblow', code: 'DB',
                 tooltip: 'Max Orbs + 1, Esoteric skills consume all orbs for +35% DMG per orb',
-                expUptime: 1, maxUptime: 1, difficulty: 0, 
+                expUptime: 1/4, maxUptime: 1, difficulty: 0, //I'm estimating 1 in 4 attacks lands with an average of 2 orbs
                 impl: { // huge burst but I'm on the fence as to a way to compute the time taken to buildup orbs
-                    //dmg: (uptime, d, mspd, aspd) => { return d * 1.35; } 
+                    dmg: (uptime, d, mspd, aspd) => { 
+                        var averageOrbCount = 2; 
+                        return d * (1 + (uptime * .35 * averageOrbCount)); 
+                    } 
                 }
             },                  
             { // 7
                 label: '(Shadowhunter) Demonic Impulse', code: 'DI',
                 tooltip: 'Composure does not active when Demonize ends. Demoninze -> Demonic Skill CD is reset and +30% Crit Rate',
-                expUptime: .7, maxUptime: 1, difficulty: 0, 
+                expUptime: .7, maxUptime: 1, difficulty: 0, //estimating in demonize about 70% of the time
                 impl: {
                     cr: (uptime, crit) => { return crit + (uptime * .3); }
                 }
@@ -497,15 +493,14 @@ const engravings = [
                 expUptime: .3, maxUptime: 1, difficulty: 0, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .15);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .15)); 
                     }
                 }
             },            
             { //10
                 label: '(Deadeye) Enhanced Weapon', code: 'EW',
                 tooltip: 'Change stance -> +30% Crit Rate for 9s',
-                expUptime: .6, maxUptime: 1, difficulty: 0, 
+                expUptime: 9/12, maxUptime: 1, difficulty: 0, //estimating stance change every 12s on average
                 impl: {
                     cr: (uptime, crit) => { return crit + (uptime * .3); }
                 }
@@ -513,11 +508,10 @@ const engravings = [
             { //11
                 label: '(Striker) Esoteric Flurry', code: 'EF',
                 tooltip: 'Using Esoteric Skill -> only 1 orb consumed and +18% DMG',
-                expUptime: .5, maxUptime: 1, difficulty: 0, 
+                expUptime: 3/5, maxUptime: 1, difficulty: 0, //estimating that 3 out of 5 skills will have the boost
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .18);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .18)); 
                     }
                 }
             },            
@@ -525,17 +519,16 @@ const engravings = [
                 label: '(Wardancer) Esoteric Skill Enhancement', code: 'ESE',
                 tooltip: 'Max orbs + 1. Esoteric skill +12% per orb held',
                 expUptime: 1/3, maxUptime: 1, difficulty: 0, 
-                impl: { // how many orbs can a dancer have?
+                impl: { // how many orbs can a wardancer have?
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .36);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .36)); 
                     }
                 }
             },
             { //13
                 label: '(Artillerist) Firepower Enhancement', code: 'FE',
                 tooltip: 'Incoming damage -20% and Crit Rate +(30/35/40)% based on level of Firepower buff',
-                expUptime: .75, maxUptime: 1, difficulty: 0, 
+                expUptime: .6, maxUptime: 1, difficulty: 0, //estimating 60% uptime and 40% movement
                 impl: {
                     dr: (uptime, d) => { return 1 - (1 - d) * (1 - (uptime * .2)); },
                     cr: (uptime, crit) => { return crit + (uptime * .4); }
@@ -547,19 +540,17 @@ const engravings = [
                 expUptime: 1, maxUptime: 1, difficulty: 0, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .32);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .32)); 
                     }
                 }
             },            
             { //15
                 label: '(Destroyer) Gravity Training', code: 'GT',
                 tooltip: 'Hypergravity mode -> +20% DMG. During Combat -> Meter recdover 2% every 1s. +30% Basic Atk and Vortex Gravity Crit Rate',
-                expUptime: .5, maxUptime: 1, difficulty: 0, 
+                expUptime: .5, maxUptime: 1, difficulty: 0, //anyone have an estimate on hypergravity mode uptime?
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .2);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .2)); 
                     },
                     cr: (uptime, crit) => { return crit + (uptime * .3); }
                 }
@@ -567,10 +558,13 @@ const engravings = [
             { //16
                 label: '(Sorceress) Igniter', code: 'IGN',
                 tooltip: 'Magick Amplification -> Crit Rate +25% and Crit Dmg +50%. When Magic Amplification is triggered skills currently in cooldown -50% CD',
-                expUptime: .75, maxUptime: 1, difficulty: 0, 
+                expUptime: 15/45, maxUptime: 1, difficulty: 0, //estimate 30s to build meter and then 15s to dump rotation (2 meteors is ideal)
                 impl: {
                     cr: (uptime, crit) => { return crit + (uptime * .25); },
-                    cd: (uptime, crit) => { return crit + (uptime * .5); }
+                    cd: (uptime, crit) => { return crit + (uptime * .5); },
+                    dmg: (uptime, d, mspd, aspd) => {  // there's some damage bonus here based on spec as well
+                        return d * (1 + (uptime * 1.00)); // estimating 100% damage bonus for average sorc with 1k spec
+                    }
                 }
             },                  
             { //17
@@ -594,12 +588,10 @@ const engravings = [
                 expUptime: .75, maxUptime: 1, difficulty: 0,
                 impl: {
                     atk: (uptime, a, base) => { 
-                        var scaled = (uptime * .1);
-                        return a + (base * scaled); 
+                        return a + (base * (uptime * .1)); 
                     },
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .14);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .14)); 
                     }
                 }
             },           
@@ -607,12 +599,13 @@ const engravings = [
                 label: '(Berserker) Mayhem', code: 'MAY',
                 tooltip: '+16% DMG, +15% Atk and Move speed, 65% additional damage reduction, -75% Max HP, -60% healing received, -75% shield absorption',
                 expUptime: 1, maxUptime: 1, difficulty: 0,
-                impl: {
-                    hp: (uptime, h) => { return h * .25; },
-                    dr: (uptime, d) => { return 1 - (1 - d) * (1 - .65); },
-                    dmg: (uptime, d, mspd, aspd) => { return d * 1.16; },
-                    aspd: (uptime, s) => { return s + .15; },
-                    mspd: (uptime, s) => { return s + .15; }
+                impl: { // manual cancel of zerker mode heals hp to 50% roughly and can be used as a potion but ruins dps while zerker mode is on cd
+                        // running arounding doing nothing for 20s is better than being dead though
+                    hp: (uptime, h) => { return h * .25; }, 
+                    dr: (uptime, d) => { return 1 - (1 - d) * (1 - (uptime * .65)); },
+                    dmg: (uptime, d, mspd, aspd) => { return d * (1 + (uptime * .16)); },
+                    aspd: (uptime, s) => { return s + (uptime * .15); },
+                    mspd: (uptime, s) => { return s + (uptime * .15); }
                 }
             },                   
             { //21
@@ -620,7 +613,7 @@ const engravings = [
                 tooltip: 'Handgun -> Atk Speed +(8/12/16)%. Shotgun -> Crit Rate +(15/20/25)%. Rifle -> +10% DMG and if enemy HP < 50% -> +(10/20/30)% DMG for 9s',
                 expUptime: .5, maxUptime: 1, difficulty: 0,
                 impl: { 
-                    cr: (uptime, crit) => { return crit + .25; },
+                    cr: (uptime, crit) => { return crit + (uptime * .25); },
                 } 
             },                
             { //22
@@ -628,7 +621,7 @@ const engravings = [
                 tooltip: 'Handgun -> Atk Speed +(8/12/16)%. Shotgun -> Crit Rate +(15/20/25)%. Rifle -> +10% DMG and if enemy HP < 50% -> +(10/20/30)% DMG for 9s',
                 expUptime: .5, maxUptime: 1, difficulty: 0,
                 impl: { 
-                    dmg: (uptime, d, mspd, aspd) => { return d * 1.1 * 1.3; },
+                    dmg: (uptime, d, mspd, aspd) => { return d * (1 + (uptime * .1)) * (1 + (uptime / 2 * .3)); },
                 } 
             },  
             { //23
@@ -636,7 +629,7 @@ const engravings = [
                 tooltip: 'Handgun -> Atk Speed +(8/12/16)%. Shotgun -> Crit Rate +(15/20/25)%. Rifle -> +10% DMG and if enemy HP < 50% -> +(10/20/30)% DMG for 9s',
                 expUptime: .5, maxUptime: 1, difficulty: 0,
                 impl: { 
-                    aspd: (uptime, s) => { return s + .16; }
+                    aspd: (uptime, s) => { return s + (uptime * .16); }
                 } 
             }, 
             { //24
@@ -644,7 +637,7 @@ const engravings = [
                 tooltip: 'Normal skill -> +30% DMG. Shadowburst Meter +50% for all skills. Disables Demonize',
                 expUptime: 1, maxUptime: 1, difficulty: 0,
                 impl: {
-                    dmg: (uptime, d, mspd, aspd) => { return d * 1.3; }
+                    dmg: (uptime, d, mspd, aspd) => { return d * (1 + (uptime * .3)); }
                 }
             },        
             { //25
@@ -652,9 +645,9 @@ const engravings = [
                 tooltip: 'Max Dual Meter and Change Stance then: Flurry -> +15% Atk Speed, +15% DMG, +25% Crit Rate. Focus -> +15% Move Speed, +20% DMG, +50% Crit DMG',
                 expUptime: .75, maxUptime: 1, difficulty: 0,
                 impl: {
-                    dmg: (uptime, d, mspd, aspd) => { return d * 1.15; },
-                    cr: (uptime, crit) => { return crit + .25; },
-                    aspd: (uptime, s) => { return s + .15; }
+                    dmg: (uptime, d, mspd, aspd) => { return d * (1 + (uptime * .15)); },
+                    cr: (uptime, crit) => { return crit + (uptime * .25); },
+                    aspd: (uptime, s) => { return s + (uptime * .15); }
                 }
             },          
             { //26
@@ -662,9 +655,9 @@ const engravings = [
                 tooltip: 'Max Dual Meter and Change Stance then: Flurry -> +15% Atk Speed, +15% DMG, +25% Crit Rate. Focus -> +15% Move Speed, +20% DMG, +50% Crit DMG',
                 expUptime: .75, maxUptime: 1, difficulty: 0,
                 impl: {
-                    dmg: (uptime, d, mspd, aspd) => { return d * 1.2; },
-                    cd: (uptime, crit) => { return crit + .5; },
-                    mspd: (uptime, s) => { return s + .15; }
+                    dmg: (uptime, d, mspd, aspd) => { return d * (1 + (uptime * .2)); },
+                    cd: (uptime, crit) => { return crit + (uptime * .5); },
+                    mspd: (uptime, s) => { return s + (uptime * .15); }
                 }
             },          
             { //27
@@ -672,16 +665,22 @@ const engravings = [
                 tooltip: 'Can only use Handgun. Skill DMG +70%, Stagger +40%, Awakening skill DMG +30%',
                 expUptime: 1, maxUptime: 1, difficulty: 0,
                 impl: {
-                    dmg: (uptime, d, mspd, aspd) => { return d * 1.7; }
+                    dmg: (uptime, d, mspd, aspd) => { return d * (1 + (uptime * .7)); }
                 }
             },                 
             { //28  
                 label: '(Destroyer) Rage Hammer', code: 'RH', 
                 tooltip: 'Use Gravity Release Skill -> +5% Crit Rate and 15% Crit Dmg based on Cores used',
-                expUptime: .5, maxUptime: 1, difficulty: 0,
+                expUptime: .5, maxUptime: 1, difficulty: 0, //how often can use Gravity Release? Duration of buff?
                 impl: { // does this buff stack up higher with more cores? how does it work?
-                    cr: (uptime, crit) => { return crit + (uptime * .05); },
-                    cd: (uptime, crit) => { return crit + (uptime * .15); },
+                    cr: (uptime, crit) => { 
+                        var averageNumCores = 2; // totally guessing here
+                        return crit + (uptime * .05); 
+                    },
+                    cd: (uptime, crit) => { 
+                        var averageNumCores = 2; // totally guessing here
+                        return crit + (uptime * .15); 
+                    },
                 }
             },                
             { //29
@@ -689,8 +688,8 @@ const engravings = [
                 tooltip: 'Disable Arcane Rupture, 16% DMG, 10% CDR (except Awakening and movement skills)',
                 expUptime: 1, maxUptime: 1, difficulty: 0,
                 impl: {
-                    dmg: (uptime, d, mspd, aspd) => { return d * 1.16; },
-                    cdr: (uptime, c) => { return (1 - (1 - c) * (1 - .1)); }
+                    dmg: (uptime, d, mspd, aspd) => { return d * (1 + (uptime * .16)); },
+                    cdr: (uptime, c) => { return (1 - (1 - c) * (1 - (uptime * .1))); }
                 }
             },                    
             { //30
@@ -712,8 +711,7 @@ const engravings = [
                 expUptime: .75, maxUptime: 1, difficulty: 0,
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .3);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .3)); 
                     }
                 }
             },              
@@ -723,8 +721,7 @@ const engravings = [
                 expUptime: .9, maxUptime: 1, difficulty: 0,
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .2);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .2)); 
                     }
                 }
             },             
@@ -734,8 +731,7 @@ const engravings = [
                 expUptime: .5, maxUptime: 1, difficulty: 0,
                 impl: {
                     atk: (uptime, a, base) => { 
-                        var scaled = (uptime * .2);
-                        return a + (base * scaled); 
+                        return a + (base * (uptime * .2)); 
                     }
                 }
             },                    
@@ -744,7 +740,7 @@ const engravings = [
                 tooltip: 'Crit Rate +(20/30/40)%, but Shotgun disabled',
                 expUptime: 1, maxUptime: 1, difficulty: 0,
                 impl: {
-                    cr: (uptime, crit) => { return crit + .4; }
+                    cr: (uptime, crit) => { return crit + (uptime * .4); }
                 }
             },             
             { //35
@@ -753,8 +749,7 @@ const engravings = [
                 expUptime: .5, maxUptime: 1, difficulty: 0,
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .2);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .2)); 
                     },
                     cr: (uptime, crit) => { return crit + (uptime * .1); },
                 }
@@ -762,11 +757,10 @@ const engravings = [
             { //36
                 label: '(Scrapper) Ultimate Skill: Taijutsu', code: 'UST',
                 tooltip: 'Stamina Skills -> +65% DMG, Shock Skills -> -30% DMG, Stamina Energy recovery + 300%',
-                expUptime: .5, maxUptime: 1, difficulty: 0,
+                expUptime: 2/3, maxUptime: 1, difficulty: 0, //estimate that 2/3 skills used will be stamina skills
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
-                        var scaled = (uptime * .65);
-                        return d * (1 + scaled); 
+                        return d * (1 + (uptime * .65)); 
                     }
                 }
             }
