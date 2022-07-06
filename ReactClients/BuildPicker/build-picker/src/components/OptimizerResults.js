@@ -15,6 +15,7 @@ const OptimizerResults = (props) => {
     {
       dpsGainExpected: (baseDmgEngrave.expected / baseDmg) - 1,
       dpsGainMaximum: (baseDmgEngrave.maximum / baseDmg) - 1,
+      difficulty: baseDmgEngrave.difficulty,
       engravings: props.selectedEngravings
     }
   ];
@@ -35,6 +36,7 @@ const OptimizerResults = (props) => {
       results.map(
         (r, index) => {
           return <tr key={index} style={styles.resultRow}>
+                  <td>{r.difficulty}</td>
                   <td style={styles.numberCell}>
                     <NumberFormat 
                       style={styles.inputCell}
@@ -80,6 +82,7 @@ const OptimizerResults = (props) => {
         <Table striped bordered variant="dark" size="sm">
           <thead>
             <tr>
+              <td>Challenge</td>
               <td>
               <OverlayTrigger
                   placement="top" 

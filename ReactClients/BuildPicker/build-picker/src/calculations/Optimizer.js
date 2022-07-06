@@ -43,6 +43,7 @@ const optimizeBuild = (props) => {
       {
         dpsGainExpected: (baseDmgEngrave.expected / baseDmg) - 1,
         dpsGainMaximum: (baseDmgEngrave.maximum / baseDmg) - 1,
+        difficulty: baseDmgEngrave.difficulty,
         engravings: e
       }
     )}
