@@ -190,7 +190,10 @@ function MainWindow() {
                     <div style={styles.tabWindow}>
                         <div style={styles.topPanel}>
                             <div className="class-engraving-picker">
-                                <EngravingSelector selectedEngravings={selectedEngravings} setSelectedEngravings={characterData.setSelectedEngravings} />
+                                <EngravingSelector 
+                                    data={characterData}
+                                    selectedEngravings={selectedEngravings} 
+                                    setSelectedEngravings={characterData.setSelectedEngravings} />
                             </div>
                         </div>
                         <div style={styles.bottomPanel}>
@@ -204,6 +207,7 @@ function MainWindow() {
                         <div style={styles.topPanel}>
                             <div className="class-engraving-picker">
                                 <EngravingSelector 
+                                    data={characterData}
                                     label={"Locked In Build: "} 
                                     maxItems={6}
                                     numItems={lockedEngravings.length}
@@ -214,6 +218,7 @@ function MainWindow() {
                             </div>
                             <div className="class-engraving-picker">
                                 <EngravingSelector 
+                                    data={characterData}
                                     label={"Build Using: "} 
                                     maxItems={15}
                                     numItems={possibleEngravings.length}

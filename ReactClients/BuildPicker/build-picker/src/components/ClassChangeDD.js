@@ -23,6 +23,7 @@ const ClassChangeDD = (props) => {
                         props.data.setSubclass(subclass);
                         props.data.setLockedEngravings(recommendations[subclass.code].lockedEngravings);
                         props.data.setPossibleEngravings(recommendations[subclass.code].possibleEngravings);
+                        props.data.setSelectedEngravings([]);
                       }}>
                         {subclassList[name].label}
                     </Dropdown.Item>

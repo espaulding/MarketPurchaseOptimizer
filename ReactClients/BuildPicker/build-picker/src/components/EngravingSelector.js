@@ -77,6 +77,11 @@ const EngravingSelector = (props) => {
   }
 
   var maxItems = 10; if(props.maxItems !== undefined) { maxItems = props.maxItems; }
+  var tmp = JSON.parse(JSON.stringify(engravings[1]));
+  tmp.items = engravings[1].items.filter(i => i.subclass === props.data.subclass.code);
+  var options = [];
+  options.push(tmp);
+  options.push(engravings[0]);
 
   return (
     <div style={styles.wrapper}>
@@ -84,7 +89,7 @@ const EngravingSelector = (props) => {
       <MultiSelect 
         style={styles.engravingSelector}
         className="multiselect-custom"
-        options={engravings} 
+        options={options} 
         itemTemplate={engravingTemplate}
         optionGroupTemplate={groupedItemTemplate}
         optionGroupChildren="items"

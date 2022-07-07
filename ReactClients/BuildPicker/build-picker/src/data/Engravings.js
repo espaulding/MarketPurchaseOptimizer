@@ -3,7 +3,7 @@ const engravings = [
         label: 'Common Engravings', code: 'common',
         items: [
             { // 0
-                label: 'Adrenaline', code: 'ADR',
+                label: 'Adrenaline', code: 'ADR', 
                 tooltip: 'Use Skill -> 1% Atk Power, 6 stacks -> +15% crit (6 stacks max)',
                 expUptime: .6, maxUptime: 1, difficulty: 1, 
                 impl: {
@@ -401,13 +401,13 @@ const engravings = [
         label: 'Class Engravings', code: 'class',
         items: [
             { // 0
-                label: '(Artillerist) Barrage Enhancement', code: 'BE',
+                label: '(Artillerist) Barrage Enhancement', code: 'BE', subclass: 'art',
                 tooltip: 'Barrage Skill Damage +40%. No Firepower Buff -> Firepower Meter +30%. On full Firepower Meter -> cooling effect removed',
                 expUptime: 1, maxUptime: 1, difficulty: 0, 
                 impl: { }
             },        
             { // 1
-                label: '(Berserker) Berserker\'s Technique', code: 'BT',
+                label: '(Berserker) Berserker\'s Technique', code: 'BT', subclass: 'ber',
                 tooltip: 'During Burst +70% Crit Dmg (Negates Exhausion after burst)',
                 expUptime: .7, maxUptime: 1, difficulty: 0, 
                 impl: {
@@ -415,7 +415,7 @@ const engravings = [
                 }
             },    
             { // 2
-                label: '(Paladin) Blessed Aura', code: 'BA',
+                label: '(Paladin) Blessed Aura', code: 'BA', subclass: 'pali',
                 tooltip: 'With aura -> (10/15/20)% Damage Reduction, 2% HP restored every (2.5/2/1.5) seconds',
                 expUptime: .1, maxUptime: 1, difficulty: 0, 
                 impl: {
@@ -423,7 +423,7 @@ const engravings = [
                 }
             },               
             { // 3
-                label: '(Gunlancer) Combat Readiness', code: 'CR',
+                label: '(Gunlancer) Combat Readiness', code: 'CR', subclass: 'gl',
                 tooltip: 'Normal skills +20% DMG, Shield amount +50%. Defensive stance -> hit by enemy -> +6% DMG (10s) up to 3 stacks',
                 expUptime: .8, maxUptime: 1, difficulty: 0, 
                 impl: {
@@ -433,7 +433,7 @@ const engravings = [
                 }
             },           
             { // 4
-                label: '(Glaivier) Control', code: 'CON',
+                label: '(Glaivier) Control', code: 'CON', subclass: 'lm',
                 tooltip: 'Cannot use Focus stance. Flurry skills +36% DMG',
                 expUptime: .9, maxUptime: 1, difficulty: 0, 
                 impl: {
@@ -443,7 +443,7 @@ const engravings = [
                 }
             },                   
             { // 5
-                label: '(Sharpshooter) Death Strike', code: 'DST',
+                label: '(Sharpshooter) Death Strike', code: 'DST', subclass: 'sharp',
                 tooltip: 'Use Last Rush -> Recover 50% Hawk Meter and Damage taken +(22/33/44)% for 8s',
                 expUptime: .5, maxUptime: 1, difficulty: 0,  //how often will this be in effect? use Last Rush every 16s?
                 impl: {
@@ -451,7 +451,7 @@ const engravings = [
                 }
             },              
             { // 6
-                label: '(Striker) Deathblow', code: 'DB',
+                label: '(Striker) Deathblow', code: 'DB', subclass: 'strike',
                 tooltip: 'Max Orbs + 1, Esoteric skills consume all orbs for +35% DMG per orb',
                 expUptime: 1/4, maxUptime: 1, difficulty: 0, //I'm estimating 1 in 4 attacks lands with an average of 2 orbs
                 impl: { // huge burst but I'm on the fence as to a way to compute the time taken to buildup orbs
@@ -462,7 +462,7 @@ const engravings = [
                 }
             },                  
             { // 7
-                label: '(Shadowhunter) Demonic Impulse', code: 'DI',
+                label: '(Shadowhunter) Demonic Impulse', code: 'DI', subclass: 'sh',
                 tooltip: 'Composure does not active when Demonize ends. Demoninze -> Demonic Skill CD is reset and +30% Crit Rate',
                 expUptime: .7, maxUptime: 1, difficulty: 0, //estimating in demonize about 70% of the time
                 impl: {
@@ -470,13 +470,13 @@ const engravings = [
                 }
             },           
             { // 8
-                label: '(Bard) Desperate Salvation', code: 'DSA',
+                label: '(Bard) Desperate Salvation', code: 'DSA', subclass: 'bard',
                 tooltip: 'Recovery effect ends -> additional recovery (8/16/24)% of your Max HP',
                 expUptime: 1, maxUptime: 1, difficulty: 0, 
                 impl: { }
             },       
             { // 9
-                label: '(Soulfist) Energy Overflow', code: 'EO',
+                label: '(Soulfist) Energy Overflow', code: 'EO', subclass: 'sf',
                 tooltip: 'Energy < 30% -> +15% DMG. Energy does not go below 1. Hype -> no longer recovers additional energy.',
                 expUptime: .3, maxUptime: 1, difficulty: 0, 
                 impl: {
@@ -486,7 +486,7 @@ const engravings = [
                 }
             },            
             { //10
-                label: '(Deadeye) Enhanced Weapon', code: 'EW',
+                label: '(Deadeye) Enhanced Weapon', code: 'EW', subclass: 'dead',
                 tooltip: 'Change stance -> +30% Crit Rate for 9s',
                 expUptime: 9/12, maxUptime: 1, difficulty: 0, //estimating stance change every 12s on average
                 impl: {
@@ -494,7 +494,7 @@ const engravings = [
                 }
             },            
             { //11
-                label: '(Striker) Esoteric Flurry', code: 'EF',
+                label: '(Striker) Esoteric Flurry', code: 'EF', subclass: 'strike',
                 tooltip: 'Using Esoteric Skill -> only 1 orb consumed and +18% DMG',
                 expUptime: 3/5, maxUptime: 1, difficulty: 0, //estimating that 3 out of 5 skills will have the boost
                 impl: {
@@ -504,7 +504,7 @@ const engravings = [
                 }
             },            
             { //12
-                label: '(Wardancer) Esoteric Skill Enhancement', code: 'ESE',
+                label: '(Wardancer) Esoteric Skill Enhancement', code: 'ESE', subclass: 'wd',
                 tooltip: 'Max orbs + 1. Esoteric skill +12% per orb held',
                 expUptime: 1/3, maxUptime: 1, difficulty: 0, 
                 impl: { // how many orbs can a wardancer have?
@@ -514,7 +514,7 @@ const engravings = [
                 }
             },
             { //13
-                label: '(Artillerist) Firepower Enhancement', code: 'FE',
+                label: '(Artillerist) Firepower Enhancement', code: 'FE', subclass: 'art',
                 tooltip: 'Incoming damage -20% and Crit Rate +(30/35/40)% based on level of Firepower buff',
                 expUptime: .6, maxUptime: 1, difficulty: 0, //estimating 60% uptime and 40% movement
                 impl: {
@@ -523,7 +523,7 @@ const engravings = [
                 }
             },      
             { //14
-                label: '(Wardancer) First Intention', code: 'FI',
+                label: '(Wardancer) First Intention', code: 'FI', subclass: 'wd',
                 tooltip: 'Can no longer gain Esoteric Meter -> +32% DMG',
                 expUptime: 1, maxUptime: 1, difficulty: 0, 
                 impl: {
@@ -533,7 +533,7 @@ const engravings = [
                 }
             },            
             { //15
-                label: '(Destroyer) Gravity Training', code: 'GT',
+                label: '(Destroyer) Gravity Training', code: 'GT', subclass: 'destro',
                 tooltip: 'Hypergravity mode -> +20% DMG. During Combat -> Meter recdover 2% every 1s. +30% Basic Atk and Vortex Gravity Crit Rate',
                 expUptime: .5, maxUptime: 1, difficulty: 0, //anyone have an estimate on hypergravity mode uptime?
                 impl: {
@@ -544,7 +544,7 @@ const engravings = [
                 }
             },           
             { //16
-                label: '(Sorceress) Igniter', code: 'IGN',
+                label: '(Sorceress) Igniter', code: 'IGN', subclass: 'sorc',
                 tooltip: 'Magick Amplification -> Crit Rate +25% and Crit Dmg +50%. When Magic Amplification is triggered skills currently in cooldown -50% CD',
                 expUptime: 10/(15+60), maxUptime: 10/(10+30), difficulty: 0,//optimistic - estimate 30s to build meter and then 10s for skill rotation
                 impl: {                                                    //pessimistic - estimate 60s to build meter and then 10s for skill rotation
@@ -558,7 +558,7 @@ const engravings = [
                 }
             },                  
             { //17
-                label: '(Paladin) Judgement', code: 'JUD',
+                label: '(Paladin) Judgement', code: 'JUD', subclass: 'pali',
                 tooltip: 'Duration of Sacred Executioner +150%. Punishment DMG +15%. When Punishment hits -> Piety Gain +100%. ',
                 expUptime: .6, maxUptime: 1, difficulty: 0, //how long to charge piety? duration? % of punishment skills in build?
                 impl: { 
@@ -568,7 +568,7 @@ const engravings = [
                 }
             },                 
             { //18
-                label: '(Gunlancer) Lone Knight', code: 'LK',
+                label: '(Gunlancer) Lone Knight', code: 'LK', subclass: 'gl',
                 tooltip: 'Gunlance skills -> +15% Crit Rate and +50% Crit DMG. Battlefield Shield cannot be used. Consumpiton of Shield Meter during Defensive Stance +100%',
                 expUptime: 1, maxUptime: 1, difficulty: 0, 
                 impl: {
@@ -577,7 +577,7 @@ const engravings = [
                 }
             },                
             { //19
-                label: '(Sharpshooter) Loyal Companion', code: 'LC',
+                label: '(Sharpshooter) Loyal Companion', code: 'LC', subclass: 'sharp',
                 tooltip: 'Mark of Death -> Foe DMG Taken + 14%. When hawk is summoned -> Atk Power +10%. Summons Silerhawk MK-II, allowing Move Speed +4%, Hawk\'s basic AoE range +60%, basic ATK DMG +300%, and summon duration +100%. Hawk inflicts Mark of Death.',
                 expUptime: .75, maxUptime: 1, difficulty: 0,
                 impl: {
@@ -590,7 +590,7 @@ const engravings = [
                 }
             },           
             { //20
-                label: '(Berserker) Mayhem', code: 'MAY',
+                label: '(Berserker) Mayhem', code: 'MAY', subclass: 'ber',
                 tooltip: '+16% DMG, +15% Atk and Move speed, 65% additional damage reduction, -75% Max HP, -60% healing received, -75% shield absorption',
                 expUptime: 1, maxUptime: 1, difficulty: -1,
                 impl: { // manual cancel of zerker mode heals hp to 50% roughly and can be used as a potion but ruins dps while zerker mode is on cd
@@ -603,7 +603,7 @@ const engravings = [
                 }
             },                   
             { //21
-                label: '(Gunslinger) Peacemaker - Shotgun', code: 'PES',
+                label: '(Gunslinger) Peacemaker - Shotgun', code: 'PES', subclass: 'gs',
                 tooltip: 'Handgun -> Atk Speed +(8/12/16)%. Shotgun -> Crit Rate +(15/20/25)%. Rifle -> +10% DMG and if enemy HP < 50% -> +(10/20/30)% DMG for 9s',
                 expUptime: .5, maxUptime: 1, difficulty: 0,
                 impl: { 
@@ -611,7 +611,7 @@ const engravings = [
                 } 
             },                
             { //22
-                label: '(Gunslinger) Peacemaker - Rifle', code: 'PER',
+                label: '(Gunslinger) Peacemaker - Rifle', code: 'PER', subclass: 'gs',
                 tooltip: 'Handgun -> Atk Speed +(8/12/16)%. Shotgun -> Crit Rate +(15/20/25)%. Rifle -> +10% DMG and if enemy HP < 50% -> +(10/20/30)% DMG for 9s',
                 expUptime: .5, maxUptime: 1, difficulty: 0,
                 impl: { 
@@ -619,7 +619,7 @@ const engravings = [
                 } 
             },  
             { //23
-                label: '(Gunslinger) Peacemaker - Handgun', code: 'PEH',
+                label: '(Gunslinger) Peacemaker - Handgun', code: 'PEH', subclass: 'gs',
                 tooltip: 'Handgun -> Atk Speed +(8/12/16)%. Shotgun -> Crit Rate +(15/20/25)%. Rifle -> +10% DMG and if enemy HP < 50% -> +(10/20/30)% DMG for 9s',
                 expUptime: .5, maxUptime: 1, difficulty: 0,
                 impl: { 
@@ -627,7 +627,7 @@ const engravings = [
                 } 
             }, 
             { //24
-                label: '(Shadowhunter) Perfect Suppression', code: 'PS',
+                label: '(Shadowhunter) Perfect Suppression', code: 'PS', subclass: 'sh',
                 tooltip: 'Normal skill -> +30% DMG. Shadowburst Meter +50% for all skills. Disables Demonize',
                 expUptime: 1, maxUptime: 1, difficulty: 0,
                 impl: {
@@ -635,7 +635,7 @@ const engravings = [
                 }
             },        
             { //25
-                label: '(Glaivier) Pinnacle (Flurry)', code: 'PFL',
+                label: '(Glaivier) Pinnacle (Flurry)', code: 'PFL', subclass: 'lm',
                 tooltip: 'Max Dual Meter and Change Stance then: Flurry -> +15% Atk Speed, +15% DMG, +25% Crit Rate. Focus -> +15% Move Speed, +20% DMG, +50% Crit DMG',
                 expUptime: .75, maxUptime: 1, difficulty: 0,
                 impl: {
@@ -645,7 +645,7 @@ const engravings = [
                 }
             },          
             { //26
-                label: '(Glaivier) Pinnacle (Focus)', code: 'PFO',
+                label: '(Glaivier) Pinnacle (Focus)', code: 'PFO', subclass: 'lm',
                 tooltip: 'Max Dual Meter and Change Stance then: Flurry -> +15% Atk Speed, +15% DMG, +25% Crit Rate. Focus -> +15% Move Speed, +20% DMG, +50% Crit DMG',
                 expUptime: .75, maxUptime: 1, difficulty: 0,
                 impl: {
@@ -655,7 +655,7 @@ const engravings = [
                 }
             },          
             { //27
-                label: '(Deadeye) Pistoleer', code: 'PIS',
+                label: '(Deadeye) Pistoleer', code: 'PIS', subclass: 'dead',
                 tooltip: 'Can only use Handgun. Skill DMG +70%, Stagger +40%, Awakening skill DMG +30%',
                 expUptime: 1, maxUptime: 1, difficulty: 0,
                 impl: {
@@ -663,7 +663,7 @@ const engravings = [
                 }
             },                 
             { //28  
-                label: '(Destroyer) Rage Hammer', code: 'RH', 
+                label: '(Destroyer) Rage Hammer', code: 'RH', subclass: 'destro',
                 tooltip: 'Use Gravity Release Skill -> +5% Crit Rate and 15% Crit Dmg based on Cores used',
                 expUptime: .5, maxUptime: 1, difficulty: 0, //how often can use Gravity Release? Duration of buff?
                 impl: { // does this buff stack up higher with more cores? how does it work?
@@ -678,7 +678,7 @@ const engravings = [
                 }
             },                
             { //29
-                label: '(Sorceress) Reflux', code: 'REF', 
+                label: '(Sorceress) Reflux', code: 'REF',  subclass: 'sorc',
                 tooltip: 'Disable Arcane Rupture, 16% DMG, 10% CDR (except Awakening and movement skills)',
                 expUptime: 1, maxUptime: 1, difficulty: 0,
                 impl: {
@@ -687,7 +687,7 @@ const engravings = [
                 }
             },                    
             { //30
-                label: '(Deathblade) Remaining Energy', code: 'RE',
+                label: '(Deathblade) Remaining Energy', code: 'RE', subclass: 'db',
                 tooltip: 'Surge skill -> +12% Atk/Move Speed and +(12/24/36) Atk Power (30s). Art does not consume meter for 2s when activated',
                 expUptime: .6, maxUptime: 1, difficulty: 0,
                 impl: {
@@ -699,7 +699,7 @@ const engravings = [
                 }
             },           
             { //31
-                label: '(Soulfist) Robust Spirit', code: 'RS', 
+                label: '(Soulfist) Robust Spirit', code: 'RS', subclass: 'sf',
                 tooltip: 'Use Hype -> Enter lvl 3 immediately, Energy Recovery +200%, and +30% DMG',
                 expUptime: .75, maxUptime: 1, difficulty: 0,
                 impl: {
@@ -709,7 +709,7 @@ const engravings = [
                 }
             },              
             { //32
-                label: '(Scrapper) Shock Training', code: 'ST',
+                label: '(Scrapper) Shock Training', code: 'ST', subclass: 'scrap',
                 tooltip: 'Shock skill +20% DMG. 4% of Shock Energy recovered every 1s',
                 expUptime: .9, maxUptime: 1, difficulty: 0,
                 impl: {
@@ -719,7 +719,7 @@ const engravings = [
                 }
             },             
             { //33
-                label: '(Deathblade) Surge', code: 'SUR',
+                label: '(Deathblade) Surge', code: 'SUR', subclass: 'db',
                 tooltip: 'Surge casts at max with empty orbs. Remaining Energy buff does not activtate. During Surge -> skill attacks stack up to 20. 1% Atk Power and Surge +6% DMG per stack. Death Trance ends -> 100% Death Orb Meter per Surge Enhancement',
                 expUptime: .5, maxUptime: 1, difficulty: 0,
                 impl: {
@@ -729,7 +729,7 @@ const engravings = [
                 }
             },                    
             { //34
-                label: '(Gunslinger) Time to Hunt', code: 'TTH',
+                label: '(Gunslinger) Time to Hunt', code: 'TTH', subclass: 'gs',
                 tooltip: 'Crit Rate +(20/30/40)%, but Shotgun disabled',
                 expUptime: 1, maxUptime: 1, difficulty: 0,
                 impl: {
@@ -737,7 +737,7 @@ const engravings = [
                 }
             },             
             { //35
-                label: '(Bard) True Courage', code: 'TC',
+                label: '(Bard) True Courage', code: 'TC', subclass: 'bard',
                 tooltip: 'Serenade of Courage -> You gain +20% DMG and +10% Crit Rate',
                 expUptime: .5, maxUptime: 1, difficulty: 0,
                 impl: {
@@ -748,7 +748,7 @@ const engravings = [
                 }
             },            
             { //36
-                label: '(Scrapper) Ultimate Skill: Taijutsu', code: 'UST',
+                label: '(Scrapper) Ultimate Skill: Taijutsu', code: 'UST', subclass: 'scrap',
                 tooltip: 'Stamina Skills -> +65% DMG, Shock Skills -> -30% DMG, Stamina Energy recovery + 300%',
                 expUptime: 2/3, maxUptime: 1, difficulty: 0, //estimate that 2/3 skills used will be stamina skills
                 impl: {
