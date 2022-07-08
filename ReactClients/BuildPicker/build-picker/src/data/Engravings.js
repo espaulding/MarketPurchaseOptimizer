@@ -168,7 +168,7 @@ const engravings = [
             { //18
                 label: 'Fortitude', code: 'FOR',
                 tooltip: 'Low HP -> Damage Taken -30%',
-                expUptime: .2, maxUptime: 1, difficulty: 0, 
+                expUptime: .3, maxUptime: 1, difficulty: 0, 
                 impl: {
                     dr: (uptime, d) => { return 1 - (1 - d) * (1 - (uptime * .3)); }
                 }

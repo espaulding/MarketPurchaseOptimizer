@@ -5,6 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 
 import subclassList from '../data/SubClasses';
 import recommendations from '../data/Recommended.js';
+import engravings from '../data/Engravings.js';
 
 const ClassChangeDD = (props) => {
 
@@ -19,6 +20,13 @@ const ClassChangeDD = (props) => {
                   return (
                     <Dropdown.Item key={index} 
                       onClick={() => {
+                        if(name === 'ber') {
+                          engravings[0].items[29].expUptime = 1; //Master's Tenacity uptime
+                          engravings[0].items[18].expUptime = 1; //Fortitude uptime
+                        } else {
+                          engravings[0].items[29].expUptime = .5; //Master's Tenacity uptime
+                          engravings[0].items[18].expUptime = .3; //Fortitude uptime
+                        }
                         var subclass = subclassList[name];
                         props.data.setSubclass(subclass);
                         props.data.setLockedEngravings(recommendations[subclass.code].lockedEngravings);
