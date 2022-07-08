@@ -168,7 +168,7 @@ const engravings = [
             { //18
                 label: 'Fortitude', code: 'FOR',
                 tooltip: 'Low HP -> Damage Taken -30%',
-                expUptime: .3, maxUptime: 1, difficulty: 0, 
+                expUptime: .2, maxUptime: 1, difficulty: 0, 
                 impl: {
                     dr: (uptime, d) => { return 1 - (1 - d) * (1 - (uptime * .3)); }
                 }
@@ -270,7 +270,7 @@ const engravings = [
             { //29
                 label: 'Master\'s Tenacity', code: 'MT',
                 tooltip: 'HP < 50% -> 16% DMG',
-                expUptime: .5, maxUptime: 1, difficulty: 0, 
+                expUptime: .3, maxUptime: 1, difficulty: 0, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
                         return d * (1 + (uptime * .16)); 
@@ -600,6 +600,36 @@ const engravings = [
                     dmg: (uptime, d, mspd, aspd) => { return d * (1 + (uptime * .16)); },
                     aspd: (uptime, s) => { return s + (uptime * .15); },
                     mspd: (uptime, s) => { return s + (uptime * .15); }
+                },
+                interaction: {
+                    add: (engravings, subclass) => {
+                        engravings.forEach(engravingSet => {
+                            if(engravingSet.code === 'common') {
+                                engravingSet.items.forEach(engraving => {
+                                    if(engraving.code === 'MT') { //Master's Tenacity uptime
+                                        engraving.expUptime = 1;
+                                    }
+                                    if(engraving.code === 'FOR') { //Fortitude uptime
+                                        engraving.expUptime = 1;
+                                    }
+                                });
+                            }
+                        });
+                    },
+                    remove: (engravings, subclass) => {
+                        engravings.forEach(engravingSet => {
+                            if(engravingSet.code === 'common') {
+                                engravingSet.items.forEach(engraving => {
+                                    if(engraving.code === 'MT') { //Master's Tenacity uptime
+                                        engraving.expUptime = .3;
+                                    }
+                                    if(engraving.code === 'FOR') { //Fortitude uptime
+                                        engraving.expUptime = .2;
+                                    }
+                                });
+                            }
+                        });
+                    }
                 }
             },                   
             { //21

@@ -1,3 +1,5 @@
+import engravings from '../data/Engravings.js';
+
 const LostArkMath = {
     mergeDifficulty: function(arrDiff) {
         var result = {};
@@ -22,6 +24,25 @@ const LostArkMath = {
     computeHp: function(data) {
         var HP = +data.hp; if(isNaN(HP)) { HP = 0; }
         return HP;
+    },
+
+    removeInteractions: function(subclass) {
+        engravings.forEach(engravingSet => {
+            engravingSet.items.forEach(e => { 
+                if(e.interaction !== undefined && e.interaction.remove !== undefined) { 
+                    e.interaction.remove(engravings);
+                }
+            });
+        });
+    },
+
+    processEngravingInteractions: function(subclass, selectedEngravings) {
+        this.removeInteractions(subclass);
+        selectedEngravings.forEach(e => {
+            if(e.interaction !== undefined && e.interaction.add !== undefined) {
+                e.interaction.add(engravings);
+            }
+        });
     },
     
     computeHpWithEngravings: function(data, selectedEngravings) {
@@ -374,6 +395,7 @@ const LostArkMath = {
     },
 
     computeBaseDmgEngrave: function(data, selectedEngravings) {
+        this.processEngravingInteractions(data.subclass, selectedEngravings);
         var critRate = this.computeCritRateEngrave(data, selectedEngravings);
         var critDmg = this.computeCritDmgEngrave(data, selectedEngravings);
         var cdr = this.computeCdrEngrave(data, selectedEngravings);
