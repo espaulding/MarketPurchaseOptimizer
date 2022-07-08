@@ -546,7 +546,7 @@ const engravings = [
             { //16
                 label: '(Sorceress) Igniter', code: 'IGN', subclass: 'sorc',
                 tooltip: 'Magick Amplification -> Crit Rate +25% and Crit Dmg +50%. When Magic Amplification is triggered skills currently in cooldown -50% CD',
-                expUptime: 10/(15+60), maxUptime: 10/(10+30), difficulty: 0,//optimistic - estimate 30s to build meter and then 10s for skill rotation
+                expUptime: 10/(15+60), maxUptime: 10/(10+30), difficulty: 1,//optimistic - estimate 30s to build meter and then 10s for skill rotation
                 impl: {                                                    //pessimistic - estimate 60s to build meter and then 10s for skill rotation
                     cr: (uptime, crit) => { return crit + (uptime * .25); },
                     cd: (uptime, crit) => { return crit + (uptime * .5); },
