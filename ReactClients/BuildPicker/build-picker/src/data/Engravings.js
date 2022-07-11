@@ -27,7 +27,7 @@ const engravings = [
             { // 2
                 label: 'Ambush Master', code: 'AM', 
                 tooltip: 'Back Attack -> +25% DMG',
-                expUptime: 16/24, maxUptime: 1, difficulty: 1, 
+                expUptime: 16/24, maxUptime: .9, difficulty: 1, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
                         return d * (1 + (uptime * .25)); 
@@ -120,7 +120,7 @@ const engravings = [
             { //12 
                 label: 'Drops of Ether', code: 'DOE',
                 tooltip: '6 possible 30s buffs, 10s CD for orbs. +15% crit, +10% atk power, +10% defense, +10% move speed, restore MP, restore HP',
-                expUptime: .1, maxUptime: 1, difficulty: 1, 
+                expUptime: .1, maxUptime: .7, difficulty: 1, 
                 impl: {
                     def: (uptime, d, bd) => { return d + (bd * (uptime * .1)); },
                     atk: (uptime, a, base) => { 
@@ -145,7 +145,7 @@ const engravings = [
             { //15
                 label: 'Ether Predator', code: 'EP',
                 tooltip: 'On hit -> .5% Atk Power 1% Def for 90s up to 30 stacks (orb CD 10s)',
-                expUptime: .1, maxUptime: 1, difficulty: 1, 
+                expUptime: .1, maxUptime: .8, difficulty: 1, 
                 impl: {
                     def: (uptime, d, bd) => { return d + (bd * (uptime * .3)); },
                     atk: (uptime, a, base) => { 
@@ -245,7 +245,7 @@ const engravings = [
             { //26
                 label: 'Magick Stream', code: 'MS',
                 tooltip: 'Not hit for 3 sec -> 3% MP Regen, 5 stacks -> 10% CDR, On hit (10s CD) -> lose 1 stack',
-                expUptime: .3, maxUptime: 1, difficulty: 1, 
+                expUptime: .3, maxUptime: .8, difficulty: 1, 
                 impl: {
                     mpr: (uptime, m, base) => { return m + (base * (uptime * .15)); },
                     cdr: (uptime, c) => { return (1 - (1 - c) * (1 - (uptime * .1))); }
@@ -254,7 +254,7 @@ const engravings = [
             { //27
                 label: 'Master Brawler', code: 'MB',
                 tooltip: 'Frontal Attack -> 25% DMG',
-                expUptime: .7, maxUptime: 1, difficulty: 1, 
+                expUptime: .64, maxUptime: .9, difficulty: 1, 
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
                         return d * (1 + (uptime * .25)); 
@@ -363,7 +363,7 @@ const engravings = [
             { //39
                 label: 'Stabilized Status', code: 'SS',
                 tooltip: 'HP > 80% -> 16% DMG',
-                expUptime: .4, maxUptime: 1, difficulty: 0, //higher expected uptime with supports
+                expUptime: .4, maxUptime: .9, difficulty: 0, //higher expected uptime with supports
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
                         return d * (1 + (uptime * .16)); 
@@ -381,7 +381,7 @@ const engravings = [
             { //41
                 label: 'Super Charge', code: 'SC',
                 tooltip: 'Charge Skill -> 20% DMG, 40% Charging Speed',
-                expUptime: 3/8, maxUptime: 6/8, difficulty: -1,  // how many charge skills be on the bar?
+                expUptime: 3/8, maxUptime: 7/8, difficulty: -1,  // how many charge skills be on the bar?
                 impl: {
                     dmg: (uptime, d, mspd, aspd) => { 
                         return d * (1 + (uptime * .2)); 

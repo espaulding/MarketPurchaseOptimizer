@@ -1,6 +1,10 @@
 import engravings from '../data/Engravings.js';
 
 const LostArkMath = {
+    defaultVal: function(input, alternative) {
+        return typeof input !== 'undefined' ? input : alternative;
+    },
+
     mergeDifficulty: function(arrDiff) {
         var result = {};
 
@@ -37,7 +41,7 @@ const LostArkMath = {
     },
 
     processEngravingInteractions: function(subclass, selectedEngravings) {
-        this.removeInteractions(subclass);
+        LostArkMath.removeInteractions(subclass);
         selectedEngravings.forEach(e => {
             if(e.interaction !== undefined && e.interaction.add !== undefined) {
                 e.interaction.add(engravings);
@@ -45,15 +49,15 @@ const LostArkMath = {
         });
     },
     
-    computeHpWithEngravings: function(data, selectedEngravings) {
-        var HP = this.computeHp(data);
+    computeHpWithEngravings: function(data, selectedEngravings, uptimeOverride) {
+        var HP = LostArkMath.computeHp(data);
 
         var difficulty = {};
         var expected = HP, maximum = HP;
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.hp !== undefined) {
                 expected = e.impl.hp(e.expUptime, expected);
-                maximum = e.impl.hp(e.maxUptime, maximum);
+                maximum = e.impl.hp(LostArkMath.defaultVal(uptimeOverride, e.maxUptime), maximum);
                 difficulty[e.code] = e.difficulty;
             }
         });
@@ -72,8 +76,8 @@ const LostArkMath = {
     },
 
     // t -> type of defense 'physical' or 'magical'
-    computeDefWithEngravings: function(data, t, selectedEngravings) {
-        var defense = this.computeDef(data, t);
+    computeDefWithEngravings: function(data, t, selectedEngravings, uptimeOverride) {
+        var defense = LostArkMath.computeDef(data, t);
         const baseDefense = defense;
 
         var difficulty = {};
@@ -81,7 +85,8 @@ const LostArkMath = {
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.def !== undefined) {
                 expected = e.impl.def(e.expUptime, expected, baseDefense);
-                maximum = e.impl.def(e.maxUptime, maximum, baseDefense);
+                var maxUptime = LostArkMath.defaultVal(uptimeOverride, e.maxUptime);
+                maximum = e.impl.def(maxUptime, maximum, baseDefense);
                 difficulty[e.code] = e.difficulty;
             }
         });
@@ -92,15 +97,15 @@ const LostArkMath = {
     // t -> type of defense 'physical' or 'magical'
     computeDr: function(data, t) {
         var DR = 0;
-        var defense = this.computeDef(data, t);
+        var defense = LostArkMath.computeDef(data, t);
         if (defense > 0) { DR = defense / (defense + 6500); }
         return DR;
     },
 
     // t -> type of defense 'physical' or 'magical'
-    computeDrWithEngravings: function(data, t, selectedEngravings) {
+    computeDrWithEngravings: function(data, t, selectedEngravings, uptimeOverride) {
         var expected = 0, maximum = 0;
-        var objDefense = this.computeDefWithEngravings(data, t, selectedEngravings);
+        var objDefense = LostArkMath.computeDefWithEngravings(data, t, selectedEngravings);
         if (objDefense.expected > 0) { expected = objDefense.expected / (objDefense.expected + 6500); }
         if (objDefense.maximum > 0) { maximum = objDefense.maximum / (objDefense.maximum + 6500); }
         
@@ -108,7 +113,7 @@ const LostArkMath = {
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.dr !== undefined) {
                 expected = e.impl.dr(e.expUptime, expected);
-                maximum = e.impl.dr(e.maxUptime, maximum);
+                maximum = e.impl.dr(LostArkMath.defaultVal(uptimeOverride, e.maxUptime), maximum);
                 difficulty[e.code] = e.difficulty;
             }
         });
@@ -119,15 +124,15 @@ const LostArkMath = {
     // t -> type of defense physical or magical
     computeEffectiveHp: function(data, t) {
         var hp = +data.hp; if(isNaN(hp)) { hp = 0; }
-        var percentDamageTaken = (1 - this.computeDr(data, t));
+        var percentDamageTaken = (1 - LostArkMath.computeDr(data, t));
         if(percentDamageTaken > 0 && hp > 0) { hp /= percentDamageTaken; }
         return  Math.floor(hp);
     },
 
     // t -> type of defense physical or magical
-    computeEffectiveHpWithEngravings: function(data, t, selectedEngravings) {
-        var objHp = this.computeHpWithEngravings(data, selectedEngravings);
-        var objDr = this.computeDrWithEngravings(data, t, selectedEngravings);
+    computeEffectiveHpWithEngravings: function(data, t, selectedEngravings, uptimeOverride) {
+        var objHp = LostArkMath.computeHpWithEngravings(data, selectedEngravings, uptimeOverride);
+        var objDr = LostArkMath.computeDrWithEngravings(data, t, selectedEngravings, uptimeOverride);
 
         if((1 - objDr.expected) > 0 && objHp.expected > 0) { objHp.expected /= (1 - objDr.expected); }
         if((1 - objDr.maximum) > 0 && objHp.maximum > 0) { objHp.maximum /= (1 - objDr.maximum); }
@@ -135,7 +140,7 @@ const LostArkMath = {
         return { 
             expected: Math.floor(objHp.expected), 
             maximum: Math.floor(objHp.maximum), 
-            difficulty: this.mergeDifficulty([objHp.difficulty, objDr.difficulty]) 
+            difficulty: LostArkMath.mergeDifficulty([objHp.difficulty, objDr.difficulty]) 
         };
     },
 
@@ -144,15 +149,15 @@ const LostArkMath = {
         return Math.floor(MP);
     },
 
-    computeMpWithEngravings: function(data, selectedEngravings) {
-        var MP = this.computeMp(data);
+    computeMpWithEngravings: function(data, selectedEngravings, uptimeOverride) {
+        var MP = LostArkMath.computeMp(data);
 
         var difficulty = {};
         var expected = MP, maximum = MP;
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.mp !== undefined) {
                 expected = e.impl.mp(e.expUptime, expected);
-                maximum = e.impl.mp(e.maxUptime, expected);
+                maximum = e.impl.mp(LostArkMath.defaultVal(uptimeOverride, e.maxUptime), expected);
                 difficulty[e.code] = e.difficulty;
             }
         });
@@ -165,15 +170,15 @@ const LostArkMath = {
         return Math.floor(mpRegen);
     },
 
-    computeMpRegenWithEngravings: function(data, selectedEngravings) {
-        var mpRegen = this.computeMpRegen(data);
+    computeMpRegenWithEngravings: function(data, selectedEngravings, uptimeOverride) {
+        var mpRegen = LostArkMath.computeMpRegen(data);
 
         var bdifficulty = {};
         var bExpected = mpRegen, bMaximum = mpRegen;
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.mprBase !== undefined) {
                 bExpected = e.impl.mprBase(e.expUptime, bExpected);
-                bMaximum = e.impl.mprBase(e.maxUptime, bMaximum);
+                bMaximum = e.impl.mprBase(LostArkMath.defaultVal(uptimeOverride, e.maxUptime), bMaximum);
                 bdifficulty[e.code] = e.difficulty;
             }
         });
@@ -184,7 +189,7 @@ const LostArkMath = {
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.mpr !== undefined) {
                 expected = e.impl.mpr(e.expUptime, expected, Math.floor(bExpected) - 1);
-                maximum = e.impl.mpr(e.maxUptime, maximum, Math.floor(bMaximum) - 1);
+                maximum = e.impl.mpr(LostArkMath.defaultVal(uptimeOverride, e.maxUptime), maximum, Math.floor(bMaximum) - 1);
                 difficulty[e.code] = e.difficulty;
             }
         });
@@ -192,7 +197,7 @@ const LostArkMath = {
         return { 
             expected: Math.floor(expected), 
             maximum: Math.floor(maximum), 
-            difficulty: this.mergeDifficulty([bdifficulty, difficulty]) 
+            difficulty: LostArkMath.mergeDifficulty([bdifficulty, difficulty]) 
         };
     },
 
@@ -208,8 +213,8 @@ const LostArkMath = {
         return Math.floor(ap);
     },
 
-    computeAttackPowerWithEngravings: function(data, selectedEngravings) {
-        var ap = this.computeAttackPower(data);
+    computeAttackPowerWithEngravings: function(data, selectedEngravings, uptimeOverride) {
+        var ap = LostArkMath.computeAttackPower(data);
         const baseAP = ap;
 
         var difficulty = {};
@@ -217,7 +222,7 @@ const LostArkMath = {
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.atk !== undefined) {
                 expected = e.impl.atk(e.expUptime, expected, baseAP);
-                maximum = e.impl.atk(e.maxUptime, maximum, baseAP);
+                maximum = e.impl.atk(LostArkMath.defaultVal(uptimeOverride, e.maxUptime), maximum, baseAP);
                 difficulty[e.code] = e.difficulty;
             }
         });
@@ -230,15 +235,15 @@ const LostArkMath = {
         return critRate < 1 ? critRate : 1;
     },
 
-    computeCritRateEngrave: function(data, selectedEngravings) {
-        var critRate = this.computeCritRate(data);
+    computeCritRateEngrave: function(data, selectedEngravings, uptimeOverride) {
+        var critRate = LostArkMath.computeCritRate(data);
 
         var difficulty = {};
         var expected = critRate, maximum = critRate;
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.cr !== undefined) {
                 expected = e.impl.cr(e.expUptime, expected);
-                maximum = e.impl.cr(e.maxUptime, maximum);
+                maximum = e.impl.cr(LostArkMath.defaultVal(uptimeOverride, e.maxUptime), maximum);
                 difficulty[e.code] = e.difficulty;
             }
         });
@@ -255,15 +260,15 @@ const LostArkMath = {
         return critDmg;
     },
 
-    computeCritDmgEngrave: function(data, selectedEngravings) {
-        var critDmg = this.computeCritDmg(data);
+    computeCritDmgEngrave: function(data, selectedEngravings, uptimeOverride) {
+        var critDmg = LostArkMath.computeCritDmg(data);
 
         var difficulty = {};
         var expected = critDmg, maximum = critDmg;
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.cd !== undefined) {
                 expected = e.impl.cd(e.expUptime, expected);
-                maximum = e.impl.cd(e.maxUptime, maximum);
+                maximum = e.impl.cd(LostArkMath.defaultVal(uptimeOverride, e.maxUptime), maximum);
                 difficulty[e.code] = e.difficulty;
             }
         });
@@ -279,15 +284,15 @@ const LostArkMath = {
         return cooldownReduction < .75 ? cooldownReduction : .75; // 75% CDR is the cap in game
     },
 
-    computeCdrEngrave: function(data, selectedEngravings) {
-        var cooldownReduction = this.computeCdr(data);
+    computeCdrEngrave: function(data, selectedEngravings, uptimeOverride) {
+        var cooldownReduction = LostArkMath.computeCdr(data);
         
         var difficulty = {};
         var expected = cooldownReduction, maximum = cooldownReduction;
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.cdr !== undefined) {
                 expected = e.impl.cdr(e.expUptime, expected);
-                maximum = e.impl.cdr(e.maxUptime, maximum);
+                maximum = e.impl.cdr(LostArkMath.defaultVal(uptimeOverride, e.maxUptime), maximum);
                 difficulty[e.code] = e.difficulty;
             }
         });
@@ -305,15 +310,15 @@ const LostArkMath = {
         return atkSpeed < 1.4 ? atkSpeed : 1.4;
     },
 
-    computeAtkSpeedEngrave: function(data, selectedEngravings) {
-        var atkSpeed = this.computeAtkSpeed(data);
+    computeAtkSpeedEngrave: function(data, selectedEngravings, uptimeOverride) {
+        var atkSpeed = LostArkMath.computeAtkSpeed(data);
 
         var difficulty = {};
         var expected = atkSpeed, maximum = atkSpeed;
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.aspd !== undefined) {
                 expected = e.impl.aspd(e.expUptime, expected);
-                maximum = e.impl.aspd(e.maxUptime, maximum);
+                maximum = e.impl.aspd(LostArkMath.defaultVal(uptimeOverride, e.maxUptime), maximum);
                 difficulty[e.code] = e.difficulty;
             }
         });
@@ -333,15 +338,15 @@ const LostArkMath = {
         return moveSpeed < 1.4 ? moveSpeed : 1.4;
     },
 
-    computeMoveSpeedEngrave: function(data, selectedEngravings) {
-        var moveSpeed = this.computeMoveSpeed(data);
+    computeMoveSpeedEngrave: function(data, selectedEngravings, uptimeOverride) {
+        var moveSpeed = LostArkMath.computeMoveSpeed(data);
 
         var difficulty = {};
         var expected = moveSpeed, maximum = moveSpeed;
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.mspd !== undefined) {
                 expected = e.impl.mspd(e.expUptime, expected);
-                maximum = e.impl.mspd(e.maxUptime, maximum);
+                maximum = e.impl.mspd(LostArkMath.defaultVal(uptimeOverride, e.maxUptime), maximum);
                 difficulty[e.code] = e.difficulty;
             }
         });
@@ -383,26 +388,26 @@ const LostArkMath = {
     },
 
     computeBaseDmg: function(data) {
-        var critRate = this.computeCritRate(data);
-        var critDmg = this.computeCritDmg(data);
-        var atkSpeed = this.computeAtkSpeed(data);
-        var cdr = this.computeCdr(data);
-        var dmg = this.normalizeCrit(this.computeAttackPower(data), critRate, critDmg);
-            dmg = this.normalizeCdr(dmg, cdr);
-            dmg = this.normalizeAtkSpeed(dmg, atkSpeed, cdr);
+        var critRate = LostArkMath.computeCritRate(data);
+        var critDmg = LostArkMath.computeCritDmg(data);
+        var atkSpeed = LostArkMath.computeAtkSpeed(data);
+        var cdr = LostArkMath.computeCdr(data);
+        var dmg = LostArkMath.normalizeCrit(LostArkMath.computeAttackPower(data), critRate, critDmg);
+            dmg = LostArkMath.normalizeCdr(dmg, cdr);
+            dmg = LostArkMath.normalizeAtkSpeed(dmg, atkSpeed, cdr);
         
         return dmg; 
     },
 
     computeBaseDmgEngrave: function(data, selectedEngravings) {
-        this.processEngravingInteractions(data.subclass, selectedEngravings);
-        var critRate = this.computeCritRateEngrave(data, selectedEngravings);
-        var critDmg = this.computeCritDmgEngrave(data, selectedEngravings);
-        var cdr = this.computeCdrEngrave(data, selectedEngravings);
-        var moveSpeed = this.computeMoveSpeedEngrave(data, selectedEngravings);
-        var atkSpeed = this.computeAtkSpeedEngrave(data, selectedEngravings);
-        var ap = this.computeAttackPowerWithEngravings(data, selectedEngravings);
-        var difficulty = this.mergeDifficulty([
+        LostArkMath.processEngravingInteractions(data.subclass, selectedEngravings);
+        var critRate = LostArkMath.computeCritRateEngrave(data, selectedEngravings);
+        var critDmg = LostArkMath.computeCritDmgEngrave(data, selectedEngravings);
+        var cdr = LostArkMath.computeCdrEngrave(data, selectedEngravings);
+        var moveSpeed = LostArkMath.computeMoveSpeedEngrave(data, selectedEngravings);
+        var atkSpeed = LostArkMath.computeAtkSpeedEngrave(data, selectedEngravings);
+        var ap = LostArkMath.computeAttackPowerWithEngravings(data, selectedEngravings);
+        var difficulty = LostArkMath.mergeDifficulty([
             critRate.difficulty, 
             critDmg.difficulty,
             cdr.difficulty,
@@ -411,13 +416,13 @@ const LostArkMath = {
             ap.difficulty
         ]);
 
-        var baseDmgEngraveExpected = this.normalizeCrit(ap.expected, critRate.expected, critDmg.expected);
-            baseDmgEngraveExpected = this.normalizeCdr(baseDmgEngraveExpected, cdr.expected);
-            baseDmgEngraveExpected = this.normalizeAtkSpeed(baseDmgEngraveExpected, atkSpeed.expected, cdr.expected);
+        var baseDmgEngraveExpected = LostArkMath.normalizeCrit(ap.expected, critRate.expected, critDmg.expected);
+            baseDmgEngraveExpected = LostArkMath.normalizeCdr(baseDmgEngraveExpected, cdr.expected);
+            baseDmgEngraveExpected = LostArkMath.normalizeAtkSpeed(baseDmgEngraveExpected, atkSpeed.expected, cdr.expected);
 
-        var baseDmgEngraveMaximum = this.normalizeCrit(ap.maximum, critRate.maximum, critDmg.maximum);
-            baseDmgEngraveMaximum = this.normalizeCdr(baseDmgEngraveMaximum, cdr.maximum);
-            baseDmgEngraveMaximum = this.normalizeAtkSpeed(baseDmgEngraveMaximum, atkSpeed.maximum, cdr.maximum);
+        var baseDmgEngraveMaximum = LostArkMath.normalizeCrit(ap.maximum, critRate.maximum, critDmg.maximum);
+            baseDmgEngraveMaximum = LostArkMath.normalizeCdr(baseDmgEngraveMaximum, cdr.maximum);
+            baseDmgEngraveMaximum = LostArkMath.normalizeAtkSpeed(baseDmgEngraveMaximum, atkSpeed.maximum, cdr.maximum);
 
         selectedEngravings.forEach(function (e) {
             if(e.impl !== undefined && e.impl.dmg !== undefined) {
@@ -430,7 +435,7 @@ const LostArkMath = {
         return { 
             expected: baseDmgEngraveExpected, 
             maximum: baseDmgEngraveMaximum, 
-            difficulty: this.sumDifficulty(difficulty)
+            difficulty: LostArkMath.sumDifficulty(difficulty)
         };
     },
 }
